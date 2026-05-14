@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+pydantic
+python-dotenv
+google-generativeai
+pdfplumber
+sqlalchemy
+psycopg2-binary
+passlib[bcrypt]
+python-jose[cryptography]
+alembic
+python-multipart
+fastapi-mail
+pydantic-settings
