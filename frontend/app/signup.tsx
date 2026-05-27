@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Alert, ActivityIndicator, Modal, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { signup, verifyOtp } from '../services/api';
+import { signup } from '../services/api';
 import { saveToken } from '../services/auth';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -12,15 +12,14 @@ export default function SignupScreen() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [dob, setDob] = useState(''); // YYYY-MM-DD
+  const [securityAnswer, setSecurityAnswer] = useState('');
   const [isMajor, setIsMajor] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [passwordStrength, setPasswordStrength] = useState({ score: 0, label: 'Weak', color: '#EF4444' });
 
-  const [showOtpModal, setShowOtpModal] = useState(false);
-  const [otpCode, setOtpCode] = useState('');
-  const [otpError, setOtpError] = useState('');
+
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [tempDate, setTempDate] = useState({ day: '', month: '', year: '' });
@@ -54,7 +53,7 @@ export default function SignupScreen() {
   };
 
   const handleSignup = async () => {
-    if (!name || !email || !password || !confirmPassword || !dob) {
+    if (!name || !email || !password || !confirmPassword || !dob || !securityAnswer) {
       setErrorMsg('Please fill in all fields');
       return;
     }
@@ -70,30 +69,13 @@ export default function SignupScreen() {
     setLoading(true);
     setErrorMsg('');
     try {
-      const data = await signup(name, email, password, isMajor, dob);
-      if (data.message) {
-        setShowOtpModal(true);
-      }
-    } catch (error: any) {
-      setErrorMsg(error.message || 'Signup failed');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleVerifyOtp = async () => {
-    if (!otpCode) return;
-    setLoading(true);
-    setOtpError('');
-    try {
-      const data = await verifyOtp(email, otpCode);
+      const data = await signup(name, email, password, isMajor, dob, securityAnswer);
       if (data.access_token) {
         await saveToken(data.access_token);
-        setShowOtpModal(false);
         router.replace('/(tabs)');
       }
     } catch (error: any) {
-      setOtpError(error.message || "Invalid OTP");
+      setErrorMsg(error.message || 'Signup failed');
     } finally {
       setLoading(false);
     }
@@ -137,6 +119,16 @@ export default function SignupScreen() {
                 {dob || "Date of Birth (Select)"}
               </Text>
             </TouchableOpacity>
+
+            <View style={styles.inputBox}>
+              <Ionicons name="help-buoy-outline" size={20} color="#64748B" />
+              <TextInput
+                style={[styles.input, Platform.OS === 'web' && { outlineStyle: 'none' } as any]}
+                placeholder="Security Q: Best friend's name?"
+                value={securityAnswer}
+                onChangeText={setSecurityAnswer}
+              />
+            </View>
 
             <View style={styles.inputBox}>
               <Ionicons name="lock-closed-outline" size={20} color="#64748B" />
@@ -206,22 +198,7 @@ export default function SignupScreen() {
         </View>
       </Modal>
 
-      <Modal visible={showOtpModal} transparent animationType="slide">
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Verify Account</Text>
-            <Text style={styles.modalSubtitle}>OTP sent to {email}</Text>
-            <TextInput style={styles.otpInput} value={otpCode} onChangeText={setOtpCode} placeholder="000000" keyboardType="number-pad" maxLength={6} />
-            {otpError ? <Text style={styles.error}>{otpError}</Text> : null}
-            <TouchableOpacity style={styles.modalBtn} onPress={handleVerifyOtp} disabled={loading}>
-              <Text style={styles.modalBtnText}>Verify</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setShowOtpModal(false)} style={{ marginTop: 20 }}>
-              <Text style={{ color: '#64748B' }}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+
     </SafeAreaView>
   );
 }
@@ -269,7 +246,6 @@ const styles = StyleSheet.create({
   modalSubtitle: { color: '#64748B', marginTop: 8, marginBottom: 24, textAlign: 'center' },
   dateRow: { flexDirection: 'row', justifyContent: 'center', gap: 10, marginBottom: 24 },
   dateInput: { backgroundColor: '#F1F5F9', width: 60, height: 56, borderRadius: 12, textAlign: 'center', fontSize: 18, fontWeight: '600' },
-  otpInput: { backgroundColor: '#F1F5F9', width: '100%', height: 64, borderRadius: 16, textAlign: 'center', fontSize: 28, fontWeight: '700', letterSpacing: 8, marginBottom: 16 },
   modalBtn: { backgroundColor: '#1A365D', width: '100%', height: 60, borderRadius: 16, justifyContent: 'center', alignItems: 'center' },
   modalBtnText: { color: '#fff', fontSize: 18, fontWeight: '700' }
 });

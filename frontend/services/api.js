@@ -32,11 +32,11 @@ export const login = async (username, password) => {
     return data;
 };
 
-export const signup = async (name, email, password, isMajor, dob) => {
+export const signup = async (name, email, password, isMajor, dob, securityAnswer) => {
     const response = await fetch(`${BASE_URL}/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, is_major: isMajor, dob })
+        body: JSON.stringify({ name, email, password, is_major: isMajor, dob, security_answer: securityAnswer })
     });
     const data = await response.json();
     if (!response.ok) {
@@ -69,35 +69,11 @@ export const updateProfile = async (name, dob) => {
     return data;
 };
 
-export const verifyOtp = async (email, code) => {
-    const response = await fetch(`${BASE_URL}/verify-otp`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, code })
-    });
-    const data = await response.json();
-    if (!response.ok) {
-        throw new Error(data.detail || "Invalid OTP");
-    }
-    return data;
-};
-
-export const forgotPassword = async (email) => {
-    const response = await fetch(`${BASE_URL}/forgot-password?email=${email}`, {
-        method: 'POST'
-    });
-    const data = await response.json();
-    if (!response.ok) {
-        throw new Error(data.detail || "Request failed");
-    }
-    return data;
-};
-
-export const resetPassword = async (email, otp, new_password) => {
+export const resetPassword = async (email, dob, security_answer, new_password) => {
     const response = await fetch(`${BASE_URL}/reset-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, otp, new_password })
+        body: JSON.stringify({ email, dob, security_answer, new_password })
     });
     const data = await response.json();
     if (!response.ok) {

@@ -10,7 +10,6 @@ from pydantic import BaseModel, EmailStr
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
 
 from ai.gemini_engine import analyze_with_gemini
 from utils.pdf_reader import extract_text_from_pdf
@@ -37,21 +36,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Email Configuration
-conf = ConnectionConfig(
-    MAIL_USERNAME = os.getenv("MAIL_USERNAME"),
-    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD"),
-    MAIL_FROM = os.getenv("MAIL_FROM"),
-    MAIL_PORT = int(os.getenv("MAIL_PORT")),
-    MAIL_SERVER = os.getenv("MAIL_SERVER"),
-    MAIL_FROM_NAME = os.getenv("MAIL_FROM_NAME"),
-    MAIL_STARTTLS = True,
-    MAIL_SSL_TLS = False,
-    USE_CREDENTIALS = True,
-    VALIDATE_CERTS = True
-)
 
-fm = FastMail(conf)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
@@ -62,15 +47,15 @@ class UserCreate(BaseModel):
     password: str
     dob: str
     is_major: bool
+    security_answer: str
 
-class VerifyOTP(BaseModel):
+class ResetPasswordSecurity(BaseModel):
     email: str
-    code: str
-
-class ResetPassword(BaseModel):
-    email: str
-    otp: str
+    dob: str
+    security_answer: str
     new_password: str
+
+
 
 class Token(BaseModel):
     access_token: str
@@ -92,23 +77,7 @@ def validate_password(password: str):
         return False, "Password must contain at least one special character."
     return True, ""
 
-async def send_otp_email(email: str, otp: str):
-    message = MessageSchema(
-        subject="Your Legal Auditor Verification Code",
-        recipients=[email],
-        body=f"Your verification code is: {otp}\n\nThis code will expire in 10 minutes.",
-        subtype=MessageType.plain
-    )
-    await fm.send_message(message)
 
-async def send_reset_email(email: str, otp: str):
-    message = MessageSchema(
-        subject="Password Reset Request - Legal Auditor",
-        recipients=[email],
-        body=f"You requested a password reset. Your OTP is: {otp}",
-        subtype=MessageType.plain
-    )
-    await fm.send_message(message)
 
 # --- DEPENDENCIES ---
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(database.get_db)):
@@ -122,7 +91,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
 # --- AUTH ROUTES ---
 @app.post("/signup")
-async def signup(user_data: UserCreate, background_tasks: BackgroundTasks, db: Session = Depends(database.get_db)):
+async def signup(user_data: UserCreate, db: Session = Depends(database.get_db)):
     # 1. Age Validation
     try:
         birth_date = datetime.datetime.strptime(user_data.dob, "%Y-%m-%d")
@@ -146,46 +115,21 @@ async def signup(user_data: UserCreate, background_tasks: BackgroundTasks, db: S
     if not is_strong:
         raise HTTPException(status_code=400, detail=msg)
 
-    # 4. Create User (Unverified)
+    # 4. Create User
     hashed_pw = auth.get_password_hash(user_data.password)
     new_user = models.User(
         name=user_data.name, 
         email=user_data.email, 
         hashed_password=hashed_pw, 
-        is_verified=0, 
         date_of_birth=user_data.dob,
-        is_major=user_data.is_major
+        is_major=user_data.is_major,
+        security_answer=user_data.security_answer.strip().lower()
     )
     db.add(new_user)
-    
-    # 5. Generate OTP
-    otp_code = str(random.randint(100000, 999999))
-    new_otp = models.OTP(email=user_data.email, code=otp_code)
-    db.add(new_otp)
-    
     db.commit()
     
-    # Send Real Email in Background
-    background_tasks.add_task(send_otp_email, user_data.email, otp_code)
-    
-    return {"message": "Account created successfully! Please verify your email with the OTP sent."}
-
-@app.post("/verify-otp", response_model=Token)
-def verify_otp(data: VerifyOTP, db: Session = Depends(database.get_db)):
-    otp_record = db.query(models.OTP).filter(models.OTP.email == data.email, models.OTP.code == data.code).first()
-    if not otp_record:
-        raise HTTPException(status_code=400, detail="Invalid or expired OTP")
-    
-    user = db.query(models.User).filter(models.User.email == data.email).first()
-    if user:
-        user.is_verified = 1
-        db.delete(otp_record) # Clean up
-        db.commit()
-        
-        access_token = auth.create_access_token(data={"sub": user.email})
-        return {"access_token": access_token, "token_type": "bearer"}
-    
-    raise HTTPException(status_code=404, detail="User not found")
+    access_token = auth.create_access_token(data={"sub": new_user.email})
+    return {"access_token": access_token, "token_type": "bearer"}
 
 @app.post("/login", response_model=Token)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
@@ -193,33 +137,23 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     if not user or not auth.verify_password(form_data.password, user.hashed_password):
         raise HTTPException(status_code=401, detail="Incorrect email or password")
     
-    if user.is_verified == 0:
-        raise HTTPException(status_code=403, detail="Please verify your email before logging in.")
-    
     access_token = auth.create_access_token(data={"sub": user.email})
     return {"access_token": access_token, "token_type": "bearer"}
 
-@app.post("/forgot-password")
-async def forgot_password(email: str, background_tasks: BackgroundTasks, db: Session = Depends(database.get_db)):
-    user = db.query(models.User).filter(models.User.email == email).first()
-    if not user:
-        raise HTTPException(status_code=404, detail="No account found with this email.")
-    
-    otp_code = str(random.randint(100000, 999999))
-    new_otp = models.OTP(email=email, code=otp_code)
-    db.add(new_otp)
-    db.commit()
-    
-    background_tasks.add_task(send_reset_email, email, otp_code)
-    return {"message": "OTP sent to your email for password reset."}
-
 @app.post("/reset-password")
-def reset_password(data: ResetPassword, db: Session = Depends(database.get_db)):
-    otp_record = db.query(models.OTP).filter(models.OTP.email == data.email, models.OTP.code == data.otp).first()
-    if not otp_record:
-        raise HTTPException(status_code=400, detail="Invalid OTP")
-    
+def reset_password(data: ResetPasswordSecurity, db: Session = Depends(database.get_db)):
     user = db.query(models.User).filter(models.User.email == data.email).first()
+    
+    if not user:
+        raise HTTPException(status_code=400, detail="Invalid details provided.")
+        
+    if user.date_of_birth != data.dob:
+        raise HTTPException(status_code=400, detail="Invalid details provided.")
+        
+    # Check security answer
+    stored_answer = user.security_answer or ""
+    if stored_answer.lower() != data.security_answer.strip().lower():
+        raise HTTPException(status_code=400, detail="Invalid details provided.")
     
     # Validate New Password Strength
     is_strong, msg = validate_password(data.new_password)
@@ -227,7 +161,6 @@ def reset_password(data: ResetPassword, db: Session = Depends(database.get_db)):
         raise HTTPException(status_code=400, detail=msg)
 
     user.hashed_password = auth.get_password_hash(data.new_password)
-    db.delete(otp_record)
     db.commit()
     
     return {"message": "Password updated successfully! You can now log in."}

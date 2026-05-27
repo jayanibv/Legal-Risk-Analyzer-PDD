@@ -11,18 +11,11 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     date_of_birth = Column(String, nullable=True)
+    security_answer = Column(String, nullable=True)
     is_major = Column(Boolean, default=False)
-    is_verified = Column(Integer, default=0) # 0 = false, 1 = true
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
     documents = relationship("Document", back_populates="owner", cascade="all, delete-orphan")
-
-class OTP(Base):
-    __tablename__ = "otps"
-    id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, index=True)
-    code = Column(String)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
 class Document(Base):
     __tablename__ = "documents"

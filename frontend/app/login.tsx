@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Alert, ActivityIndicator, Modal, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { login, forgotPassword, resetPassword } from '../services/api';
+import { login, resetPassword } from '../services/api';
 import { saveToken } from '../services/auth';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -14,11 +14,12 @@ export default function LoginScreen() {
 
   const [showForgotModal, setShowForgotModal] = useState(false);
   const [forgotEmail, setForgotEmail] = useState('');
-  const [resetOtp, setResetOtp] = useState('');
+  const [forgotDob, setForgotDob] = useState('');
+  const [forgotSecurity, setForgotSecurity] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [step, setStep] = useState(1);
   const [modalError, setModalError] = useState('');
   const [modalSuccess, setModalSuccess] = useState('');
+
 
   const router = useRouter();
 
@@ -42,41 +43,22 @@ export default function LoginScreen() {
     }
   };
 
-  const handleRequestReset = async () => {
-    if (!forgotEmail) {
-      setModalError('Please enter an email address');
-      return;
-    }
-    setLoading(true);
-    setModalError('');
-    try {
-      await forgotPassword(forgotEmail);
-      setStep(2);
-      setModalSuccess('OTP sent to your email. Please check your inbox.');
-      setTimeout(() => setModalSuccess(''), 5000);
-    } catch (error: any) {
-      setModalError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleResetPassword = async () => {
-    if (!resetOtp || !newPassword) {
-      setModalError('Please enter the OTP and a new password');
+    if (!forgotEmail || !forgotDob || !forgotSecurity || !newPassword) {
+      setModalError('Please fill in all fields');
       return;
     }
     setLoading(true);
     setModalError('');
     try {
-      await resetPassword(forgotEmail, resetOtp, newPassword);
+      await resetPassword(forgotEmail, forgotDob, forgotSecurity, newPassword);
       setModalSuccess('Password reset successfully!');
       setTimeout(() => {
         setShowForgotModal(false);
-        setStep(1);
         setModalSuccess('');
         setForgotEmail('');
-        setResetOtp('');
+        setForgotDob('');
+        setForgotSecurity('');
         setNewPassword('');
       }, 2000);
     } catch (error: any) {
@@ -85,6 +67,8 @@ export default function LoginScreen() {
       setLoading(false);
     }
   };
+
+
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -139,36 +123,25 @@ export default function LoginScreen() {
         </ScrollView>
       </KeyboardAvoidingView>
 
+
       <Modal visible={showForgotModal} transparent animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Reset Password</Text>
-            {step === 1 ? (
-              <>
-                <Text style={styles.modalSubtitle}>Enter your email to receive an OTP</Text>
-                <TextInput style={styles.modalInput} placeholder="Email" value={forgotEmail} onChangeText={setForgotEmail} autoCapitalize="none" />
+            <Text style={styles.modalSubtitle}>Verify your identity to reset password</Text>
+            
+            <TextInput style={styles.modalInput} placeholder="Email" value={forgotEmail} onChangeText={setForgotEmail} autoCapitalize="none" />
+            <TextInput style={styles.modalInput} placeholder="Date of Birth (YYYY-MM-DD)" value={forgotDob} onChangeText={setForgotDob} />
+            <TextInput style={styles.modalInput} placeholder="Best friend's name?" value={forgotSecurity} onChangeText={setForgotSecurity} />
+            <TextInput style={styles.modalInput} placeholder="New Password" value={newPassword} onChangeText={setNewPassword} secureTextEntry />
 
-                {modalError ? <Text style={styles.modalError}>{modalError}</Text> : null}
-                {modalSuccess ? <Text style={styles.modalSuccess}>{modalSuccess}</Text> : null}
+            {modalError ? <Text style={styles.modalError}>{modalError}</Text> : null}
+            {modalSuccess ? <Text style={styles.modalSuccess}>{modalSuccess}</Text> : null}
 
-                <TouchableOpacity style={styles.modalBtn} onPress={handleRequestReset} disabled={loading}>
-                  {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.modalBtnText}>Send OTP</Text>}
-                </TouchableOpacity>
-              </>
-            ) : (
-              <>
-                <Text style={styles.modalSubtitle}>Check email for OTP and enter new password</Text>
-                <TextInput style={styles.modalInput} placeholder="6-digit OTP" value={resetOtp} onChangeText={setResetOtp} keyboardType="number-pad" />
-                <TextInput style={styles.modalInput} placeholder="New Password" value={newPassword} onChangeText={setNewPassword} secureTextEntry />
-
-                {modalError ? <Text style={styles.modalError}>{modalError}</Text> : null}
-                {modalSuccess ? <Text style={styles.modalSuccess}>{modalSuccess}</Text> : null}
-
-                <TouchableOpacity style={styles.modalBtn} onPress={handleResetPassword} disabled={loading}>
-                  {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.modalBtnText}>Reset Password</Text>}
-                </TouchableOpacity>
-              </>
-            )}
+            <TouchableOpacity style={styles.modalBtn} onPress={handleResetPassword} disabled={loading}>
+              {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.modalBtnText}>Reset Password</Text>}
+            </TouchableOpacity>
+            
             <TouchableOpacity onPress={() => { setShowForgotModal(false); setModalError(''); setModalSuccess(''); }} style={{ marginTop: 20 }}>
               <Text style={{ color: '#64748B' }}>Cancel</Text>
             </TouchableOpacity>
