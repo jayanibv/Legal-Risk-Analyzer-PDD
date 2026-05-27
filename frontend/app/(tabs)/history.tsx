@@ -1,9 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, SafeAreaView, ActivityIndicator } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { getHistory } from '../../services/api';
 import { useTheme } from '../../context/ThemeContext';
+
+const formatDate = (dateString: string) => {
+  if (!dateString) return "Just now";
+  try {
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return dateString;
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+  } catch (e) {
+    return dateString;
+  }
+};
 
 export default function HistoryScreen() {
   const router = useRouter();
@@ -11,9 +23,11 @@ export default function HistoryScreen() {
   const [history, setHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchHistory();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchHistory();
+    }, [])
+  );
 
   const fetchHistory = async () => {
     try {
@@ -45,7 +59,7 @@ export default function HistoryScreen() {
       </View>
       <View style={styles.info}>
         <Text style={[styles.filename, { color: colors.text }]} numberOfLines={1}>{item.filename}</Text>
-        <Text style={[styles.date, { color: colors.textSecondary }]}>{item.date}</Text>
+        <Text style={[styles.date, { color: colors.textSecondary }]}>{formatDate(item.date)}</Text>
       </View>
       <View style={[styles.badge, { backgroundColor: getRiskColor(item.risk_level) + '10' }]}>
         <Text style={[styles.badgeText, { color: getRiskColor(item.risk_level) }]}>{item.risk_level?.toUpperCase()}</Text>

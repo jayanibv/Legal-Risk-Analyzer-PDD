@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
@@ -62,7 +63,7 @@ export default function SummaryScreen() {
         <View style={styles.center}>
           <Ionicons name="alert-circle-outline" size={64} color={colors.error} />
           <Text style={[styles.errorText, { color: colors.error }]}>{error || 'Result not found'}</Text>
-          <TouchableOpacity onPress={() => router.replace('/')} style={[styles.button, { backgroundColor: colors.primary }]}>
+          <TouchableOpacity onPress={() => router.replace('/(tabs)')} style={[styles.button, { backgroundColor: colors.primary }]}>
             <Text style={styles.buttonText}>Go Home</Text>
           </TouchableOpacity>
         </View>
@@ -77,7 +78,7 @@ export default function SummaryScreen() {
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.bg }]}>
       <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.divider }]}>
-        <TouchableOpacity onPress={() => router.replace('/')} style={styles.backButton}>
+        <TouchableOpacity onPress={() => router.replace('/(tabs)')} style={styles.backButton}>
           <Ionicons name="close" size={24} color={colors.text} />
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: colors.text }]}>Risk Summary</Text>

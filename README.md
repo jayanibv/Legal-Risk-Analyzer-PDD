@@ -22,14 +22,18 @@
 
 ### Backend
 - **Framework**: [FastAPI](https://fastapi.tiangolo.com/) (Python 3.10+)
-- **Core AI**: [Gemini Pro](https://aistudio.google.com/) for high-precision legal reasoning.
-- **Database**: [PostgreSQL](https://www.postgresql.org/) with [SQLAlchemy ORM](https://www.sqlalchemy.org/).
+- **Core AI**: **Gemini 2.5 Flash** via Google GenAI SDK for high-precision, low-latency legal reasoning.
+- **Document Processing**: `pdfplumber` for robust PDF text extraction.
+- **Database & Storage**: **Supabase** (Managed PostgreSQL & S3-compatible Storage buckets) integrated via SQLAlchemy and the Supabase Python SDK.
 - **Security**: JWT-based authentication, salted password hashing (bcrypt), and OTP-gated registration.
 - **Email**: Gmail SMTP integration for OTP and Password Reset delivery.
+- **Networking**: Cloudflare Tunnels used to seamlessly expose the local development backend to physical mobile devices.
 
 ### Frontend
-- **Framework**: [React Native](https://reactnative.dev/) + [Expo Router](https://docs.expo.dev/router/introduction/).
-- **UI/UX**: Custom "Professional Navy" design system with `ThemeContext` for dynamic dark mode.
+- **Framework**: [React Native](https://reactnative.dev/) + [Expo](https://expo.dev/) (v54).
+- **Language**: **TypeScript** for strict type-safety and reliability.
+- **Navigation**: [Expo Router](https://docs.expo.dev/router/introduction/) for file-based routing and Bottom Tabs.
+- **UI/UX**: Custom "Professional Navy" design system with `ThemeContext` for dynamic dark mode. Uses Reanimated and Gesture Handler for micro-animations.
 - **PDF Engine**: Dynamic `html2pdf.js` (Web) and `expo-print/sharing` (Native).
 
 ---
@@ -40,6 +44,7 @@
 - Python 3.10+
 - Node.js & npm/yarn
 - A [Google AI Studio API Key](https://aistudio.google.com/app/apikey)
+- A [Supabase Project](https://supabase.com) with a database and a storage bucket named `legal-documents`.
 - A Gmail account with an [App Password](https://myaccount.google.com/apppasswords) for SMTP.
 
 ### 2. Backend Setup
@@ -53,7 +58,9 @@ pip install -r requirements.txt
 ```
 - Create a `.env` file in the `backend` folder:
 ```env
-DATABASE_URL=postgresql://user:pass@localhost/dbname
+DATABASE_URL=postgresql://postgres:[YOUR-PASSWORD]@aws-0-REGION.pooler.supabase.com:5432/postgres
+SUPABASE_URL=https://[YOUR-PROJECT].supabase.co
+SUPABASE_API_KEY=[YOUR-SERVICE-ROLE-OR-ANON-KEY]
 SECRET_KEY=your_jwt_secret
 GEMINI_API_KEY=your_google_api_key
 MAIL_USERNAME=your_gmail@gmail.com

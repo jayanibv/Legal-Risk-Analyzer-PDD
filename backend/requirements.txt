@@ -2,7 +2,7 @@ fastapi
 uvicorn
 pydantic
 python-dotenv
-google-generativeai
+google-genai
 pdfplumber
 sqlalchemy
 psycopg2-binary
@@ -12,3 +12,4 @@ alembic
 python-multipart
 fastapi-mail
 pydantic-settings
+supabase

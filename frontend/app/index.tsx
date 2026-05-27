@@ -9,15 +9,7 @@ export default function Index() {
     useEffect(() => {
         const check = async () => {
             const authed = await isAuthenticated();
-            
-            // Check if it's the very first time
-            const hasSeenOnboarding = Platform.OS === 'web' 
-                ? localStorage.getItem('has_seen_onboarding')
-                : null; // Use SecureStore if needed
-
-            if (!hasSeenOnboarding) {
-                setStatus('onboarding');
-            } else if (authed) {
+            if (authed) {
                 setStatus('dashboard');
             } else {
                 setStatus('onboarding');

@@ -1,10 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView, ActivityIndicator } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { isAuthenticated, removeToken } from '../../services/auth';
 import { getHistory, getUserProfile } from '../../services/api';
 import { useTheme } from '../../context/ThemeContext';
+
+const formatDate = (dateString: string) => {
+  if (!dateString) return "Just now";
+  try {
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return dateString;
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+  } catch (e) {
+    return dateString;
+  }
+};
 
 export default function DashboardScreen() {
   const router = useRouter();
@@ -15,17 +27,19 @@ export default function DashboardScreen() {
   const [stats, setStats] = useState({ total: 0, highRisk: 0 });
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const authed = await isAuthenticated();
-      if (!authed) {
-        router.replace('/onboarding');
-      } else {
-        fetchData();
-      }
-    };
-    checkAuth();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      const checkAuth = async () => {
+        const authed = await isAuthenticated();
+        if (!authed) {
+          router.replace('/onboarding');
+        } else {
+          fetchData();
+        }
+      };
+      checkAuth();
+    }, [])
+  );
 
   const fetchData = async () => {
     try {
@@ -64,7 +78,7 @@ export default function DashboardScreen() {
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.header}>
           <View>
-            <Text style={[styles.greeting, { color: colors.textSecondary }]}>Good Morning,</Text>
+            <Text style={[styles.greeting, { color: colors.textSecondary }]}>Hello,</Text>
             <Text style={[styles.userName, { color: colors.text }]}>{userName}</Text>
           </View>
           <TouchableOpacity 
@@ -118,7 +132,7 @@ export default function DashboardScreen() {
                 <View style={styles.recentItemText}>
                   <Text style={[styles.recentItemTitle, { color: colors.text }]} numberOfLines={1}>{scan.filename || "Pasted Text"}</Text>
                   <Text style={[styles.recentItemDate, { color: colors.textSecondary }]}>
-                    {scan.date || "Just now"}
+                    {formatDate(scan.date)}
                   </Text>
                 </View>
                 <View style={[styles.badge, { backgroundColor: getRiskColor(scan.risk_level) + '20' }]}>

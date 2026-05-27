@@ -1,6 +1,7 @@
 import os
 import json
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -8,10 +9,9 @@ load_dotenv()
 # 🧠 CONFIGURE GEMINI
 api_key = os.getenv("GEMINI_API_KEY")
 if api_key:
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    client = genai.Client(api_key=api_key)
 else:
-    model = None
+    client = None
 
 SYSTEM_PROMPT = """
 You are a professional Legal Document Auditor. Your task is to analyze a legal contract and provide a comprehensive risk assessment.
@@ -37,21 +37,31 @@ OUTPUT FORMAT (STRICT JSON):
 }
 """
 
-def analyze_with_gemini(text):
-    if not model:
+import time
+
+def analyze_with_gemini(text, retries=4):
+    if not client:
         return None
 
-    try:
-        prompt = f"{SYSTEM_PROMPT}\n\nDocument to analyze:\n{text}"
-        response = model.generate_content(
-            prompt,
-            generation_config=genai.types.GenerationConfig(
-                response_mime_type="application/json",
+    for attempt in range(retries):
+        try:
+            prompt = f"{SYSTEM_PROMPT}\n\nDocument to analyze:\n{text}"
+            response = client.models.generate_content(
+                model='gemini-2.5-flash',
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json",
+                )
             )
-        )
-        
-        data = json.loads(response.text)
-        return data
-    except Exception as e:
-        print(f"Gemini Error: {e}")
-        return None
+            
+            data = json.loads(response.text)
+            return data
+        except Exception as e:
+            print(f"Gemini Error (Attempt {attempt + 1}/{retries}): {e}")
+            if 'response' in locals() and hasattr(response, 'text') and response.text:
+                print(f"Raw Gemini Response: {response.text}")
+                
+            if attempt < retries - 1:
+                time.sleep(2 ** attempt)  # 1s, 2s, 4s wait
+            else:
+                return None

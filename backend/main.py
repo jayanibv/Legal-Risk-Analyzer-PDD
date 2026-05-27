@@ -4,6 +4,7 @@ import random
 import re
 import os
 import datetime
+import urllib.parse
 from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, BackgroundTasks
 from pydantic import BaseModel, EmailStr
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,6 +14,7 @@ from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
 
 from ai.gemini_engine import analyze_with_gemini
 from utils.pdf_reader import extract_text_from_pdf
+from utils.supabase_client import supabase
 import models, database, auth
 from dotenv import load_dotenv
 
@@ -352,8 +354,18 @@ async def analyze_pdf(
     if not gemini_result:
         raise HTTPException(status_code=500, detail="Gemini API Error")
 
+    # Upload to Supabase Storage
+    file_url = None
+    try:
+        file_path = f"{current_user.id}/{file_hash}.pdf"
+        file.file.seek(0)
+        supabase.storage.from_("legal-documents").upload(file_path, file.file.read(), {"content-type": "application/pdf"})
+        file_url = supabase.storage.from_("legal-documents").get_public_url(file_path)
+    except Exception as e:
+        print(f"Supabase storage upload failed: {e}")
+
     # Save to DB
-    new_doc = models.Document(user_id=current_user.id, filename=file.filename, file_hash=file_hash)
+    new_doc = models.Document(user_id=current_user.id, filename=file.filename, file_hash=file_hash, file_url=file_url)
     db.add(new_doc)
     db.commit()
     db.refresh(new_doc)
@@ -385,10 +397,11 @@ def get_history(current_user: models.User = Depends(get_current_user), db: Sessi
         if doc.analysis:
             history.append({
                 "id": doc.id,
-                "filename": doc.filename,
+                "filename": urllib.parse.unquote(doc.filename) if doc.filename else "Raw Text",
+                "file_url": doc.file_url,
                 "risk_score": doc.analysis.risk_score,
                 "risk_level": doc.analysis.risk_level,
-                "date": doc.created_at.strftime("%Y-%m-%d %H:%M")
+                "date": doc.created_at.isoformat() + "Z"
             })
     return history
 
@@ -400,12 +413,13 @@ def get_analysis_by_id(doc_id: int, current_user: models.User = Depends(get_curr
     
     return {
         "id": doc.id,
-        "filename": doc.filename,
+        "filename": urllib.parse.unquote(doc.filename) if doc.filename else "Raw Text",
+        "file_url": doc.file_url,
         "risk_score": doc.analysis.risk_score,
         "risk_level": doc.analysis.risk_level,
         "summaries": doc.analysis.data.get("summaries", []),
         "risks": doc.analysis.data.get("risks", []),
         "clauses": doc.analysis.data.get("detected_clauses", []),
         "context": doc.analysis.data.get("context", "Other"),
-        "date": doc.created_at.strftime("%Y-%m-%d %H:%M")
+        "date": doc.created_at.isoformat() + "Z"
     }

@@ -15,8 +15,7 @@ load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 if not DATABASE_URL:
-    # Fallback to local sqlite for development if Postgres is not provided
-    DATABASE_URL = "sqlite:///./sql_app.db"
+    raise ValueError("DATABASE_URL is missing. Please set your Supabase connection string in the .env file.")
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
