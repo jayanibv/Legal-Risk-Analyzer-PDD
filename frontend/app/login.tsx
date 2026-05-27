@@ -85,7 +85,7 @@ export default function LoginScreen() {
               <Ionicons name="mail-outline" size={20} color="#64748B" />
               <TextInput
                 style={[styles.input, Platform.OS === 'web' && { outlineStyle: 'none' } as any]}
-                placeholder="Email Address"
+                placeholderTextColor="#94A3B8" placeholder="Email Address"
                 value={email}
                 onChangeText={setEmail}
                 autoCapitalize="none"
@@ -96,7 +96,7 @@ export default function LoginScreen() {
               <Ionicons name="lock-closed-outline" size={20} color="#64748B" />
               <TextInput
                 style={[styles.input, Platform.OS === 'web' && { outlineStyle: 'none' } as any]}
-                placeholder="Password"
+                placeholderTextColor="#94A3B8" placeholder="Password"
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
@@ -130,10 +130,10 @@ export default function LoginScreen() {
             <Text style={styles.modalTitle}>Reset Password</Text>
             <Text style={styles.modalSubtitle}>Verify your identity to reset password</Text>
             
-            <TextInput style={styles.modalInput} placeholder="Email" value={forgotEmail} onChangeText={setForgotEmail} autoCapitalize="none" />
-            <TextInput style={styles.modalInput} placeholder="Date of Birth (YYYY-MM-DD)" value={forgotDob} onChangeText={setForgotDob} />
-            <TextInput style={styles.modalInput} placeholder="Best friend's name?" value={forgotSecurity} onChangeText={setForgotSecurity} />
-            <TextInput style={styles.modalInput} placeholder="New Password" value={newPassword} onChangeText={setNewPassword} secureTextEntry />
+            <TextInput style={styles.modalInput} placeholderTextColor="#94A3B8" placeholder="Email" value={forgotEmail} onChangeText={setForgotEmail} autoCapitalize="none" />
+            <TextInput style={styles.modalInput} placeholderTextColor="#94A3B8" placeholder="Date of Birth (YYYY-MM-DD)" value={forgotDob} onChangeText={setForgotDob} />
+            <TextInput style={styles.modalInput} placeholderTextColor="#94A3B8" placeholder="Best friend's name?" value={forgotSecurity} onChangeText={setForgotSecurity} />
+            <TextInput style={styles.modalInput} placeholderTextColor="#94A3B8" placeholder="New Password" value={newPassword} onChangeText={setNewPassword} secureTextEntry />
 
             {modalError ? <Text style={styles.modalError}>{modalError}</Text> : null}
             {modalSuccess ? <Text style={styles.modalSuccess}>{modalSuccess}</Text> : null}

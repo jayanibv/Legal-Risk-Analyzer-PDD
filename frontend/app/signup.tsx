@@ -96,7 +96,7 @@ export default function SignupScreen() {
               <Ionicons name="person-outline" size={20} color="#64748B" />
               <TextInput
                 style={[styles.input, Platform.OS === 'web' && { outlineStyle: 'none' } as any]}
-                placeholder="Full Name"
+                placeholderTextColor="#94A3B8" placeholder="Full Name"
                 value={name}
                 onChangeText={setName}
               />
@@ -106,7 +106,7 @@ export default function SignupScreen() {
               <Ionicons name="mail-outline" size={20} color="#64748B" />
               <TextInput
                 style={[styles.input, Platform.OS === 'web' && { outlineStyle: 'none' } as any]}
-                placeholder="Email Address"
+                placeholderTextColor="#94A3B8" placeholder="Email Address"
                 value={email}
                 onChangeText={setEmail}
                 autoCapitalize="none"
@@ -124,7 +124,7 @@ export default function SignupScreen() {
               <Ionicons name="help-buoy-outline" size={20} color="#64748B" />
               <TextInput
                 style={[styles.input, Platform.OS === 'web' && { outlineStyle: 'none' } as any]}
-                placeholder="Security Q: Best friend's name?"
+                placeholderTextColor="#94A3B8" placeholder="Security Q: Best friend's name?"
                 value={securityAnswer}
                 onChangeText={setSecurityAnswer}
               />
@@ -134,7 +134,7 @@ export default function SignupScreen() {
               <Ionicons name="lock-closed-outline" size={20} color="#64748B" />
               <TextInput
                 style={[styles.input, Platform.OS === 'web' && { outlineStyle: 'none' } as any]}
-                placeholder="Password"
+                placeholderTextColor="#94A3B8" placeholder="Password"
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
@@ -150,7 +150,7 @@ export default function SignupScreen() {
               <Ionicons name="checkmark-circle-outline" size={20} color="#64748B" />
               <TextInput
                 style={[styles.input, Platform.OS === 'web' && { outlineStyle: 'none' } as any]}
-                placeholder="Confirm Password"
+                placeholderTextColor="#94A3B8" placeholder="Confirm Password"
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
                 secureTextEntry
@@ -184,9 +184,9 @@ export default function SignupScreen() {
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Select Date of Birth</Text>
             <View style={styles.dateRow}>
-              <TextInput style={styles.dateInput} placeholder="DD" value={tempDate.day} onChangeText={(v) => setTempDate({ ...tempDate, day: v })} keyboardType="number-pad" maxLength={2} />
-              <TextInput style={styles.dateInput} placeholder="MM" value={tempDate.month} onChangeText={(v) => setTempDate({ ...tempDate, month: v })} keyboardType="number-pad" maxLength={2} />
-              <TextInput style={[styles.dateInput, { width: 80 }]} placeholder="YYYY" value={tempDate.year} onChangeText={(v) => setTempDate({ ...tempDate, year: v })} keyboardType="number-pad" maxLength={4} />
+              <TextInput style={styles.dateInput} placeholderTextColor="#94A3B8" placeholder="DD" value={tempDate.day} onChangeText={(v) => setTempDate({ ...tempDate, day: v })} keyboardType="number-pad" maxLength={2} />
+              <TextInput style={styles.dateInput} placeholderTextColor="#94A3B8" placeholder="MM" value={tempDate.month} onChangeText={(v) => setTempDate({ ...tempDate, month: v })} keyboardType="number-pad" maxLength={2} />
+              <TextInput style={[styles.dateInput, { width: 80 }]} placeholderTextColor="#94A3B8" placeholder="YYYY" value={tempDate.year} onChangeText={(v) => setTempDate({ ...tempDate, year: v })} keyboardType="number-pad" maxLength={4} />
             </View>
             <TouchableOpacity style={styles.modalBtn} onPress={handleConfirmDate}>
               <Text style={styles.modalBtnText}>Confirm Date</Text>
