@@ -2,7 +2,7 @@ import { getToken } from './auth';
 import { Platform } from 'react-native';
 
 // Use localhost for web, and your computer's IP for physical devices
-const BASE_URL = Platform.OS === 'web' ? 'http://localhost:8000' : 'https://laid-render-rank-epic.trycloudflare.com';
+const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 
 const getHeaders = async (isMultipart = false) => {
     const token = await getToken();
