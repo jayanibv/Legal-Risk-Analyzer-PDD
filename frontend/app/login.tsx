@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Alert, ActivityIndicator, Modal, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Alert, ActivityIndicator, Modal, ScrollView, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { login, resetPassword } from '../services/api';
 import { saveToken } from '../services/auth';
 import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '../context/ThemeContext';
+import { LinearGradient } from 'expo-linear-gradient';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import AnimatedButton from '../components/AnimatedButton';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -21,6 +25,7 @@ export default function LoginScreen() {
   const [modalSuccess, setModalSuccess] = useState('');
 
 
+  const { colors, isDark } = useTheme();
   const router = useRouter();
 
   const handleLogin = async () => {
@@ -34,7 +39,7 @@ export default function LoginScreen() {
       const data = await login(email, password);
       if (data.access_token) {
         await saveToken(data.access_token);
-        router.replace('/(tabs)');
+        router.replace('/(drawer)');
       }
     } catch (error: any) {
       setErrorMsg(error.message || 'Login failed');
@@ -71,128 +76,139 @@ export default function LoginScreen() {
 
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          <View style={styles.header}>
-            <Ionicons name="lock-open" size={64} color="#1A365D" />
-            <Text style={styles.title}>Welcome Back</Text>
-            <Text style={styles.subtitle}>Sign in to access your reports</Text>
-          </View>
-
-          <View style={styles.form}>
-            <View style={styles.inputBox}>
-              <Ionicons name="mail-outline" size={20} color="#64748B" />
-              <TextInput
-                style={[styles.input, Platform.OS === 'web' && { outlineStyle: 'none' } as any]}
-                placeholderTextColor="#94A3B8" placeholder="Email Address"
-                value={email}
-                onChangeText={setEmail}
-                autoCapitalize="none"
-              />
-            </View>
-
-            <View style={styles.inputBox}>
-              <Ionicons name="lock-closed-outline" size={20} color="#64748B" />
-              <TextInput
-                style={[styles.input, Platform.OS === 'web' && { outlineStyle: 'none' } as any]}
-                placeholderTextColor="#94A3B8" placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-              />
-            </View>
-
-            <TouchableOpacity style={styles.forgotBtn} onPress={() => setShowForgotModal(true)}>
-              <Text style={styles.forgotText}>Forgot Password?</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={[styles.mainBtn, loading && { opacity: 0.7 }]} onPress={handleLogin} disabled={loading}>
-              {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.mainBtnText}>Sign In</Text>}
-            </TouchableOpacity>
-
-            {errorMsg ? <Text style={styles.error}>{errorMsg}</Text> : null}
-
-            <View style={styles.footer}>
-              <Text style={styles.footerText}>Don't have an account? </Text>
-              <TouchableOpacity onPress={() => router.push('/signup')}>
-                <Text style={styles.footerLink}>Sign Up</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-
-
-      <Modal visible={showForgotModal} transparent animationType="fade">
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Reset Password</Text>
-            <Text style={styles.modalSubtitle}>Verify your identity to reset password</Text>
+    <View style={{ flex: 1 }}>
+      <StatusBar barStyle={isDark ? "light-content" : "dark-content"} />
+      <LinearGradient
+        colors={[colors.bg, colors.cardAlt]}
+        style={StyleSheet.absoluteFillObject}
+      />
+      <SafeAreaView style={styles.safeArea}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+          <ScrollView contentContainerStyle={styles.scrollContent}>
             
-            <TextInput style={styles.modalInput} placeholderTextColor="#94A3B8" placeholder="Email" value={forgotEmail} onChangeText={setForgotEmail} autoCapitalize="none" />
-            <TextInput style={styles.modalInput} placeholderTextColor="#94A3B8" placeholder="Date of Birth (YYYY-MM-DD)" value={forgotDob} onChangeText={setForgotDob} />
-            <TextInput style={styles.modalInput} placeholderTextColor="#94A3B8" placeholder="Best friend's name?" value={forgotSecurity} onChangeText={setForgotSecurity} />
-            <TextInput style={styles.modalInput} placeholderTextColor="#94A3B8" placeholder="New Password" value={newPassword} onChangeText={setNewPassword} secureTextEntry />
+            <Animated.View entering={FadeInDown.duration(200).springify()} style={styles.header}>
+              <View style={[styles.iconContainer, { backgroundColor: colors.primary + '15' }]}>
+                <Ionicons name="lock-open" size={48} color={colors.primary} />
+              </View>
+              <Text style={[styles.title, { color: colors.text }]}>Welcome Back</Text>
+              <Text style={[styles.subtitle, { color: colors.textSecondary }]}>Sign in to access your reports</Text>
+            </Animated.View>
+
+            <Animated.View entering={FadeInUp.duration(200).delay(100).springify()} style={[styles.form, { backgroundColor: colors.card, shadowColor: isDark ? '#000' : colors.primary }]}>
+              <View style={[styles.inputBox, { backgroundColor: colors.cardAlt }]}>
+                <Ionicons name="mail" size={20} color={colors.textSecondary} />
+                <TextInput
+                  style={[styles.input, { color: colors.text }, Platform.OS === 'web' && { outlineStyle: 'none' } as any]}
+                  placeholderTextColor={colors.textSecondary} placeholder="Email Address"
+                  value={email}
+                  onChangeText={setEmail}
+                  autoCapitalize="none"
+                />
+              </View>
+
+              <View style={[styles.inputBox, { backgroundColor: colors.cardAlt }]}>
+                <Ionicons name="lock-closed" size={20} color={colors.textSecondary} />
+                <TextInput
+                  style={[styles.input, { color: colors.text }, Platform.OS === 'web' && { outlineStyle: 'none' } as any]}
+                  placeholderTextColor={colors.textSecondary} placeholder="Password"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry
+                />
+              </View>
+
+              <TouchableOpacity style={styles.forgotBtn} onPress={() => setShowForgotModal(true)}>
+                <Text style={[styles.forgotText, { color: colors.textSecondary }]}>Forgot Password?</Text>
+              </TouchableOpacity>
+
+              <AnimatedButton
+                title="Sign In"
+                onPress={handleLogin}
+                loading={loading}
+                colors={colors}
+              />
+
+              {errorMsg ? <Text style={styles.error}>{errorMsg}</Text> : null}
+
+              <View style={styles.footer}>
+                <Text style={[styles.footerText, { color: colors.textSecondary }]}>Don't have an account? </Text>
+                <TouchableOpacity onPress={() => router.push('/signup')}>
+                  <Text style={[styles.footerLink, { color: colors.primary }]}>Sign Up</Text>
+                </TouchableOpacity>
+              </View>
+            </Animated.View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+
+      <Modal visible={showForgotModal} transparent animationType="slide">
+        <View style={styles.modalOverlay}>
+          <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
+            <Text style={[styles.modalTitle, { color: colors.text }]}>Reset Password</Text>
+            <Text style={[styles.modalSubtitle, { color: colors.textSecondary }]}>Verify your identity to reset password</Text>
+            
+            <TextInput style={[styles.modalInput, { backgroundColor: colors.cardAlt, color: colors.text }]} placeholderTextColor={colors.textSecondary} placeholder="Email" value={forgotEmail} onChangeText={setForgotEmail} autoCapitalize="none" />
+            <TextInput style={[styles.modalInput, { backgroundColor: colors.cardAlt, color: colors.text }]} placeholderTextColor={colors.textSecondary} placeholder="Date of Birth (YYYY-MM-DD)" value={forgotDob} onChangeText={setForgotDob} />
+            <TextInput style={[styles.modalInput, { backgroundColor: colors.cardAlt, color: colors.text }]} placeholderTextColor={colors.textSecondary} placeholder="Best friend's name?" value={forgotSecurity} onChangeText={setForgotSecurity} />
+            <TextInput style={[styles.modalInput, { backgroundColor: colors.cardAlt, color: colors.text }]} placeholderTextColor={colors.textSecondary} placeholder="New Password" value={newPassword} onChangeText={setNewPassword} secureTextEntry />
 
             {modalError ? <Text style={styles.modalError}>{modalError}</Text> : null}
             {modalSuccess ? <Text style={styles.modalSuccess}>{modalSuccess}</Text> : null}
 
-            <TouchableOpacity style={styles.modalBtn} onPress={handleResetPassword} disabled={loading}>
-              {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.modalBtnText}>Reset Password</Text>}
-            </TouchableOpacity>
+            <AnimatedButton
+                title="Reset Password"
+                onPress={handleResetPassword}
+                loading={loading}
+                colors={colors}
+                style={{ width: '100%' }}
+            />
             
-            <TouchableOpacity onPress={() => { setShowForgotModal(false); setModalError(''); setModalSuccess(''); }} style={{ marginTop: 20 }}>
-              <Text style={{ color: '#64748B' }}>Cancel</Text>
+            <TouchableOpacity onPress={() => { setShowForgotModal(false); setModalError(''); setModalSuccess(''); }} style={{ marginTop: 24, padding: 8 }}>
+              <Text style={{ color: colors.textSecondary, fontWeight: '600' }}>Cancel</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: '#F8FAFC' },
+  safeArea: { flex: 1 },
   container: { flex: 1 },
   scrollContent: { padding: 24, flexGrow: 1, justifyContent: 'center' },
-  header: { alignItems: 'center', marginBottom: 48 },
-  title: { fontSize: 32, fontWeight: '800', color: '#1A365D', marginTop: 16 },
-  subtitle: { fontSize: 16, color: '#64748B', marginTop: 8 },
+  header: { alignItems: 'center', marginBottom: 40 },
+  iconContainer: { width: 80, height: 80, borderRadius: 40, justifyContent: 'center', alignItems: 'center', marginBottom: 24 },
+  title: { fontSize: 32, fontFamily: 'SpaceGrotesk_700Bold', marginTop: 16 },
+  subtitle: { fontSize: 16, marginTop: 8, fontFamily: 'Inter_400Regular' },
   form: {
-    backgroundColor: '#fff',
-    borderRadius: 24,
+    borderRadius: 16,
     padding: 24,
-    ...Platform.select({
-      web: { boxShadow: '0 10px 25px rgba(0,0,0,0.05)' },
-      native: { elevation: 5 }
-    })
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.1,
+    shadowRadius: 20,
+    elevation: 10,
   },
   inputBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F1F5F9',
-    borderRadius: 16,
+    borderRadius: 12,
     paddingHorizontal: 16,
-    height: 56,
+    height: 60,
     marginBottom: 16
   },
-  input: { flex: 1, marginLeft: 12, fontSize: 16, color: '#1E293B' },
-  forgotBtn: { alignSelf: 'flex-end', marginBottom: 24 },
-  forgotText: { color: '#64748B', fontSize: 14, fontWeight: '600' },
-  mainBtn: { backgroundColor: '#1A365D', height: 60, borderRadius: 16, justifyContent: 'center', alignItems: 'center' },
-  mainBtnText: { color: '#fff', fontSize: 18, fontWeight: '700' },
-  error: { color: '#EF4444', textAlign: 'center', marginTop: 16 },
-  footer: { flexDirection: 'row', justifyContent: 'center', marginTop: 24 },
-  footerText: { color: '#64748B' },
-  footerLink: { color: '#1A365D', fontWeight: '700' },
-  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', padding: 20 },
-  modalContent: { backgroundColor: '#fff', borderRadius: 24, padding: 32, alignItems: 'center' },
-  modalTitle: { fontSize: 24, fontWeight: '800', color: '#1E293B' },
-  modalSubtitle: { color: '#64748B', marginTop: 8, marginBottom: 24, textAlign: 'center' },
-  modalInput: { backgroundColor: '#F1F5F9', width: '100%', height: 56, borderRadius: 16, paddingHorizontal: 16, marginBottom: 16, fontSize: 16 },
-  modalError: { color: '#EF4444', marginBottom: 16, textAlign: 'center' },
-  modalSuccess: { color: '#10B981', marginBottom: 16, textAlign: 'center', fontWeight: 'bold' },
-  modalBtn: { backgroundColor: '#1A365D', width: '100%', height: 60, borderRadius: 16, justifyContent: 'center', alignItems: 'center' },
-  modalBtnText: { color: '#fff', fontSize: 18, fontWeight: '700' }
+  input: { flex: 1, marginLeft: 12, fontSize: 16, fontFamily: 'Inter_400Regular' },
+  forgotBtn: { alignSelf: 'flex-end', marginBottom: 28 },
+  forgotText: { fontSize: 14, fontFamily: 'Inter_600SemiBold' },
+  error: { color: '#EF4444', textAlign: 'center', marginTop: 16, fontFamily: 'Inter_600SemiBold' },
+  footer: { flexDirection: 'row', justifyContent: 'center', marginTop: 32 },
+  footerText: { fontFamily: 'Inter_400Regular' },
+  footerLink: { fontFamily: 'Inter_600SemiBold' },
+  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'flex-end' },
+  modalContent: { borderTopLeftRadius: 32, borderTopRightRadius: 32, padding: 32, alignItems: 'center', paddingBottom: Platform.OS === 'ios' ? 50 : 32 },
+  modalTitle: { fontSize: 24, fontFamily: 'SpaceGrotesk_700Bold' },
+  modalSubtitle: { marginTop: 8, marginBottom: 32, textAlign: 'center', fontFamily: 'Inter_400Regular' },
+  modalInput: { width: '100%', height: 60, borderRadius: 12, paddingHorizontal: 16, marginBottom: 16, fontSize: 16, fontFamily: 'Inter_400Regular' },
+  modalError: { color: '#EF4444', marginBottom: 16, textAlign: 'center', fontFamily: 'Inter_600SemiBold' },
+  modalSuccess: { color: '#10B981', marginBottom: 16, textAlign: 'center', fontFamily: 'Inter_600SemiBold' }
 });

@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Switch, ScrollView, Alert, Modal, TextInput, ActivityIndicator, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useRouter, useNavigation } from 'expo-router';
+import { DrawerActions } from '@react-navigation/native';
 import { removeToken } from '../../services/auth';
 import { getUserProfile, updateProfile } from '../../services/api';
 import { useTheme } from '../../context/ThemeContext';
 
 export default function SettingsScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
   const { colors, isDark, toggleTheme } = useTheme();
   
   const [userName, setUserName] = useState('User');
@@ -151,6 +153,12 @@ export default function SettingsScreen() {
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.bg }]}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.header}>
+          <TouchableOpacity 
+            style={styles.menuIcon}
+            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+          >
+            <Ionicons name="menu" size={28} color={colors.text} />
+          </TouchableOpacity>
           <Text style={[styles.title, { color: colors.text }]}>Settings</Text>
         </View>
 
@@ -316,7 +324,8 @@ const styles = StyleSheet.create({
   safeArea: { flex: 1 },
   loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   container: { padding: 24 },
-  header: { marginBottom: 32 },
+  header: { marginBottom: 32, flexDirection: 'row', alignItems: 'center' },
+  menuIcon: { marginRight: 16 },
   title: { fontSize: 32, fontWeight: '800' },
   profileCard: { flexDirection: 'row', alignItems: 'center', padding: 20, borderRadius: 24, marginBottom: 32, borderWidth: 1 },
   avatar: { width: 64, height: 64, borderRadius: 32, justifyContent: 'center', alignItems: 'center' },

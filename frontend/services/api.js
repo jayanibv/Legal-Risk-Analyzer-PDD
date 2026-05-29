@@ -2,8 +2,8 @@ import { getToken } from './auth';
 import { Platform } from 'react-native';
 
 // Use localhost for web, and your computer's IP for physical devices
-const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
-
+const BASE_URL = process.env.EXPO_PUBLIC_API_URL; // (Railway URL)
+//const BASE_URL = 'https://witness-point-affiliate-contractors.trycloudflare.com'; // Paste your Cloudflare tunnel URL here
 const getHeaders = async (isMultipart = false) => {
     const token = await getToken();
     const headers = {
@@ -16,13 +16,14 @@ const getHeaders = async (isMultipart = false) => {
 };
 
 export const login = async (username, password) => {
-    const formData = new FormData();
-    formData.append('username', username);
-    formData.append('password', password);
+    const body = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
 
     const response = await fetch(`${BASE_URL}/login`, {
         method: 'POST',
-        body: formData
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body
     });
 
     const data = await response.json();
@@ -128,5 +129,27 @@ export const getAnalysisById = async (id) => {
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.detail || "Analysis not found");
+    return data;
+};
+
+export const chatWithBot = async (message) => {
+    const response = await fetch(`${BASE_URL}/chat`, {
+        method: "POST",
+        headers: await getHeaders(),
+        body: JSON.stringify({ message })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.detail || "Failed to chat");
+    return data.response;
+};
+
+export const translateText = async (text, language) => {
+    const response = await fetch(`${BASE_URL}/translate`, {
+        method: "POST",
+        headers: await getHeaders(),
+        body: JSON.stringify({ text, language })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.detail || "Failed to translate");
     return data;
 };

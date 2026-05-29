@@ -63,7 +63,7 @@ export default function SummaryScreen() {
         <View style={styles.center}>
           <Ionicons name="alert-circle-outline" size={64} color={colors.error} />
           <Text style={[styles.errorText, { color: colors.error }]}>{error || 'Result not found'}</Text>
-          <TouchableOpacity onPress={() => router.replace('/(tabs)')} style={[styles.button, { backgroundColor: colors.primary }]}>
+          <TouchableOpacity onPress={() => router.replace('/(drawer)')} style={[styles.button, { backgroundColor: colors.primary }]}>
             <Text style={styles.buttonText}>Go Home</Text>
           </TouchableOpacity>
         </View>
@@ -78,7 +78,7 @@ export default function SummaryScreen() {
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.bg }]}>
       <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.divider }]}>
-        <TouchableOpacity onPress={() => router.replace('/(tabs)')} style={styles.backButton}>
+        <TouchableOpacity onPress={() => router.replace('/(drawer)')} style={styles.backButton}>
           <Ionicons name="close" size={24} color={colors.text} />
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: colors.text }]}>Risk Summary</Text>

@@ -27,7 +27,7 @@ export default function Index() {
     }
 
     if (status === 'dashboard') {
-        return <Redirect href="/(tabs)" />;
+        return <Redirect href="/(drawer)" />;
     } else {
         return <Redirect href="/onboarding" />;
     }

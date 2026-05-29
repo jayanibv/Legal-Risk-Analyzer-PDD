@@ -65,3 +65,57 @@ def analyze_with_gemini(text, retries=4):
                 time.sleep(2 ** attempt)  # 1s, 2s, 4s wait
             else:
                 return None
+
+def chat_with_gemini(message, retries=2):
+    if not client:
+        return {"response": "AI is unavailable right now."}
+    
+    for attempt in range(retries):
+        try:
+            prompt = f"You are a helpful Legal Assistant. Answer the user's question simply and accurately. Avoid giving strict legal advice, but explain concepts clearly.\n\nUser: {message}"
+            response = client.models.generate_content(
+                model='gemini-2.5-flash',
+                contents=prompt
+            )
+            return {"response": response.text}
+        except Exception as e:
+            if attempt < retries - 1:
+                time.sleep(1)
+            else:
+                return {"response": "Sorry, I couldn't process your request."}
+
+def translate_with_gemini(text, language, retries=2):
+    if not client:
+        return {"response": "AI is unavailable right now."}
+        
+    for attempt in range(retries):
+        try:
+            prompt = f"""
+Translate or rewrite the following legal clause into {language}.
+If the language is 'Plain English', rewrite it so a 5-year-old could understand it without losing important conditions.
+Otherwise, translate it accurately preserving legal meaning.
+
+OUTPUT STRICTLY IN JSON FORMAT:
+{{
+  "translation": "...",
+  "translator_notes": "..."
+}}
+
+Clause to translate:
+{text}
+"""
+                
+            response = client.models.generate_content(
+                model='gemini-2.5-flash',
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json",
+                )
+            )
+            data = json.loads(response.text)
+            return {"response": data.get("translation", "Error"), "notes": data.get("translator_notes", "")}
+        except Exception as e:
+            if attempt < retries - 1:
+                time.sleep(1)
+            else:
+                return {"response": "Sorry, translation failed."}

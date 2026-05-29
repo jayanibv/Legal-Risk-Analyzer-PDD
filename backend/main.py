@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-from ai.gemini_engine import analyze_with_gemini
+from ai.gemini_engine import analyze_with_gemini, chat_with_gemini, translate_with_gemini
 from utils.pdf_reader import extract_text_from_pdf
 from utils.supabase_client import supabase
 import models, database, auth
@@ -63,6 +63,13 @@ class Token(BaseModel):
 
 class Input(BaseModel):
     text: str
+
+class ChatRequest(BaseModel):
+    message: str
+
+class TranslateRequest(BaseModel):
+    text: str
+    language: str
 
 # --- HELPERS ---
 def validate_password(password: str):
@@ -356,3 +363,13 @@ def get_analysis_by_id(doc_id: int, current_user: models.User = Depends(get_curr
         "context": doc.analysis.data.get("context", "Other"),
         "date": doc.created_at.isoformat() + "Z"
     }
+
+@app.post("/chat")
+def chat_endpoint(req: ChatRequest, current_user: models.User = Depends(get_current_user)):
+    response = chat_with_gemini(req.message)
+    return response
+
+@app.post("/translate")
+def translate_endpoint(req: TranslateRequest, current_user: models.User = Depends(get_current_user)):
+    response = translate_with_gemini(req.text, req.language)
+    return response

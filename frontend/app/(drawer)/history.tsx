@@ -2,7 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter, useFocusEffect } from 'expo-router';
+import { useRouter, useFocusEffect, useNavigation } from 'expo-router';
+import { DrawerActions } from '@react-navigation/native';
 import { getHistory } from '../../services/api';
 import { useTheme } from '../../context/ThemeContext';
 
@@ -19,6 +20,7 @@ const formatDate = (dateString: string) => {
 
 export default function HistoryScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
   const { colors } = useTheme();
   const [history, setHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -70,6 +72,12 @@ export default function HistoryScreen() {
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.bg }]}>
       <View style={styles.header}>
+        <TouchableOpacity 
+          style={styles.menuIcon}
+          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+        >
+          <Ionicons name="menu" size={28} color={colors.text} />
+        </TouchableOpacity>
         <Text style={[styles.title, { color: colors.text }]}>Document History</Text>
       </View>
 
@@ -95,7 +103,8 @@ export default function HistoryScreen() {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1 },
-  header: { padding: 24, paddingTop: 40 },
+  header: { padding: 24, paddingTop: 40, flexDirection: 'row', alignItems: 'center' },
+  menuIcon: { marginRight: 16 },
   title: { fontSize: 28, fontWeight: '800' },
   list: { padding: 24, paddingTop: 0 },
   card: { flexDirection: 'row', alignItems: 'center', padding: 16, borderRadius: 20, marginBottom: 12, borderWidth: 1 },

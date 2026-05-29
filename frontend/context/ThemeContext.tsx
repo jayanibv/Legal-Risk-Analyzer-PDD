@@ -8,37 +8,60 @@ interface ThemeContextType {
   theme: Theme;
   isDark: boolean;
   toggleTheme: () => void;
-  colors: any;
+  colors: ThemeColors;
+}
+
+export interface ThemeColors {
+  bg: string;
+  card: string;
+  cardAlt: string;
+  text: string;
+  textSecondary: string;
+  primary: string;
+  primaryGradientStart: string;
+  primaryGradientEnd: string;
+  secondary: string;
+  border: string;
+  divider: string;
+  error: string;
+  success: string;
+  warning: string;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const lightColors = {
-  bg: '#F8FAFC',
-  text: '#1E293B',
-  textSecondary: '#64748B',
+export const lightColors: ThemeColors = {
+  bg: '#F4F6F9',
   card: '#FFFFFF',
-  divider: '#F1F5F9',
-  primary: '#1A365D',
-  accent: '#3182CE',
-  error: '#EF4444',
-  success: '#10B981',
-  warning: '#F59E0B',
-  border: '#E2E8F0',
+  cardAlt: '#F8FAFC',
+  text: '#1B1F3B',
+  textSecondary: '#64748B',
+  primary: '#00E5FF',
+  primaryGradientStart: '#00E5FF',
+  primaryGradientEnd: '#00B8CC',
+  secondary: '#FF4D6D',
+  border: 'rgba(27,31,59,0.1)',
+  divider: '#E2E8F0',
+  error: '#FF4D6D',
+  success: '#00F5A0',
+  warning: '#FFB020',
 };
 
-export const darkColors = {
-  bg: '#0F172A',
-  text: '#F8FAFC',
-  textSecondary: '#94A3B8',
-  card: '#1E293B',
-  divider: '#334155',
-  primary: '#3B82F6',
-  accent: '#60A5FA',
-  error: '#F87171',
-  success: '#34D399',
-  warning: '#FBBF24',
-  border: '#334155',
+export const darkColors: ThemeColors = {
+  bg: '#1B1F3B',
+  card: '#252A4A',
+  cardAlt: '#2A3052',
+  text: '#FFFFFF',
+  textSecondary: '#8B92B8',
+  primary: '#00E5FF',
+  primaryGradientStart: '#00E5FF',
+  primaryGradientEnd: '#00B8CC',
+  secondary: '#FF4D6D',
+  border: 'rgba(0,229,255,0.3)',
+  divider: '#2A3052',
+  error: '#FF4D6D',
+  success: '#00F5A0',
+  warning: '#FFB020',
 };
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
