@@ -162,7 +162,7 @@ export default function DashboardScreen() {
               <Ionicons name="menu" size={28} color={colors.text} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => router.push('/settings')} style={[styles.avatarRing, { borderColor: colors.primary, shadowColor: colors.primary }]}>
-              <Image source={require('../../assets/images/mascot.png')} style={styles.mascotImg} resizeMode="contain" />
+              <Image source={require('../../assets/images/mascot.jpg')} style={styles.mascotImg} resizeMode="contain" />
             </TouchableOpacity>
           </Animated.View>
           

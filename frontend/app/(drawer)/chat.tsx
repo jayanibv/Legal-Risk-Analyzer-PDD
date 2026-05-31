@@ -109,7 +109,7 @@ export default function ChatScreen() {
             >
               <Ionicons name="menu" size={28} color={colors.text} />
             </TouchableOpacity>
-            <Image source={require('../../assets/images/mascot.png')} style={styles.mascotImg} resizeMode="contain" />
+            <Image source={require('../../assets/images/mascot.jpg')} style={styles.mascotImg} resizeMode="contain" />
             <View style={{ flex: 1, marginLeft: 12 }}>
               <Text style={[styles.title, { color: colors.text }]}>AI Legal Assistant</Text>
               <Text style={{ color: colors.success, fontSize: 12, fontFamily: 'Inter_600SemiBold' }}>● Online</Text>
