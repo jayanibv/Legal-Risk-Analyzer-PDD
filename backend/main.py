@@ -5,16 +5,11 @@ import re
 import os
 import datetime
 import urllib.parse
-from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, BackgroundTasks, Request
-from fastapi.responses import HTMLResponse, FileResponse
-from fastapi.staticfiles import StaticFiles
+from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, BackgroundTasks
 from pydantic import BaseModel, EmailStr
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.util import get_remote_address
-from slowapi.errors import RateLimitExceeded
 
 from ai.gemini_engine import analyze_with_gemini, chat_with_gemini, translate_with_gemini
 from utils.pdf_reader import extract_text_from_pdf
@@ -27,146 +22,19 @@ load_dotenv()
 # Initialize Database
 models.Base.metadata.create_all(bind=database.engine)
 
-# Initialize FastAPI app with docs configuration (disabled in production)
-ENV = os.getenv("ENV", "development").lower()
-show_docs = ENV != "production"
-
-limiter = Limiter(key_func=get_remote_address)
-app = FastAPI(
-    title="Legal Risk Analyzer API",
-    docs_url="/docs" if show_docs else None,
-    redoc_url="/redoc" if show_docs else None,
-    openapi_url="/openapi.json" if show_docs else None
-)
-app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
-
-# Restricted CORS Allowed Origins Whitelist
-allowed_origins = [
-    "http://localhost:8081",
-    "http://localhost:19006",
-    "http://localhost:3000",
-    "http://127.0.0.1:8081",
-    "http://127.0.0.1:3000",
-    "https://legal-risk-analyzer.up.railway.app",
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# ─── Serve Expo Static Frontend ───────────────────────────────────────────────
-# Determine frontend dist path (relative to this file for Railway deployment)
-_BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
-_FRONTEND_DIST = os.path.join(_BACKEND_DIR, "..", "frontend", "dist")
-_FRONTEND_DIST = os.path.normpath(_FRONTEND_DIST)
-
-# Mount static assets (_expo directory, assets, etc.) if frontend is built
-if os.path.isdir(_FRONTEND_DIST):
-    _EXPO_ASSETS = os.path.join(_FRONTEND_DIST, "_expo")
-    if os.path.isdir(_EXPO_ASSETS):
-        app.mount("/_expo", StaticFiles(directory=_EXPO_ASSETS), name="expo_assets")
-    _ASSETS_DIR = os.path.join(_FRONTEND_DIST, "assets")
-    if os.path.isdir(_ASSETS_DIR):
-        app.mount("/assets", StaticFiles(directory=_ASSETS_DIR), name="frontend_assets")
-
-
-def _serve_frontend_page(page: str) -> HTMLResponse:
-    """Serve a specific frontend HTML page from the Expo dist directory."""
-    html_file = os.path.join(_FRONTEND_DIST, page)
-    if os.path.isfile(html_file):
-        with open(html_file, "r", encoding="utf-8") as f:
-            return HTMLResponse(content=f.read())
-    # Fallback to index.html for SPA routing
-    index_file = os.path.join(_FRONTEND_DIST, "index.html")
-    if os.path.isfile(index_file):
-        with open(index_file, "r", encoding="utf-8") as f:
-            return HTMLResponse(content=f.read())
-    return HTMLResponse(content="<html><body><h1>Frontend not found</h1></body></html>", status_code=404)
-
+app = FastAPI(title="Legal Risk Analyzer API")
 
 @app.get("/")
-def read_root(request: Request):
-    # If Accept header prefers HTML (browser request), serve frontend
-    accept = request.headers.get("accept", "")
-    if "text/html" in accept:
-        return _serve_frontend_page("index.html")
+def read_root():
     return {"status": "online", "message": "Legal Risk Analyzer API is running!"}
 
 
-# ─── Frontend Page Routes (SPA) ───────────────────────────────────────────────
-@app.get("/login", response_class=HTMLResponse)
-def serve_login_page():
-    return _serve_frontend_page("login.html")
-
-@app.get("/signup", response_class=HTMLResponse)
-def serve_signup_page():
-    return _serve_frontend_page("signup.html")
-
-@app.get("/onboarding", response_class=HTMLResponse)
-def serve_onboarding_page():
-    return _serve_frontend_page("onboarding.html")
-
-@app.get("/upload", response_class=HTMLResponse)
-def serve_upload_page():
-    return _serve_frontend_page("upload.html")
-
-@app.get("/scanning", response_class=HTMLResponse)
-def serve_scanning_page():
-    return _serve_frontend_page("scanning.html")
-
-@app.get("/summary", response_class=HTMLResponse)
-def serve_summary_page():
-    return _serve_frontend_page("summary.html")
-
-@app.get("/clauses", response_class=HTMLResponse)
-def serve_clauses_page():
-    return _serve_frontend_page("clauses.html")
-
-@app.get("/details", response_class=HTMLResponse)
-def serve_details_page():
-    return _serve_frontend_page("details.html")
-
-@app.get("/export", response_class=HTMLResponse)
-def serve_export_page():
-    return _serve_frontend_page("export.html")
-
-@app.get("/(drawer)", response_class=HTMLResponse)
-@app.get("/(drawer)/{path:path}", response_class=HTMLResponse)
-def serve_drawer_page(path: str = ""):
-    """Serve drawer routes – Expo static builds flatten these to root HTML files."""
-    # Expo may build drawer routes as flat files: history.html, settings.html, etc.
-    # Map known drawer sub-paths to their flat HTML counterparts
-    _drawer_page_map = {
-        "": "index.html",
-        "history": "history.html",
-        "settings": "settings.html",
-        "chat": "index.html",       # fallback to index if no dedicated page
-        "translator": "index.html",
-        "templates": "index.html",
-    }
-    page_filename = _drawer_page_map.get(path, f"{path}.html")
-    
-    # Try flat file first
-    page_file = os.path.join(_FRONTEND_DIST, page_filename)
-    if os.path.isfile(page_file):
-        with open(page_file, "r", encoding="utf-8") as f:
-            return HTMLResponse(content=f.read())
-    
-    # Try inside (drawer) subdirectory if it exists
-    drawer_dir = os.path.join(_FRONTEND_DIST, "(drawer)")
-    if os.path.isdir(drawer_dir):
-        drawer_page = os.path.join(drawer_dir, f"{path}.html" if path else "index.html")
-        if os.path.isfile(drawer_page):
-            with open(drawer_page, "r", encoding="utf-8") as f:
-                return HTMLResponse(content=f.read())
-    
-    # Final fallback to main index
-    return _serve_frontend_page("index.html")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 
@@ -220,11 +88,6 @@ def validate_password(password: str):
 
 # --- DEPENDENCIES ---
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(database.get_db)):
-    # Session invalidation (logout verification)
-    is_blacklisted = db.query(models.BlacklistedToken).filter(models.BlacklistedToken.token == token).first()
-    if is_blacklisted:
-        raise HTTPException(status_code=401, detail="Session has been invalidated. Please log in again.")
-
     payload = auth.decode_access_token(token)
     if not payload:
         raise HTTPException(status_code=401, detail="Invalid authentication credentials")
@@ -235,8 +98,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
 # --- AUTH ROUTES ---
 @app.post("/signup")
-@limiter.limit("3/minute")  # DAST fix F-002: prevent automated bulk account creation
-async def signup(request: Request, user_data: UserCreate, db: Session = Depends(database.get_db)):
+async def signup(user_data: UserCreate, db: Session = Depends(database.get_db)):
     # 1. Age Validation
     try:
         birth_date = datetime.datetime.strptime(user_data.dob, "%Y-%m-%d")
@@ -277,8 +139,7 @@ async def signup(request: Request, user_data: UserCreate, db: Session = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 @app.post("/login", response_model=Token)
-@limiter.limit("5/minute")  # DAST fix F-001: brute-force protection (5 attempts/min per IP)
-def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
+def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
     user = db.query(models.User).filter(models.User.email == form_data.username).first()
     if not user or not auth.verify_password(form_data.password, user.hashed_password):
         raise HTTPException(status_code=401, detail="Incorrect email or password")
@@ -287,8 +148,7 @@ def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends(), db
     return {"access_token": access_token, "token_type": "bearer"}
 
 @app.post("/reset-password")
-@limiter.limit("3/minute")
-def reset_password(request: Request, data: ResetPasswordSecurity, db: Session = Depends(database.get_db)):
+def reset_password(data: ResetPasswordSecurity, db: Session = Depends(database.get_db)):
     user = db.query(models.User).filter(models.User.email == data.email).first()
     
     if not user:
@@ -311,19 +171,6 @@ def reset_password(request: Request, data: ResetPasswordSecurity, db: Session = 
     db.commit()
     
     return {"message": "Password updated successfully! You can now log in."}
-
-@app.post("/logout")
-def logout(request: Request, current_user: models.User = Depends(get_current_user), db: Session = Depends(database.get_db)):
-    auth_header = request.headers.get("Authorization")
-    if auth_header and auth_header.startswith("Bearer "):
-        token = auth_header.split(" ")[1]
-        # Check if already blacklisted
-        exists = db.query(models.BlacklistedToken).filter(models.BlacklistedToken.token == token).first()
-        if not exists:
-            db_token = models.BlacklistedToken(token=token)
-            db.add(db_token)
-            db.commit()
-    return {"message": "Successfully logged out."}
 
 @app.get("/me")
 async def get_me(current_user: models.User = Depends(get_current_user)):
@@ -363,18 +210,9 @@ def get_risk_level(score):
     return "Low Risk"
 
 @app.post("/analyze")
-@limiter.limit("5/minute")
-def analyze(request: Request, data: Input, current_user: models.User = Depends(get_current_user), db: Session = Depends(database.get_db)):
-    # Input validation: check for blank or whitespace-only strings (DAST injection fix)
-    clean_text = data.text.strip() if data.text else ""
-    if not clean_text:
-        raise HTTPException(
-            status_code=400, 
-            detail="Analysis text cannot be empty or whitespace-only."
-        )
-
+def analyze(data: Input, current_user: models.User = Depends(get_current_user), db: Session = Depends(database.get_db)):
     # Simple hash for raw text caching
-    text_hash = hashlib.sha256(clean_text.encode("utf-8", errors="replace")).hexdigest()
+    text_hash = hashlib.sha256(data.text.encode()).hexdigest()
     
     # Check if this user has analyzed this text before
     existing_doc = db.query(models.Document).filter(
@@ -393,41 +231,25 @@ def analyze(request: Request, data: Input, current_user: models.User = Depends(g
         }
 
     # Call Gemini
-    try:
-        gemini_result = analyze_with_gemini(clean_text)
-    except Exception as e:
-        print(f"Gemini engine failed during analysis: {e}")
-        gemini_result = None
-
+    gemini_result = analyze_with_gemini(data.text)
     if not gemini_result:
-        raise HTTPException(
-            status_code=502, 
-            detail="The analysis engine encountered an error or failed to process the request. Please try again."
-        )
+        raise HTTPException(status_code=500, detail="Gemini API Error")
 
     # Save to DB
-    try:
-        new_doc = models.Document(user_id=current_user.id, filename="Raw Text", file_hash=text_hash)
-        db.add(new_doc)
-        db.commit()
-        db.refresh(new_doc)
-        
-        risk_score = gemini_result.get("risk_score", 10)
-        analysis = models.AnalysisResult(
-            document_id=new_doc.id,
-            risk_score=risk_score,
-            risk_level=get_risk_level(risk_score),
-            data=gemini_result
-        )
-        db.add(analysis)
-        db.commit()
-    except Exception as db_err:
-        db.rollback()
-        print(f"Database error during saving analysis: {db_err}")
-        raise HTTPException(
-            status_code=500,
-            detail="Failed to save analysis result. Please try again."
-        )
+    new_doc = models.Document(user_id=current_user.id, filename="Raw Text", file_hash=text_hash)
+    db.add(new_doc)
+    db.commit()
+    db.refresh(new_doc)
+    
+    risk_score = gemini_result.get("risk_score", 10)
+    analysis = models.AnalysisResult(
+        document_id=new_doc.id,
+        risk_score=risk_score,
+        risk_level=get_risk_level(risk_score),
+        data=gemini_result
+    )
+    db.add(analysis)
+    db.commit()
 
     return {
         "summaries": gemini_result.get("summaries", []),
@@ -438,25 +260,14 @@ def analyze(request: Request, data: Input, current_user: models.User = Depends(g
         "cached": False
     }
 
-MAX_FILE_SIZE = 10 * 1024 * 1024 # 10 MB limit
-
 @app.post("/analyze-pdf")
-@limiter.limit("3/minute")
 async def analyze_pdf(
-    request: Request,
     file: UploadFile = File(...), 
     current_user: models.User = Depends(get_current_user), 
     db: Session = Depends(database.get_db)
 ):
-    # Read file content and check size
+    # Read file content and create hash
     contents = await file.read()
-    if len(contents) > MAX_FILE_SIZE:
-        raise HTTPException(status_code=400, detail="File size exceeds the 10 MB limit.")
-        
-    # PDF validation: check magic bytes/signature (%PDF-)
-    if not contents.startswith(b"%PDF-"):
-        raise HTTPException(status_code=400, detail="Invalid file type. Only PDF documents are allowed.")
-
     file_hash = hashlib.sha256(contents).hexdigest()
     file.file.seek(0) # Reset file pointer for pdfplumber
     
@@ -554,13 +365,11 @@ def get_analysis_by_id(doc_id: int, current_user: models.User = Depends(get_curr
     }
 
 @app.post("/chat")
-@limiter.limit("10/minute")
-def chat_endpoint(request: Request, req: ChatRequest, current_user: models.User = Depends(get_current_user)):
+def chat_endpoint(req: ChatRequest, current_user: models.User = Depends(get_current_user)):
     response = chat_with_gemini(req.message)
     return response
 
 @app.post("/translate")
-@limiter.limit("10/minute")
-def translate_endpoint(request: Request, req: TranslateRequest, current_user: models.User = Depends(get_current_user)):
+def translate_endpoint(req: TranslateRequest, current_user: models.User = Depends(get_current_user)):
     response = translate_with_gemini(req.text, req.language)
     return response
