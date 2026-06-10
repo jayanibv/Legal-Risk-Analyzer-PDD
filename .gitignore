@@ -1,2 +1,41 @@
+# ── Environment / Secrets (DAST fix: catch ALL .env files) ──────────────────
+.env
+*.env
+.env.*
+!.env.example
+
+# Specific paths (already listed, kept for explicitness)
 backend/.env
 frontend/.env
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.results.json
+htmlcov/
+.coverage
+
+# ── Node / Expo ───────────────────────────────────────────────────────────────
+node_modules/
+.expo/
+dist/
+!frontend/dist/
+web-build/
+*.orig.*
+npm-debug.log*
+yarn-error.log*
+
+# ── OS / Editor ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
