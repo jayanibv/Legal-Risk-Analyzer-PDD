@@ -35,9 +35,14 @@ class TestAPIHealth:
         """TC004: Root JSON contains a non-empty message field."""
         r = requests.get(f"{BASE_URL}/", timeout=15)
         data = r.json()
-        assert "message" in data, "Root response missing 'messa
-<truncated 111 bytes>
-sage", ""), \
+        assert "message" in data, "Root response missing 'message' key"
+        assert len(data.get("message", "")) > 0, "Root message is empty"
+
+    def test_tc005_api_root_name_reference(self):
+        """TC005: Root JSON message mentions 'Legal Risk Analyzer'."""
+        r = requests.get(f"{BASE_URL}/", timeout=15)
+        data = r.json()
+        assert "Legal Risk Analyzer" in data.get("message", ""), \
             "Root message should reference 'Legal Risk Analyzer'"
 
     def test_tc006_api_response_time_under_10s(self):
