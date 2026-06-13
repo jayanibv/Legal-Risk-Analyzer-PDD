@@ -1,0 +1,130 @@
+{
+  "base_url": "http://localhost:8000",
+  "tokens": {
+    "valid_user": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYXN0XzFhNDZlMmVlX3UxQHNlY3Rlc3QuZGV2IiwiZXhwIjoxNzgzNjcyNTUzfQ.GGmj9680twB9KkctfqKqwMoCJglKMIfsV8picwQJzv0",
+    "other_user": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYXN0XzhmNmUyYTIwX3UyQHNlY3Rlc3QuZGV2IiwiZXhwIjoxNzgzNjcyNTU5fQ.xlYR1shQOJJG1uxkRZ-lY_s0lflYql6-8HzRAvyUjuo"
+  },
+  "endpoints": [
+    {
+      "idx": 1,
+      "method": "GET",
+      "path": "/",
+      "access_rule": "public",
+      "no_auth_status": 200,
+      "latency_ms": 2045
+    },
+    {
+      "idx": 2,
+      "method": "POST",
+      "path": "/signup",
+      "access_rule": "public",
+      "no_auth_status": 422,
+      "latency_ms": 2061
+    },
+    {
+      "idx": 3,
+      "method": "POST",
+      "path": "/login",
+      "access_rule": "public",
+      "no_auth_status": 422,
+      "latency_ms": 2046
+    },
+    {
+      "idx": 4,
+      "method": "POST",
+      "path": "/reset-password",
+      "access_rule": "public",
+      "no_auth_status": 422,
+      "latency_ms": 2051
+    },
+    {
+      "idx": 5,
+      "method": "GET",
+      "path": "/docs",
+      "access_rule": "public",
+      "no_auth_status": 200,
+      "latency_ms": 2045
+    },
+    {
+      "idx": 6,
+      "method": "GET",
+      "path": "/openapi.json",
+      "access_rule": "public",
+      "no_auth_status": 200,
+      "latency_ms": 2036
+    },
+    {
+      "idx": 7,
+      "method": "GET",
+      "path": "/redoc",
+      "access_rule": "public",
+      "no_auth_status": 200,
+      "latency_ms": 2017
+    },
+    {
+      "idx": 8,
+      "method": "GET",
+      "path": "/me",
+      "access_rule": "requires-auth",
+      "no_auth_status": 401,
+      "latency_ms": 2026
+    },
+    {
+      "idx": 9,
+      "method": "POST",
+      "path": "/update-profile",
+      "access_rule": "requires-auth",
+      "no_auth_status": 401,
+      "latency_ms": 2044
+    },
+    {
+      "idx": 10,
+      "method": "POST",
+      "path": "/analyze",
+      "access_rule": "requires-auth",
+      "no_auth_status": 401,
+      "latency_ms": 2036
+    },
+    {
+      "idx": 11,
+      "method": "POST",
+      "path": "/analyze-pdf",
+      "access_rule": "requires-auth",
+      "no_auth_status": 401,
+      "latency_ms": 2037
+    },
+    {
+      "idx": 12,
+      "method": "GET",
+      "path": "/history",
+      "access_rule": "requires-auth",
+      "no_auth_status": 401,
+      "latency_ms": 2042
+    },
+    {
+      "idx": 13,
+      "method": "GET",
+      "path": "/analysis/{id}",
+      "access_rule": "requires-auth",
+      "no_auth_status": 401,
+      "latency_ms": 2050
+    },
+    {
+      "idx": 14,
+      "method": "POST",
+      "path": "/chat",
+      "access_rule": "requires-auth",
+      "no_auth_status": 401,
+      "latency_ms": 2038
+    },
+    {
+      "idx": 15,
+      "method": "POST",
+      "path": "/translate",
+      "access_rule": "requires-auth",
+      "no_auth_status": 401,
+      "latency_ms": 2044
+    }
+  ],
+  "generated_at": "2026-06-10T08:35:59.981790Z"
+}

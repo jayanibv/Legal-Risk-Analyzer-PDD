@@ -1,0 +1,4 @@
+{
+  "baseUrl": "http://localhost:8000",
+  "notes": "Target set to local server to test the security fixes locally."
+}

@@ -6,7 +6,7 @@ import os
 import datetime
 import urllib.parse
 from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, BackgroundTasks
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -62,7 +62,7 @@ class Token(BaseModel):
     token_type: str
 
 class Input(BaseModel):
-    text: str
+    text: str = Field(..., max_length=100000)
 
 class ChatRequest(BaseModel):
     message: str
@@ -211,8 +211,11 @@ def get_risk_level(score):
 
 @app.post("/analyze")
 def analyze(data: Input, current_user: models.User = Depends(get_current_user), db: Session = Depends(database.get_db)):
+    if not data.text.strip():
+        raise HTTPException(status_code=400, detail="Text cannot be empty")
+        
     # Simple hash for raw text caching
-    text_hash = hashlib.sha256(data.text.encode()).hexdigest()
+    text_hash = hashlib.sha256(data.text.encode('utf-8')).hexdigest()
     
     # Check if this user has analyzed this text before
     existing_doc = db.query(models.Document).filter(
@@ -222,7 +225,7 @@ def analyze(data: Input, current_user: models.User = Depends(get_current_user), 
     
     if existing_doc and existing_doc.analysis:
         return {
-            "summary": existing_doc.analysis.data.get("summaries", []),
+            "summaries": existing_doc.analysis.data.get("summaries", []),
             "clauses": existing_doc.analysis.data.get("detected_clauses", []),
             "risk_score": existing_doc.analysis.risk_score,
             "risk_level": existing_doc.analysis.risk_level,
