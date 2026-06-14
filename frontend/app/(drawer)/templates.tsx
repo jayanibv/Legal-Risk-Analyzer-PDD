@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Linking, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation, Link } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import { DrawerActions } from '@react-navigation/native';
 import { useTheme } from '../../context/ThemeContext';
 import Animated, { FadeInDown } from 'react-native-reanimated';
@@ -55,12 +55,22 @@ export default function TemplatesScreen() {
             <Text style={[styles.cardDesc, { color: colors.textSecondary }]} numberOfLines={2}>{item.description}</Text>
           </View>
         </View>
-        <Link href={item.url as any} asChild target="_blank">
-          <TouchableOpacity style={[styles.downloadBtn, { backgroundColor: colors.cardAlt }]}>
+        {Platform.OS === 'web' ? (
+          <a href={item.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+            <View style={[styles.downloadBtn, { backgroundColor: colors.cardAlt }]}>
+              <Ionicons name="cloud-download" size={18} color={colors.primary} style={{ marginRight: 8 }} />
+              <Text style={[styles.downloadText, { color: colors.primary }]}>Download Template</Text>
+            </View>
+          </a>
+        ) : (
+          <TouchableOpacity 
+            style={[styles.downloadBtn, { backgroundColor: colors.cardAlt }]}
+            onPress={() => Linking.openURL(item.url).catch(e => console.log(e))}
+          >
             <Ionicons name="cloud-download" size={18} color={colors.primary} style={{ marginRight: 8 }} />
             <Text style={[styles.downloadText, { color: colors.primary }]}>Download Template</Text>
           </TouchableOpacity>
-        </Link>
+        )}
       </View>
     </Animated.View>
   );
