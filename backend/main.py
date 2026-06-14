@@ -107,7 +107,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
 # --- AUTH ROUTES ---
 @app.post("/signup")
-@limiter.limit("5/minute")
+@limiter.limit("3/minute")
 async def signup(request: Request, user_data: UserCreate, db: Session = Depends(database.get_db)):
     # 1. Age Validation
     try:
