@@ -30,7 +30,7 @@ def _make_driver():
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     # Uncomment for headless CI:
-    # options.add_argument("--headless=new")
+    options.add_argument("--headless=new")
     service = Service(ChromeDriverManager().install())
     drv = webdriver.Chrome(service=service, options=options)
     drv.set_page_load_timeout(30)
@@ -198,6 +198,31 @@ def pytest_sessionfinish(session, exitstatus):
         
         pie.series[0].data_points = [slice_passed, slice_failed, slice_skipped]
         ws_summary.add_chart(pie, "D2")
+
+    # Category Breakdown
+    cat_start_row = 8
+    headers = ["Category", "Total", "Passed", "Failed", "Skipped", "Pass Rate %"]
+    for col, h in enumerate(headers, 1):
+        cell = ws_summary.cell(row=cat_start_row, column=col, value=h)
+        cell.fill = header_fill
+        cell.font = header_font
+        cell.alignment = center_aligned_text
+        cell.border = thin_border
+
+    categories = set(r["category"] for r in _test_results)
+    for i, cat in enumerate(sorted(categories), 1):
+        cat_results = [r for r in _test_results if r["category"] == cat]
+        cat_total = len(cat_results)
+        cat_passed = sum(1 for r in cat_results if r["outcome"] == "passed")
+        cat_failed = sum(1 for r in cat_results if r["outcome"] == "failed")
+        cat_skipped = sum(1 for r in cat_results if r["outcome"] == "skipped")
+        pass_rate = f"{(cat_passed/cat_total)*100:.1f}%" if cat_total > 0 else "0.0%"
+        
+        row_data = [cat, cat_total, cat_passed, cat_failed, cat_skipped, pass_rate]
+        for col, val in enumerate(row_data, 1):
+            cell = ws_summary.cell(row=cat_start_row + i, column=col, value=val)
+            cell.border = thin_border
+            cell.alignment = center_aligned_text if col > 1 else left_aligned_text
 
     # --- Passed Tests Tab ---
     apply_header(ws_passed, ["Category", "Test Name", "Duration (s)", "Timestamp"])

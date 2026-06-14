@@ -117,37 +117,27 @@ class TestSignupPage:
 
     def test_tc073_signup_with_missing_fields_shows_error(self, driver):
         """TC073: Submitting empty signup form shows an error."""
-        btns = driver.find_elements(By.TAG_NAME, "button")
-        # Find the Sign Up button specifically
-        sign_up_btn = None
-        for btn in btns:
-            if "Sign Up" in (btn.text or "") or "Create" in (btn.text or ""):
-                sign_up_btn = btn
-                break
-        if sign_up_btn:
-            sign_up_btn.click()
-        elif btns:
-            btns[0].click()
-        time.sleep(2)
-        body = driver.find_element(By.TAG_NAME, "body").text
-        assert any(kw in body.lower() for kw in ("fill", "required", "error", "all fields")), \
-            f"No error shown for empty signup form. Body: {body[:300]}"
+        submit_btn = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//*[text()='Sign Up']"))
+        )
+        driver.execute_script("arguments[0].click();", submit_btn)
+        time.sleep(1)
+        WebDriverWait(driver, 10).until(
+            lambda d: any(kw in d.find_element(By.TAG_NAME, "body").text.lower() for kw in ("fill", "required", "error", "all fields"))
+        )
+        body_text = driver.find_element(By.TAG_NAME, "body").text
+        assert any(kw in body_text.lower() for kw in ("fill", "required", "error", "all fields")), "No error shown for empty signup form"
 
     def test_tc074_security_question_field_present(self, driver):
         """TC074: Security question field for 'Best friend's name' is present."""
-        body = driver.find_element(By.TAG_NAME, "body").text
-        if "Security" not in body and "friend" not in body.lower():
-            time.sleep(3)
-            body = driver.find_element(By.TAG_NAME, "body").text
-        assert "Security" in body or "friend" in body.lower() or "security" in body.lower(), \
-            f"Security question field not visible. Body: {body[:300]}"
+        security_input = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//input[contains(translate(@placeholder, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'friend') or contains(translate(@placeholder, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'security')]"))
+        )
+        assert security_input.is_displayed(), "Security question field not visible"
 
     def test_tc075_sign_up_button_present_on_page(self, driver):
         """TC075: 'Sign Up' submit button is present."""
-        body = driver.find_element(By.TAG_NAME, "body").text
-        if "Sign Up" not in body:
-            time.sleep(3)
-            body = driver.find_element(By.TAG_NAME, "body").text
-        btns = driver.find_elements(By.TAG_NAME, "button")
-        assert len(btns) > 0 and ("Sign Up" in body or "Create" in body), \
-            f"Sign Up button not found. Body: {body[:200]}"
+        signup_btn = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//*[text()='Sign Up' or text()='Create Account']"))
+        )
+        assert signup_btn.is_displayed(), "Sign Up button not found"

@@ -156,7 +156,7 @@ class TestUploadPage:
         
         # Wait for the character count text to update
         WebDriverWait(driver, 10).until(
-            EC.text_to_be_present_in_element((By.XPATH, "//*[contains(text(), 'chars')]"), "41 chars")
+            lambda d: "41 chars" in d.find_element(By.TAG_NAME, "body").text
         )
         assert textarea.get_attribute("value") == "This is a test legal clause for scanning."
 
@@ -174,10 +174,10 @@ class TestUploadPage:
         
         # Length of "Hello world test text" is 21
         WebDriverWait(driver, 10).until(
-            EC.text_to_be_present_in_element((By.XPATH, "//*[contains(text(), 'chars')]"), "21 chars")
+            lambda d: "21 chars" in d.find_element(By.TAG_NAME, "body").text
         )
-        char_count = driver.find_element(By.XPATH, "//*[contains(text(), 'chars')]")
-        assert "21 chars" in char_count.text, f"Character count not visible. Text: {char_count.text}"
+        body_text = driver.find_element(By.TAG_NAME, "body").text
+        assert "21 chars" in body_text, f"Character count not visible. Text: {body_text[:100]}"
 
     def test_tc084_close_button_navigates_back(self, driver):
         """TC084: Close (X) button on upload screen navigates away from /upload."""
