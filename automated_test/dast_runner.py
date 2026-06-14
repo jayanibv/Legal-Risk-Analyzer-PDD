@@ -17,7 +17,7 @@ def print_banner():
     print("\n" + "â*”" + "â*" * 63 + "â*—")
     print("â*‘  Legal Risk Analyzer â€” DAST Security Assessment           â*‘")
     print(f"â*‘  Target  : {BASE_URL:<50} â*‘")
-    print(f"â*‘  Started : {datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC'):<50} â*‘")
+    print(f"â*‘  Started : {datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC'):<50} â*‘")
     print("â*š" + "â*" * 63 + "â*")
 
 def run_module(name, func, *args):
@@ -135,7 +135,7 @@ def main():
             print(f"  {i:<3} {r.get('severity','?'):<10} {r.get('test_category','?'):<22} {ep}")
 
     print(f"\n  Report : {REPORT_PATH}")
-    print(f"  Ended  : {datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}\n")
+    print(f"  Ended  : {datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}\n")
 
 
 if __name__ == "__main__":

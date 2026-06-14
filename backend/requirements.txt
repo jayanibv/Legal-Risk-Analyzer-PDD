@@ -13,3 +13,4 @@ python-multipart
 fastapi-mail
 pydantic-settings
 supabase
+slowapi

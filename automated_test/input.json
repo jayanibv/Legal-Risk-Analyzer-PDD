@@ -1,4 +1,4 @@
 {
-  "baseUrl": "http://localhost:8000",
+  "baseUrl": "https://legal-risk-analyzer.up.railway.app",
   "notes": "Target set to local server to test the security fixes locally."
 }

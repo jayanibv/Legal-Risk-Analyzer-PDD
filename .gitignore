@@ -1,2 +1,6 @@
+.env
+.env.*
+!.env.example
+automated_test/savepoint.json
 backend/.env
 frontend/.env
