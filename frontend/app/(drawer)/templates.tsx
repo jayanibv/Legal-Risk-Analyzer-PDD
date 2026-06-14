@@ -39,14 +39,11 @@ export default function TemplatesScreen() {
   const { colors, isDark } = useTheme();
   const navigation = useNavigation();
 
-  const handleDownload = async (url: string) => {
-    try {
-      const supported = await Linking.canOpenURL(url);
-      if (supported) {
-        await Linking.openURL(url);
-      }
-    } catch (e) {
-      console.log("Could not open URL");
+  const handleDownload = (url: string) => {
+    if (Platform.OS === 'web') {
+      window.open(url, '_blank');
+    } else {
+      Linking.openURL(url).catch(e => console.log("Could not open URL", e));
     }
   };
 
