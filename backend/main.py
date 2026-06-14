@@ -251,9 +251,12 @@ def analyze(data: Input, current_user: models.User = Depends(get_current_user), 
         }
 
     # Call Gemini
-    gemini_result = analyze_with_gemini(data.text)
-    if not gemini_result:
-        raise HTTPException(status_code=500, detail="Gemini API Error")
+    try:
+        gemini_result = analyze_with_gemini(data.text)
+        if not gemini_result:
+            raise HTTPException(status_code=500, detail="Gemini API Error")
+    except Exception as e:
+        raise HTTPException(status_code=400, detail="Unable to process the provided text. Invalid input formatting.")
 
     # Save to DB
     new_doc = models.Document(user_id=current_user.id, filename="Raw Text", file_hash=text_hash)
