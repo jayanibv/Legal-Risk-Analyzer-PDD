@@ -30,9 +30,10 @@ yarn-error.*
 .DS_Store
 *.pem
 
-# local env files
-.env*.local
-
+# Environment / Secrets (DAST fix: catch ALL .env files)
+.env
+.env.*
+!.env.example
 # typescript
 *.tsbuildinfo
 

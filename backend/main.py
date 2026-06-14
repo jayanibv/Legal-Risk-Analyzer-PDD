@@ -31,7 +31,7 @@ def read_root():
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://legal-risk-analyzer-pdd.vercel.app"],
     allow_methods=["*"],
     allow_headers=["*"],
 )

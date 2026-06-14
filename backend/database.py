@@ -12,10 +12,7 @@ load_dotenv()
 
 # The database URL should be in the format:
 # postgresql://user:password@postgresserver/db
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL is missing. Please set your Supabase connection string in the .env file.")
+DATABASE_URL = os.environ["DATABASE_URL"]
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
