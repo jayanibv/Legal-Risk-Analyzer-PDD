@@ -26,9 +26,15 @@ load_dotenv()
 # Initialize Database
 models.Base.metadata.create_all(bind=database.engine)
 
+def get_real_ip(request: Request):
+    forwarded_for = request.headers.get("X-Forwarded-For")
+    if forwarded_for:
+        return forwarded_for.split(",")[0].strip()
+    return request.client.host or "127.0.0.1"
+
 app = FastAPI(title="Legal Risk Analyzer API")
 
-limiter = Limiter(key_func=get_remote_address)
+limiter = Limiter(key_func=get_real_ip)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(SlowAPIMiddleware)
@@ -107,7 +113,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
 # --- AUTH ROUTES ---
 @app.post("/signup")
-@limiter.limit("3/minute")
+@limiter.limit("2/minute")
 async def signup(request: Request, user_data: UserCreate, db: Session = Depends(database.get_db)):
     # 1. Age Validation
     try:
@@ -149,7 +155,7 @@ async def signup(request: Request, user_data: UserCreate, db: Session = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 @app.post("/login", response_model=Token)
-@limiter.limit("5/minute")
+@limiter.limit("2/minute")
 def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
     user = db.query(models.User).filter(models.User.email == form_data.username).first()
     if not user or not auth.verify_password(form_data.password, user.hashed_password):
