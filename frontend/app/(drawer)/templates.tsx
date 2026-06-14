@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Linking, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from 'expo-router';
+import { useNavigation, Link } from 'expo-router';
 import { DrawerActions } from '@react-navigation/native';
 import { useTheme } from '../../context/ThemeContext';
 import Animated, { FadeInDown } from 'react-native-reanimated';
@@ -39,13 +39,6 @@ export default function TemplatesScreen() {
   const { colors, isDark } = useTheme();
   const navigation = useNavigation();
 
-  const handleDownload = (url: string) => {
-    if (Platform.OS === 'web') {
-      window.open(url, '_blank');
-    } else {
-      Linking.openURL(url).catch(e => console.log("Could not open URL", e));
-    }
-  };
 
   const renderTemplate = ({ item, index }: { item: typeof TEMPLATES[0]; index: number }) => (
     <Animated.View entering={FadeInDown.delay(index * 100).springify()}>
@@ -62,13 +55,12 @@ export default function TemplatesScreen() {
             <Text style={[styles.cardDesc, { color: colors.textSecondary }]} numberOfLines={2}>{item.description}</Text>
           </View>
         </View>
-        <TouchableOpacity 
-          style={[styles.downloadBtn, { backgroundColor: colors.cardAlt }]}
-          onPress={() => handleDownload(item.url)}
-        >
-          <Ionicons name="cloud-download" size={18} color={colors.primary} style={{ marginRight: 8 }} />
-          <Text style={[styles.downloadText, { color: colors.primary }]}>Download Template</Text>
-        </TouchableOpacity>
+        <Link href={item.url as any} asChild target="_blank">
+          <TouchableOpacity style={[styles.downloadBtn, { backgroundColor: colors.cardAlt }]}>
+            <Ionicons name="cloud-download" size={18} color={colors.primary} style={{ marginRight: 8 }} />
+            <Text style={[styles.downloadText, { color: colors.primary }]}>Download Template</Text>
+          </TouchableOpacity>
+        </Link>
       </View>
     </Animated.View>
   );
