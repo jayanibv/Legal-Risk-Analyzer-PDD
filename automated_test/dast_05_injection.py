@@ -34,10 +34,22 @@ GENERIC_SPECIAL = [
     "A" * 5000,                    # oversized input
 ]
 
+XSS_PAYLOADS = [
+    "<script>alert(1)</script>",
+    "<img src=x onerror=prompt()>"
+]
+
+PT_PAYLOADS = [
+    "../../../etc/passwd",
+    "..\\..\\..\\windows\\win.ini"
+]
+
 ALL_PAYLOADS = (
     [(p, "sqli")    for p in SQLI_PAYLOADS]
     + [(p, "nosqli") for p in NOSQLI_PAYLOADS]
     + [(p, "special") for p in GENERIC_SPECIAL]
+    + [(p, "xss") for p in XSS_PAYLOADS]
+    + [(p, "pt") for p in PT_PAYLOADS]
 )
 
 
@@ -114,7 +126,7 @@ def run(tokens: dict):
                                 data="username=baseline@test.com&password=wrong")
     baseline_login = base_ms or 500
 
-    for payload, ptype in ALL_PAYLOADS[:12]:   # limit to first 12 payloads
+    for payload, ptype in ALL_PAYLOADS:   # limit removed to test all payloads
         r, ms = safe_post(login_url, headers=login_hdrs,
                           data=f"username={payload}&password=wrong")
         status = r.status_code if r is not None else "ERR"
@@ -139,8 +151,7 @@ def run(tokens: dict):
     # â”€â”€ SIGNUP endpoint â€” name / email fields â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     print("\n  [*] Probing POST /signup (email field)...")
     signup_url = f"{BASE_URL}/signup"
-    for payload in SQLI_PAYLOADS[:5]:
-        ptype = "sqli"
+    for payload, ptype in ALL_PAYLOADS:
         body = {
             "name": "InjectionTest",
             "email": payload + "@test.com",
@@ -172,7 +183,7 @@ def run(tokens: dict):
     if tok:
         print("\n  [*] Probing POST /analyze (text field)...")
         analyze_url = f"{BASE_URL}/analyze"
-        payloads_to_test = [(p, "sqli") for p in SQLI_PAYLOADS[:4]] + [(p, "special") for p in GENERIC_SPECIAL[:2]]
+        payloads_to_test = ALL_PAYLOADS
         for payload, ptype in payloads_to_test:
             r, ms = safe_post(analyze_url, headers=hdrs,
                               json_body={"text": payload})
