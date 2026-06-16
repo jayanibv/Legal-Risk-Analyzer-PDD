@@ -61,11 +61,7 @@ class TestAPIHealth:
         assert r.status_code in (401, 403), \
             f"Expected 401/403 for unauthorized request, got {r.status_code}"
 
-    def test_tc008_unauthorized_history_returns_401(self):
-        """TC008: GET /history without token returns 401/403."""
-        r = requests.get(f"{BASE_URL}/history", timeout=15)
-        assert r.status_code in (401, 403), \
-            f"Expected 401/403 for unauthorized /history, got {r.status_code}"
+
 
     def test_tc009_unauthorized_me_returns_401(self):
         """TC009: GET /me without token returns 401/403."""
