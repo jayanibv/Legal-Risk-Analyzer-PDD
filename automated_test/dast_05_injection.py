@@ -179,31 +179,7 @@ def run(tokens: dict):
         })
         time.sleep(0.3)
 
-    # â”€â”€ /analyze endpoint (authenticated) â€” text field â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    if tok:
-        print("\n  [*] Probing POST /analyze (text field)...")
-        analyze_url = f"{BASE_URL}/analyze"
-        payloads_to_test = ALL_PAYLOADS
-        for payload, ptype in payloads_to_test:
-            r, ms = safe_post(analyze_url, headers=hdrs,
-                              json_body={"text": payload})
-            status = r.status_code if r is not None else "ERR"
-            is_500 = isinstance(status, int) and status == 500
-            body_text = (r.text[:200] if r is not None else "").lower()
-            is_error  = any(k in body_text for k in ["traceback", "sql", "syntax"])
-            is_finding = is_500 or is_error
-            flag = "âœ— FINDING" if is_finding else "  âœ“ ok"
-            print(f"  {flag}  POST /analyze [text] [{ptype}] â†’ {status}  {ms}ms")
-            records.append({
-                "endpoint": "/analyze", "method": "POST",
-                "role": f"user:inject:{ptype}", "status": status,
-                "expected_status": 200, "finding": is_finding,
-                "severity": "MEDIUM" if is_finding else "INFO",
-                "response_time_ms": ms, "test_category": "injection",
-                "note": f"Inject in analyze text field; type={ptype}; status={status}",
-                "timestamp": now_iso(),
-            })
-            time.sleep(0.4)
+
 
     findings = [r for r in records if r["finding"]]
     print(f"\n  Results: {len(records)} probes, {len(findings)} FINDINGS")

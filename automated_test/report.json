@@ -7,10 +7,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 982,
+    "response_time_ms": 1430,
     "test_category": "authn_bypass",
     "note": "Token type=no_token; got 401; finding=False",
-    "timestamp": "2026-06-14T13:19:44.556637Z"
+    "timestamp": "2026-06-16T05:02:37.762375Z"
   },
   {
     "endpoint": "/me",
@@ -20,10 +20,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 867,
+    "response_time_ms": 1301,
     "test_category": "authn_bypass",
     "note": "Token type=malformed; got 401; finding=False",
-    "timestamp": "2026-06-14T13:19:45.676013Z"
+    "timestamp": "2026-06-16T05:02:39.315906Z"
   },
   {
     "endpoint": "/me",
@@ -33,10 +33,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 905,
+    "response_time_ms": 1344,
     "test_category": "authn_bypass",
     "note": "Token type=expired; got 401; finding=False",
-    "timestamp": "2026-06-14T13:19:46.834354Z"
+    "timestamp": "2026-06-16T05:02:40.913125Z"
   },
   {
     "endpoint": "/me",
@@ -46,10 +46,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 875,
+    "response_time_ms": 1124,
     "test_category": "authn_bypass",
     "note": "Token type=wrong_sig; got 401; finding=False",
-    "timestamp": "2026-06-14T13:19:47.962530Z"
+    "timestamp": "2026-06-16T05:02:42.290542Z"
   },
   {
     "endpoint": "/update-profile",
@@ -59,10 +59,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 796,
+    "response_time_ms": 1354,
     "test_category": "authn_bypass",
     "note": "Token type=no_token; got 401; finding=False",
-    "timestamp": "2026-06-14T13:19:49.014188Z"
+    "timestamp": "2026-06-16T05:02:43.897481Z"
   },
   {
     "endpoint": "/update-profile",
@@ -72,10 +72,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 875,
+    "response_time_ms": 1371,
     "test_category": "authn_bypass",
     "note": "Token type=malformed; got 401; finding=False",
-    "timestamp": "2026-06-14T13:19:50.142218Z"
+    "timestamp": "2026-06-16T05:02:45.523485Z"
   },
   {
     "endpoint": "/update-profile",
@@ -85,10 +85,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 879,
+    "response_time_ms": 1105,
     "test_category": "authn_bypass",
     "note": "Token type=expired; got 401; finding=False",
-    "timestamp": "2026-06-14T13:19:51.274947Z"
+    "timestamp": "2026-06-16T05:02:46.881672Z"
   },
   {
     "endpoint": "/update-profile",
@@ -98,10 +98,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 916,
+    "response_time_ms": 1367,
     "test_category": "authn_bypass",
     "note": "Token type=wrong_sig; got 401; finding=False",
-    "timestamp": "2026-06-14T13:19:52.443647Z"
+    "timestamp": "2026-06-16T05:02:48.502594Z"
   },
   {
     "endpoint": "/analyze",
@@ -111,10 +111,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 887,
+    "response_time_ms": 1531,
     "test_category": "authn_bypass",
     "note": "Token type=no_token; got 401; finding=False",
-    "timestamp": "2026-06-14T13:19:53.584780Z"
+    "timestamp": "2026-06-16T05:02:50.286985Z"
   },
   {
     "endpoint": "/analyze",
@@ -124,10 +124,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 867,
+    "response_time_ms": 1309,
     "test_category": "authn_bypass",
     "note": "Token type=malformed; got 401; finding=False",
-    "timestamp": "2026-06-14T13:19:54.704816Z"
+    "timestamp": "2026-06-16T05:02:51.850452Z"
   },
   {
     "endpoint": "/analyze",
@@ -137,10 +137,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 870,
+    "response_time_ms": 1129,
     "test_category": "authn_bypass",
     "note": "Token type=expired; got 401; finding=False",
-    "timestamp": "2026-06-14T13:19:55.828784Z"
+    "timestamp": "2026-06-16T05:02:53.232737Z"
   },
   {
     "endpoint": "/analyze",
@@ -150,10 +150,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 865,
+    "response_time_ms": 1294,
     "test_category": "authn_bypass",
     "note": "Token type=wrong_sig; got 401; finding=False",
-    "timestamp": "2026-06-14T13:19:56.946735Z"
+    "timestamp": "2026-06-16T05:02:54.781205Z"
   },
   {
     "endpoint": "/analyze-pdf",
@@ -163,10 +163,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 877,
+    "response_time_ms": 1150,
     "test_category": "authn_bypass",
     "note": "Token type=no_token; got 401; finding=False",
-    "timestamp": "2026-06-14T13:19:58.077884Z"
+    "timestamp": "2026-06-16T05:02:56.184719Z"
   },
   {
     "endpoint": "/analyze-pdf",
@@ -176,10 +176,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 854,
+    "response_time_ms": 1235,
     "test_category": "authn_bypass",
     "note": "Token type=malformed; got 401; finding=False",
-    "timestamp": "2026-06-14T13:19:59.185116Z"
+    "timestamp": "2026-06-16T05:02:57.672121Z"
   },
   {
     "endpoint": "/analyze-pdf",
@@ -189,10 +189,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 924,
+    "response_time_ms": 1170,
     "test_category": "authn_bypass",
     "note": "Token type=expired; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:00.363553Z"
+    "timestamp": "2026-06-16T05:02:59.094314Z"
   },
   {
     "endpoint": "/analyze-pdf",
@@ -202,10 +202,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 870,
+    "response_time_ms": 1213,
     "test_category": "authn_bypass",
     "note": "Token type=wrong_sig; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:01.485734Z"
+    "timestamp": "2026-06-16T05:03:00.561977Z"
   },
   {
     "endpoint": "/history",
@@ -215,10 +215,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 838,
+    "response_time_ms": 2404,
     "test_category": "authn_bypass",
     "note": "Token type=no_token; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:02.576205Z"
+    "timestamp": "2026-06-16T05:03:03.220037Z"
   },
   {
     "endpoint": "/history",
@@ -228,10 +228,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 1193,
+    "response_time_ms": 1277,
     "test_category": "authn_bypass",
     "note": "Token type=malformed; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:04.022745Z"
+    "timestamp": "2026-06-16T05:03:04.749847Z"
   },
   {
     "endpoint": "/history",
@@ -241,10 +241,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 857,
+    "response_time_ms": 1207,
     "test_category": "authn_bypass",
     "note": "Token type=expired; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:05.132759Z"
+    "timestamp": "2026-06-16T05:03:06.209970Z"
   },
   {
     "endpoint": "/history",
@@ -254,10 +254,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 933,
+    "response_time_ms": 1192,
     "test_category": "authn_bypass",
     "note": "Token type=wrong_sig; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:06.319571Z"
+    "timestamp": "2026-06-16T05:03:07.656144Z"
   },
   {
     "endpoint": "/analysis/{id}",
@@ -267,10 +267,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 789,
+    "response_time_ms": 1164,
     "test_category": "authn_bypass",
     "note": "Token type=no_token; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:07.361950Z"
+    "timestamp": "2026-06-16T05:03:09.073238Z"
   },
   {
     "endpoint": "/analysis/{id}",
@@ -280,10 +280,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 877,
+    "response_time_ms": 1280,
     "test_category": "authn_bypass",
     "note": "Token type=malformed; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:08.493673Z"
+    "timestamp": "2026-06-16T05:03:10.606889Z"
   },
   {
     "endpoint": "/analysis/{id}",
@@ -293,10 +293,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 855,
+    "response_time_ms": 1252,
     "test_category": "authn_bypass",
     "note": "Token type=expired; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:09.603705Z"
+    "timestamp": "2026-06-16T05:03:12.111837Z"
   },
   {
     "endpoint": "/analysis/{id}",
@@ -306,10 +306,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 865,
+    "response_time_ms": 1178,
     "test_category": "authn_bypass",
     "note": "Token type=wrong_sig; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:10.721872Z"
+    "timestamp": "2026-06-16T05:03:13.542788Z"
   },
   {
     "endpoint": "/chat",
@@ -319,10 +319,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 906,
+    "response_time_ms": 1344,
     "test_category": "authn_bypass",
     "note": "Token type=no_token; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:11.881980Z"
+    "timestamp": "2026-06-16T05:03:15.139523Z"
   },
   {
     "endpoint": "/chat",
@@ -332,10 +332,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 950,
+    "response_time_ms": 1516,
     "test_category": "authn_bypass",
     "note": "Token type=malformed; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:13.111281Z"
+    "timestamp": "2026-06-16T05:03:16.908736Z"
   },
   {
     "endpoint": "/chat",
@@ -345,10 +345,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 910,
+    "response_time_ms": 1669,
     "test_category": "authn_bypass",
     "note": "Token type=expired; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:14.273559Z"
+    "timestamp": "2026-06-16T05:03:18.831192Z"
   },
   {
     "endpoint": "/chat",
@@ -358,10 +358,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 912,
+    "response_time_ms": 1206,
     "test_category": "authn_bypass",
     "note": "Token type=wrong_sig; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:15.438679Z"
+    "timestamp": "2026-06-16T05:03:20.291200Z"
   },
   {
     "endpoint": "/translate",
@@ -371,23 +371,23 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 879,
+    "response_time_ms": 1194,
     "test_category": "authn_bypass",
     "note": "Token type=no_token; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:16.571716Z"
+    "timestamp": "2026-06-16T05:03:21.739170Z"
   },
   {
     "endpoint": "/translate",
     "method": "POST",
     "role": "no-auth:malformed",
-    "status": 401,
+    "status": 502,
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 921,
+    "response_time_ms": 1121,
     "test_category": "authn_bypass",
-    "note": "Token type=malformed; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:17.745168Z"
+    "note": "Token type=malformed; got 502; finding=False",
+    "timestamp": "2026-06-16T05:03:23.113471Z"
   },
   {
     "endpoint": "/translate",
@@ -397,10 +397,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 886,
+    "response_time_ms": 997,
     "test_category": "authn_bypass",
     "note": "Token type=expired; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:18.883447Z"
+    "timestamp": "2026-06-16T05:03:24.363775Z"
   },
   {
     "endpoint": "/translate",
@@ -410,10 +410,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 886,
+    "response_time_ms": 942,
     "test_category": "authn_bypass",
     "note": "Token type=wrong_sig; got 401; finding=False",
-    "timestamp": "2026-06-14T13:20:20.022820Z"
+    "timestamp": "2026-06-16T05:03:25.557344Z"
   },
   {
     "endpoint": "/analysis/{1}",
@@ -423,10 +423,10 @@
     "expected_status": 403,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 1654,
+    "response_time_ms": 1725,
     "test_category": "idor",
     "note": "user2 accessed user1 doc_id=1; status=404. Correctly blocked",
-    "timestamp": "2026-06-14T13:20:31.146625Z"
+    "timestamp": "2026-06-16T05:03:36.547924Z"
   },
   {
     "endpoint": "/analysis/{2}",
@@ -436,10 +436,10 @@
     "expected_status": 403,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 1328,
+    "response_time_ms": 1638,
     "test_category": "idor",
     "note": "user2 accessed user1 doc_id=2; status=404. Correctly blocked",
-    "timestamp": "2026-06-14T13:20:32.777419Z"
+    "timestamp": "2026-06-16T05:03:38.489804Z"
   },
   {
     "endpoint": "/analysis/{3}",
@@ -449,10 +449,10 @@
     "expected_status": 403,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 1336,
+    "response_time_ms": 1641,
     "test_category": "idor",
     "note": "user2 accessed user1 doc_id=3; status=404. Correctly blocked",
-    "timestamp": "2026-06-14T13:20:34.417591Z"
+    "timestamp": "2026-06-16T05:03:40.433875Z"
   },
   {
     "endpoint": "/history",
@@ -465,7 +465,7 @@
     "response_time_ms": 0,
     "test_category": "idor",
     "note": "No history overlap \u00e2\u20ac\u201d user1 sees 0 docs, user2 sees 0 docs",
-    "timestamp": "2026-06-14T13:20:37.181372Z"
+    "timestamp": "2026-06-16T05:03:43.728121Z"
   },
   {
     "endpoint": "/me",
@@ -475,10 +475,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 706,
+    "response_time_ms": 1195,
     "test_category": "token_tampering",
     "note": "Tamper=flip_sub; status=401",
-    "timestamp": "2026-06-14T13:20:37.915440Z"
+    "timestamp": "2026-06-16T05:03:44.938565Z"
   },
   {
     "endpoint": "/history",
@@ -488,10 +488,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 865,
+    "response_time_ms": 1065,
     "test_category": "token_tampering",
     "note": "Tamper=flip_sub; status=401",
-    "timestamp": "2026-06-14T13:20:38.983263Z"
+    "timestamp": "2026-06-16T05:03:46.207573Z"
   },
   {
     "endpoint": "/analysis/{id}",
@@ -501,10 +501,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 853,
+    "response_time_ms": 1285,
     "test_category": "token_tampering",
     "note": "Tamper=flip_sub; status=401",
-    "timestamp": "2026-06-14T13:20:40.041281Z"
+    "timestamp": "2026-06-16T05:03:47.697039Z"
   },
   {
     "endpoint": "/analyze",
@@ -514,10 +514,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 904,
+    "response_time_ms": 1165,
     "test_category": "token_tampering",
     "note": "Tamper=flip_sub; status=401",
-    "timestamp": "2026-06-14T13:20:41.148198Z"
+    "timestamp": "2026-06-16T05:03:49.065097Z"
   },
   {
     "endpoint": "/chat",
@@ -527,10 +527,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 875,
+    "response_time_ms": 1108,
     "test_category": "token_tampering",
     "note": "Tamper=flip_sub; status=401",
-    "timestamp": "2026-06-14T13:20:42.225271Z"
+    "timestamp": "2026-06-16T05:03:50.376328Z"
   },
   {
     "endpoint": "/me",
@@ -540,10 +540,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 887,
+    "response_time_ms": 1632,
     "test_category": "token_tampering",
     "note": "Tamper=alg_none; status=401",
-    "timestamp": "2026-06-14T13:20:43.315578Z"
+    "timestamp": "2026-06-16T05:03:52.213045Z"
   },
   {
     "endpoint": "/history",
@@ -553,10 +553,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 882,
+    "response_time_ms": 1294,
     "test_category": "token_tampering",
     "note": "Tamper=alg_none; status=401",
-    "timestamp": "2026-06-14T13:20:44.401385Z"
+    "timestamp": "2026-06-16T05:03:53.711956Z"
   },
   {
     "endpoint": "/analysis/{id}",
@@ -566,10 +566,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 868,
+    "response_time_ms": 1239,
     "test_category": "token_tampering",
     "note": "Tamper=alg_none; status=401",
-    "timestamp": "2026-06-14T13:20:45.473120Z"
+    "timestamp": "2026-06-16T05:03:55.154723Z"
   },
   {
     "endpoint": "/analyze",
@@ -579,10 +579,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 887,
+    "response_time_ms": 1207,
     "test_category": "token_tampering",
     "note": "Tamper=alg_none; status=401",
-    "timestamp": "2026-06-14T13:20:46.563266Z"
+    "timestamp": "2026-06-16T05:03:56.565518Z"
   },
   {
     "endpoint": "/chat",
@@ -592,10 +592,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 1489,
+    "response_time_ms": 1169,
     "test_category": "token_tampering",
     "note": "Tamper=alg_none; status=401",
-    "timestamp": "2026-06-14T13:20:48.255528Z"
+    "timestamp": "2026-06-16T05:03:57.937953Z"
   },
   {
     "endpoint": "/me",
@@ -605,10 +605,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 963,
+    "response_time_ms": 1361,
     "test_category": "token_tampering",
     "note": "Tamper=alg_None; status=401",
-    "timestamp": "2026-06-14T13:20:49.421918Z"
+    "timestamp": "2026-06-16T05:03:59.502616Z"
   },
   {
     "endpoint": "/history",
@@ -618,10 +618,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 896,
+    "response_time_ms": 1173,
     "test_category": "token_tampering",
     "note": "Tamper=alg_None; status=401",
-    "timestamp": "2026-06-14T13:20:50.520447Z"
+    "timestamp": "2026-06-16T05:04:00.878721Z"
   },
   {
     "endpoint": "/analysis/{id}",
@@ -631,10 +631,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 856,
+    "response_time_ms": 1268,
     "test_category": "token_tampering",
     "note": "Tamper=alg_None; status=401",
-    "timestamp": "2026-06-14T13:20:51.578824Z"
+    "timestamp": "2026-06-16T05:04:02.349567Z"
   },
   {
     "endpoint": "/analyze",
@@ -644,10 +644,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 858,
+    "response_time_ms": 1303,
     "test_category": "token_tampering",
     "note": "Tamper=alg_None; status=401",
-    "timestamp": "2026-06-14T13:20:52.638943Z"
+    "timestamp": "2026-06-16T05:04:03.856055Z"
   },
   {
     "endpoint": "/chat",
@@ -657,10 +657,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 865,
+    "response_time_ms": 1155,
     "test_category": "token_tampering",
     "note": "Tamper=alg_None; status=401",
-    "timestamp": "2026-06-14T13:20:53.706855Z"
+    "timestamp": "2026-06-16T05:04:05.214655Z"
   },
   {
     "endpoint": "/me",
@@ -670,10 +670,10 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 870,
+    "response_time_ms": 1018,
     "test_category": "token_tampering",
     "note": "Tamper=truncated_sig; status=401",
-    "timestamp": "2026-06-14T13:20:54.778963Z"
+    "timestamp": "2026-06-16T05:04:06.435556Z"
   },
   {
     "endpoint": "/history",
@@ -683,595 +683,595 @@
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 865,
+    "response_time_ms": 891,
     "test_category": "token_tampering",
     "note": "Tamper=truncated_sig; status=401",
-    "timestamp": "2026-06-14T13:20:55.847439Z"
+    "timestamp": "2026-06-16T05:04:07.528493Z"
   },
   {
     "endpoint": "/analysis/{id}",
     "method": "GET",
     "role": "tampered:truncated_sig",
-    "status": 401,
+    "status": 502,
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 857,
+    "response_time_ms": 1021,
     "test_category": "token_tampering",
-    "note": "Tamper=truncated_sig; status=401",
-    "timestamp": "2026-06-14T13:20:56.908189Z"
+    "note": "Tamper=truncated_sig; status=502",
+    "timestamp": "2026-06-16T05:04:08.752499Z"
   },
   {
     "endpoint": "/analyze",
     "method": "POST",
     "role": "tampered:truncated_sig",
-    "status": 401,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 972,
-    "test_category": "token_tampering",
-    "note": "Tamper=truncated_sig; status=401",
-    "timestamp": "2026-06-14T13:20:58.082425Z"
-  },
-  {
-    "endpoint": "/chat",
-    "method": "POST",
-    "role": "tampered:truncated_sig",
-    "status": 401,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 876,
-    "test_category": "token_tampering",
-    "note": "Tamper=truncated_sig; status=401",
-    "timestamp": "2026-06-14T13:20:59.160716Z"
-  },
-  {
-    "endpoint": "/me",
-    "method": "GET",
-    "role": "tampered:corrupt_payload",
-    "status": 401,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 883,
-    "test_category": "token_tampering",
-    "note": "Tamper=corrupt_payload; status=401",
-    "timestamp": "2026-06-14T13:21:00.249214Z"
-  },
-  {
-    "endpoint": "/history",
-    "method": "GET",
-    "role": "tampered:corrupt_payload",
-    "status": 401,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 907,
-    "test_category": "token_tampering",
-    "note": "Tamper=corrupt_payload; status=401",
-    "timestamp": "2026-06-14T13:21:01.359954Z"
-  },
-  {
-    "endpoint": "/analysis/{id}",
-    "method": "GET",
-    "role": "tampered:corrupt_payload",
-    "status": 401,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 900,
-    "test_category": "token_tampering",
-    "note": "Tamper=corrupt_payload; status=401",
-    "timestamp": "2026-06-14T13:21:02.463108Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "tampered:corrupt_payload",
-    "status": 401,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 860,
-    "test_category": "token_tampering",
-    "note": "Tamper=corrupt_payload; status=401",
-    "timestamp": "2026-06-14T13:21:03.526833Z"
-  },
-  {
-    "endpoint": "/chat",
-    "method": "POST",
-    "role": "tampered:corrupt_payload",
-    "status": 401,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 882,
-    "test_category": "token_tampering",
-    "note": "Tamper=corrupt_payload; status=401",
-    "timestamp": "2026-06-14T13:21:04.611567Z"
-  },
-  {
-    "endpoint": "/me",
-    "method": "GET",
-    "role": "tampered:role_inject",
-    "status": 401,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 872,
-    "test_category": "token_tampering",
-    "note": "Tamper=role_inject; status=401",
-    "timestamp": "2026-06-14T13:21:05.686696Z"
-  },
-  {
-    "endpoint": "/history",
-    "method": "GET",
-    "role": "tampered:role_inject",
-    "status": 401,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 880,
-    "test_category": "token_tampering",
-    "note": "Tamper=role_inject; status=401",
-    "timestamp": "2026-06-14T13:21:06.769950Z"
-  },
-  {
-    "endpoint": "/analysis/{id}",
-    "method": "GET",
-    "role": "tampered:role_inject",
-    "status": 401,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 847,
-    "test_category": "token_tampering",
-    "note": "Tamper=role_inject; status=401",
-    "timestamp": "2026-06-14T13:21:07.820118Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "tampered:role_inject",
-    "status": 401,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 852,
-    "test_category": "token_tampering",
-    "note": "Tamper=role_inject; status=401",
-    "timestamp": "2026-06-14T13:21:08.875710Z"
-  },
-  {
-    "endpoint": "/chat",
-    "method": "POST",
-    "role": "tampered:role_inject",
-    "status": 401,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 854,
-    "test_category": "token_tampering",
-    "note": "Tamper=role_inject; status=401",
-    "timestamp": "2026-06-14T13:21:09.932339Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "POST",
-    "role": "no-auth:inject:sqli",
-    "status": 401,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 1226,
-    "test_category": "injection",
-    "note": "SQLi/inject in username field; type=sqli; status=401",
-    "timestamp": "2026-06-14T13:21:12.395944Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "POST",
-    "role": "no-auth:inject:sqli",
-    "status": 429,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 867,
-    "test_category": "injection",
-    "note": "SQLi/inject in username field; type=sqli; status=429",
-    "timestamp": "2026-06-14T13:21:13.564810Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "POST",
-    "role": "no-auth:inject:sqli",
-    "status": 429,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 927,
-    "test_category": "injection",
-    "note": "SQLi/inject in username field; type=sqli; status=429",
-    "timestamp": "2026-06-14T13:21:14.794334Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "POST",
-    "role": "no-auth:inject:sqli",
-    "status": 429,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 890,
-    "test_category": "injection",
-    "note": "SQLi/inject in username field; type=sqli; status=429",
-    "timestamp": "2026-06-14T13:21:15.990226Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "POST",
-    "role": "no-auth:inject:sqli",
-    "status": 429,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 847,
-    "test_category": "injection",
-    "note": "SQLi/inject in username field; type=sqli; status=429",
-    "timestamp": "2026-06-14T13:21:17.140879Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "POST",
-    "role": "no-auth:inject:sqli",
-    "status": 429,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 859,
-    "test_category": "injection",
-    "note": "SQLi/inject in username field; type=sqli; status=429",
-    "timestamp": "2026-06-14T13:21:18.302767Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "POST",
-    "role": "no-auth:inject:sqli",
-    "status": 429,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 904,
-    "test_category": "injection",
-    "note": "SQLi/inject in username field; type=sqli; status=429",
-    "timestamp": "2026-06-14T13:21:19.508963Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "POST",
-    "role": "no-auth:inject:sqli",
-    "status": 429,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 886,
-    "test_category": "injection",
-    "note": "SQLi/inject in username field; type=sqli; status=429",
-    "timestamp": "2026-06-14T13:21:20.697122Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "POST",
-    "role": "no-auth:inject:nosqli",
-    "status": 429,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 752,
-    "test_category": "injection",
-    "note": "SQLi/inject in username field; type=nosqli; status=429",
-    "timestamp": "2026-06-14T13:21:21.750759Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "POST",
-    "role": "no-auth:inject:nosqli",
-    "status": 429,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 938,
-    "test_category": "injection",
-    "note": "SQLi/inject in username field; type=nosqli; status=429",
-    "timestamp": "2026-06-14T13:21:22.992910Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "POST",
-    "role": "no-auth:inject:nosqli",
-    "status": 429,
-    "expected_status": 401,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 921,
-    "test_category": "injection",
-    "note": "SQLi/inject in username field; type=nosqli; status=429",
-    "timestamp": "2026-06-14T13:21:24.215861Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "POST",
-    "role": "no-auth:inject:special",
-    "status": 429,
+    "status": 502,
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
     "response_time_ms": 894,
-    "test_category": "injection",
-    "note": "SQLi/inject in username field; type=special; status=429",
-    "timestamp": "2026-06-14T13:21:25.412750Z"
+    "test_category": "token_tampering",
+    "note": "Tamper=truncated_sig; status=502",
+    "timestamp": "2026-06-16T05:04:09.849280Z"
+  },
+  {
+    "endpoint": "/chat",
+    "method": "POST",
+    "role": "tampered:truncated_sig",
+    "status": 401,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 995,
+    "test_category": "token_tampering",
+    "note": "Tamper=truncated_sig; status=401",
+    "timestamp": "2026-06-16T05:04:11.046540Z"
+  },
+  {
+    "endpoint": "/me",
+    "method": "GET",
+    "role": "tampered:corrupt_payload",
+    "status": 401,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 867,
+    "test_category": "token_tampering",
+    "note": "Tamper=corrupt_payload; status=401",
+    "timestamp": "2026-06-16T05:04:12.115735Z"
+  },
+  {
+    "endpoint": "/history",
+    "method": "GET",
+    "role": "tampered:corrupt_payload",
+    "status": 401,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 912,
+    "test_category": "token_tampering",
+    "note": "Tamper=corrupt_payload; status=401",
+    "timestamp": "2026-06-16T05:04:13.230555Z"
+  },
+  {
+    "endpoint": "/analysis/{id}",
+    "method": "GET",
+    "role": "tampered:corrupt_payload",
+    "status": 401,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1087,
+    "test_category": "token_tampering",
+    "note": "Tamper=corrupt_payload; status=401",
+    "timestamp": "2026-06-16T05:04:14.519541Z"
+  },
+  {
+    "endpoint": "/analyze",
+    "method": "POST",
+    "role": "tampered:corrupt_payload",
+    "status": 401,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1287,
+    "test_category": "token_tampering",
+    "note": "Tamper=corrupt_payload; status=401",
+    "timestamp": "2026-06-16T05:04:16.010933Z"
+  },
+  {
+    "endpoint": "/chat",
+    "method": "POST",
+    "role": "tampered:corrupt_payload",
+    "status": 401,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1355,
+    "test_category": "token_tampering",
+    "note": "Tamper=corrupt_payload; status=401",
+    "timestamp": "2026-06-16T05:04:17.569802Z"
+  },
+  {
+    "endpoint": "/me",
+    "method": "GET",
+    "role": "tampered:role_inject",
+    "status": 401,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1245,
+    "test_category": "token_tampering",
+    "note": "Tamper=role_inject; status=401",
+    "timestamp": "2026-06-16T05:04:19.017597Z"
+  },
+  {
+    "endpoint": "/history",
+    "method": "GET",
+    "role": "tampered:role_inject",
+    "status": 401,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1358,
+    "test_category": "token_tampering",
+    "note": "Tamper=role_inject; status=401",
+    "timestamp": "2026-06-16T05:04:20.578969Z"
+  },
+  {
+    "endpoint": "/analysis/{id}",
+    "method": "GET",
+    "role": "tampered:role_inject",
+    "status": 401,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1247,
+    "test_category": "token_tampering",
+    "note": "Tamper=role_inject; status=401",
+    "timestamp": "2026-06-16T05:04:22.030540Z"
+  },
+  {
+    "endpoint": "/analyze",
+    "method": "POST",
+    "role": "tampered:role_inject",
+    "status": 401,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 873,
+    "test_category": "token_tampering",
+    "note": "Tamper=role_inject; status=401",
+    "timestamp": "2026-06-16T05:04:23.106546Z"
+  },
+  {
+    "endpoint": "/chat",
+    "method": "POST",
+    "role": "tampered:role_inject",
+    "status": 401,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 962,
+    "test_category": "token_tampering",
+    "note": "Tamper=role_inject; status=401",
+    "timestamp": "2026-06-16T05:04:24.272757Z"
   },
   {
     "endpoint": "/login",
     "method": "POST",
-    "role": "no-auth:inject:special",
-    "status": 429,
+    "role": "no-auth:inject:sqli",
+    "status": 401,
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 876,
+    "response_time_ms": 1595,
     "test_category": "injection",
-    "note": "SQLi/inject in username field; type=special; status=429",
-    "timestamp": "2026-06-14T13:21:26.593059Z"
+    "note": "SQLi/inject in username field; type=sqli; status=401",
+    "timestamp": "2026-06-16T05:04:27.637172Z"
   },
   {
     "endpoint": "/login",
     "method": "POST",
-    "role": "no-auth:inject:special",
+    "role": "no-auth:inject:sqli",
     "status": 429,
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 915,
+    "response_time_ms": 1331,
     "test_category": "injection",
-    "note": "SQLi/inject in username field; type=special; status=429",
-    "timestamp": "2026-06-14T13:21:27.810581Z"
+    "note": "SQLi/inject in username field; type=sqli; status=429",
+    "timestamp": "2026-06-16T05:04:29.271455Z"
   },
   {
     "endpoint": "/login",
     "method": "POST",
-    "role": "no-auth:inject:special",
+    "role": "no-auth:inject:sqli",
     "status": 429,
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 885,
+    "response_time_ms": 1296,
     "test_category": "injection",
-    "note": "SQLi/inject in username field; type=special; status=429",
-    "timestamp": "2026-06-14T13:21:28.999650Z"
+    "note": "SQLi/inject in username field; type=sqli; status=429",
+    "timestamp": "2026-06-16T05:04:30.869907Z"
   },
   {
     "endpoint": "/login",
     "method": "POST",
-    "role": "no-auth:inject:xss",
+    "role": "no-auth:inject:sqli",
     "status": 429,
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 900,
+    "response_time_ms": 1311,
     "test_category": "injection",
-    "note": "SQLi/inject in username field; type=xss; status=429",
-    "timestamp": "2026-06-14T13:21:30.202833Z"
+    "note": "SQLi/inject in username field; type=sqli; status=429",
+    "timestamp": "2026-06-16T05:04:32.483945Z"
   },
   {
     "endpoint": "/login",
     "method": "POST",
-    "role": "no-auth:inject:xss",
+    "role": "no-auth:inject:sqli",
     "status": 429,
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 994,
+    "response_time_ms": 1602,
     "test_category": "injection",
-    "note": "SQLi/inject in username field; type=xss; status=429",
-    "timestamp": "2026-06-14T13:21:31.500487Z"
+    "note": "SQLi/inject in username field; type=sqli; status=429",
+    "timestamp": "2026-06-16T05:04:34.389092Z"
   },
   {
     "endpoint": "/login",
     "method": "POST",
-    "role": "no-auth:inject:pt",
+    "role": "no-auth:inject:sqli",
     "status": 429,
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 875,
+    "response_time_ms": 1468,
     "test_category": "injection",
-    "note": "SQLi/inject in username field; type=pt; status=429",
-    "timestamp": "2026-06-14T13:21:32.682215Z"
+    "note": "SQLi/inject in username field; type=sqli; status=429",
+    "timestamp": "2026-06-16T05:04:36.159328Z"
   },
   {
     "endpoint": "/login",
     "method": "POST",
-    "role": "no-auth:inject:pt",
+    "role": "no-auth:inject:sqli",
     "status": 429,
     "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 856,
+    "response_time_ms": 1208,
     "test_category": "injection",
-    "note": "SQLi/inject in username field; type=pt; status=429",
-    "timestamp": "2026-06-14T13:21:33.842169Z"
+    "note": "SQLi/inject in username field; type=sqli; status=429",
+    "timestamp": "2026-06-16T05:04:37.671136Z"
   },
   {
-    "endpoint": "/signup",
+    "endpoint": "/login",
     "method": "POST",
     "role": "no-auth:inject:sqli",
-    "status": 422,
-    "expected_status": "422/400",
+    "status": 429,
+    "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 744,
+    "response_time_ms": 2243,
     "test_category": "injection",
-    "note": "Inject in email field; type=sqli; status=422",
-    "timestamp": "2026-06-14T13:21:34.890920Z"
+    "note": "SQLi/inject in username field; type=sqli; status=429",
+    "timestamp": "2026-06-16T05:04:40.217306Z"
   },
   {
-    "endpoint": "/signup",
-    "method": "POST",
-    "role": "no-auth:inject:sqli",
-    "status": 422,
-    "expected_status": "422/400",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 928,
-    "test_category": "injection",
-    "note": "Inject in email field; type=sqli; status=422",
-    "timestamp": "2026-06-14T13:21:36.122572Z"
-  },
-  {
-    "endpoint": "/signup",
-    "method": "POST",
-    "role": "no-auth:inject:sqli",
-    "status": 422,
-    "expected_status": "422/400",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 853,
-    "test_category": "injection",
-    "note": "Inject in email field; type=sqli; status=422",
-    "timestamp": "2026-06-14T13:21:37.279452Z"
-  },
-  {
-    "endpoint": "/signup",
-    "method": "POST",
-    "role": "no-auth:inject:sqli",
-    "status": 422,
-    "expected_status": "422/400",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 914,
-    "test_category": "injection",
-    "note": "Inject in email field; type=sqli; status=422",
-    "timestamp": "2026-06-14T13:21:38.497298Z"
-  },
-  {
-    "endpoint": "/signup",
-    "method": "POST",
-    "role": "no-auth:inject:sqli",
-    "status": 422,
-    "expected_status": "422/400",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 858,
-    "test_category": "injection",
-    "note": "Inject in email field; type=sqli; status=422",
-    "timestamp": "2026-06-14T13:21:39.658952Z"
-  },
-  {
-    "endpoint": "/signup",
-    "method": "POST",
-    "role": "no-auth:inject:sqli",
-    "status": 422,
-    "expected_status": "422/400",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 879,
-    "test_category": "injection",
-    "note": "Inject in email field; type=sqli; status=422",
-    "timestamp": "2026-06-14T13:21:40.841504Z"
-  },
-  {
-    "endpoint": "/signup",
-    "method": "POST",
-    "role": "no-auth:inject:sqli",
-    "status": 400,
-    "expected_status": "422/400",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 1196,
-    "test_category": "injection",
-    "note": "Inject in email field; type=sqli; status=400",
-    "timestamp": "2026-06-14T13:21:42.341508Z"
-  },
-  {
-    "endpoint": "/signup",
-    "method": "POST",
-    "role": "no-auth:inject:sqli",
-    "status": 422,
-    "expected_status": "422/400",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 934,
-    "test_category": "injection",
-    "note": "Inject in email field; type=sqli; status=422",
-    "timestamp": "2026-06-14T13:21:43.578523Z"
-  },
-  {
-    "endpoint": "/signup",
+    "endpoint": "/login",
     "method": "POST",
     "role": "no-auth:inject:nosqli",
-    "status": 422,
-    "expected_status": "422/400",
+    "status": 429,
+    "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 905,
+    "response_time_ms": 1361,
     "test_category": "injection",
-    "note": "Inject in email field; type=nosqli; status=422",
-    "timestamp": "2026-06-14T13:21:44.786182Z"
+    "note": "SQLi/inject in username field; type=nosqli; status=429",
+    "timestamp": "2026-06-16T05:04:41.881451Z"
   },
   {
-    "endpoint": "/signup",
+    "endpoint": "/login",
     "method": "POST",
     "role": "no-auth:inject:nosqli",
-    "status": 422,
-    "expected_status": "422/400",
+    "status": 429,
+    "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 880,
+    "response_time_ms": 1190,
     "test_category": "injection",
-    "note": "Inject in email field; type=nosqli; status=422",
-    "timestamp": "2026-06-14T13:21:45.970241Z"
+    "note": "SQLi/inject in username field; type=nosqli; status=429",
+    "timestamp": "2026-06-16T05:04:43.373953Z"
   },
   {
-    "endpoint": "/signup",
+    "endpoint": "/login",
     "method": "POST",
     "role": "no-auth:inject:nosqli",
-    "status": 422,
-    "expected_status": "422/400",
+    "status": 429,
+    "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 864,
+    "response_time_ms": 1171,
     "test_category": "injection",
-    "note": "Inject in email field; type=nosqli; status=422",
-    "timestamp": "2026-06-14T13:21:47.137985Z"
+    "note": "SQLi/inject in username field; type=nosqli; status=429",
+    "timestamp": "2026-06-16T05:04:44.848632Z"
   },
   {
-    "endpoint": "/signup",
+    "endpoint": "/login",
     "method": "POST",
     "role": "no-auth:inject:special",
-    "status": 422,
-    "expected_status": "422/400",
+    "status": 429,
+    "expected_status": 401,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 902,
+    "response_time_ms": 1203,
     "test_category": "injection",
-    "note": "Inject in email field; type=special; status=422",
-    "timestamp": "2026-06-14T13:21:48.342746Z"
+    "note": "SQLi/inject in username field; type=special; status=429",
+    "timestamp": "2026-06-16T05:04:46.355904Z"
   },
   {
-    "endpoint": "/signup",
+    "endpoint": "/login",
     "method": "POST",
     "role": "no-auth:inject:special",
-    "status": 400,
-    "expected_status": "422/400",
+    "status": 429,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1317,
+    "test_category": "injection",
+    "note": "SQLi/inject in username field; type=special; status=429",
+    "timestamp": "2026-06-16T05:04:47.977513Z"
+  },
+  {
+    "endpoint": "/login",
+    "method": "POST",
+    "role": "no-auth:inject:special",
+    "status": 429,
+    "expected_status": 401,
     "finding": false,
     "severity": "INFO",
     "response_time_ms": 1213,
     "test_category": "injection",
+    "note": "SQLi/inject in username field; type=special; status=429",
+    "timestamp": "2026-06-16T05:04:49.493202Z"
+  },
+  {
+    "endpoint": "/login",
+    "method": "POST",
+    "role": "no-auth:inject:special",
+    "status": 429,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1166,
+    "test_category": "injection",
+    "note": "SQLi/inject in username field; type=special; status=429",
+    "timestamp": "2026-06-16T05:04:50.966121Z"
+  },
+  {
+    "endpoint": "/login",
+    "method": "POST",
+    "role": "no-auth:inject:xss",
+    "status": 429,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1167,
+    "test_category": "injection",
+    "note": "SQLi/inject in username field; type=xss; status=429",
+    "timestamp": "2026-06-16T05:04:52.436971Z"
+  },
+  {
+    "endpoint": "/login",
+    "method": "POST",
+    "role": "no-auth:inject:xss",
+    "status": 429,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1330,
+    "test_category": "injection",
+    "note": "SQLi/inject in username field; type=xss; status=429",
+    "timestamp": "2026-06-16T05:04:54.071136Z"
+  },
+  {
+    "endpoint": "/login",
+    "method": "POST",
+    "role": "no-auth:inject:pt",
+    "status": 429,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1178,
+    "test_category": "injection",
+    "note": "SQLi/inject in username field; type=pt; status=429",
+    "timestamp": "2026-06-16T05:04:55.552856Z"
+  },
+  {
+    "endpoint": "/login",
+    "method": "POST",
+    "role": "no-auth:inject:pt",
+    "status": 429,
+    "expected_status": 401,
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1119,
+    "test_category": "injection",
+    "note": "SQLi/inject in username field; type=pt; status=429",
+    "timestamp": "2026-06-16T05:04:56.975762Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "POST",
+    "role": "no-auth:inject:sqli",
+    "status": 422,
+    "expected_status": "422/400",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1137,
+    "test_category": "injection",
+    "note": "Inject in email field; type=sqli; status=422",
+    "timestamp": "2026-06-16T05:04:58.417730Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "POST",
+    "role": "no-auth:inject:sqli",
+    "status": 502,
+    "expected_status": "422/400",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1283,
+    "test_category": "injection",
+    "note": "Inject in email field; type=sqli; status=502",
+    "timestamp": "2026-06-16T05:05:00.004373Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "POST",
+    "role": "no-auth:inject:sqli",
+    "status": 422,
+    "expected_status": "422/400",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1295,
+    "test_category": "injection",
+    "note": "Inject in email field; type=sqli; status=422",
+    "timestamp": "2026-06-16T05:05:01.603196Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "POST",
+    "role": "no-auth:inject:sqli",
+    "status": 422,
+    "expected_status": "422/400",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1311,
+    "test_category": "injection",
+    "note": "Inject in email field; type=sqli; status=422",
+    "timestamp": "2026-06-16T05:05:03.218093Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "POST",
+    "role": "no-auth:inject:sqli",
+    "status": 422,
+    "expected_status": "422/400",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1578,
+    "test_category": "injection",
+    "note": "Inject in email field; type=sqli; status=422",
+    "timestamp": "2026-06-16T05:05:05.098851Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "POST",
+    "role": "no-auth:inject:sqli",
+    "status": 422,
+    "expected_status": "422/400",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1279,
+    "test_category": "injection",
+    "note": "Inject in email field; type=sqli; status=422",
+    "timestamp": "2026-06-16T05:05:06.681087Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "POST",
+    "role": "no-auth:inject:sqli",
+    "status": 400,
+    "expected_status": "422/400",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 2153,
+    "test_category": "injection",
+    "note": "Inject in email field; type=sqli; status=400",
+    "timestamp": "2026-06-16T05:05:09.138143Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "POST",
+    "role": "no-auth:inject:sqli",
+    "status": 422,
+    "expected_status": "422/400",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1240,
+    "test_category": "injection",
+    "note": "Inject in email field; type=sqli; status=422",
+    "timestamp": "2026-06-16T05:05:10.680969Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "POST",
+    "role": "no-auth:inject:nosqli",
+    "status": 422,
+    "expected_status": "422/400",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1584,
+    "test_category": "injection",
+    "note": "Inject in email field; type=nosqli; status=422",
+    "timestamp": "2026-06-16T05:05:12.567221Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "POST",
+    "role": "no-auth:inject:nosqli",
+    "status": 422,
+    "expected_status": "422/400",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1161,
+    "test_category": "injection",
+    "note": "Inject in email field; type=nosqli; status=422",
+    "timestamp": "2026-06-16T05:05:14.031661Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "POST",
+    "role": "no-auth:inject:nosqli",
+    "status": 422,
+    "expected_status": "422/400",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1139,
+    "test_category": "injection",
+    "note": "Inject in email field; type=nosqli; status=422",
+    "timestamp": "2026-06-16T05:05:15.474765Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "POST",
+    "role": "no-auth:inject:special",
+    "status": 422,
+    "expected_status": "422/400",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1240,
+    "test_category": "injection",
+    "note": "Inject in email field; type=special; status=422",
+    "timestamp": "2026-06-16T05:05:17.017139Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "POST",
+    "role": "no-auth:inject:special",
+    "status": 400,
+    "expected_status": "422/400",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 2482,
+    "test_category": "injection",
     "note": "Inject in email field; type=special; status=400",
-    "timestamp": "2026-06-14T13:21:49.858330Z"
+    "timestamp": "2026-06-16T05:05:19.801519Z"
   },
   {
     "endpoint": "/signup",
@@ -1281,10 +1281,10 @@
     "expected_status": "422/400",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 868,
+    "response_time_ms": 1362,
     "test_category": "injection",
     "note": "Inject in email field; type=special; status=429",
-    "timestamp": "2026-06-14T13:21:51.028603Z"
+    "timestamp": "2026-06-16T05:05:21.465513Z"
   },
   {
     "endpoint": "/signup",
@@ -1294,10 +1294,10 @@
     "expected_status": "422/400",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 895,
+    "response_time_ms": 1657,
     "test_category": "injection",
     "note": "Inject in email field; type=special; status=422",
-    "timestamp": "2026-06-14T13:21:52.226891Z"
+    "timestamp": "2026-06-16T05:05:23.425090Z"
   },
   {
     "endpoint": "/signup",
@@ -1307,10 +1307,10 @@
     "expected_status": "422/400",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 864,
+    "response_time_ms": 1369,
     "test_category": "injection",
     "note": "Inject in email field; type=xss; status=422",
-    "timestamp": "2026-06-14T13:21:53.394728Z"
+    "timestamp": "2026-06-16T05:05:25.097834Z"
   },
   {
     "endpoint": "/signup",
@@ -1320,10 +1320,10 @@
     "expected_status": "422/400",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 890,
+    "response_time_ms": 1783,
     "test_category": "injection",
     "note": "Inject in email field; type=xss; status=422",
-    "timestamp": "2026-06-14T13:21:54.587300Z"
+    "timestamp": "2026-06-16T05:05:27.183649Z"
   },
   {
     "endpoint": "/signup",
@@ -1333,10 +1333,10 @@
     "expected_status": "422/400",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 863,
+    "response_time_ms": 2199,
     "test_category": "injection",
     "note": "Inject in email field; type=pt; status=422",
-    "timestamp": "2026-06-14T13:21:55.755421Z"
+    "timestamp": "2026-06-16T05:05:29.685720Z"
   },
   {
     "endpoint": "/signup",
@@ -1346,257 +1346,10 @@
     "expected_status": "422/400",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 870,
+    "response_time_ms": 1430,
     "test_category": "injection",
     "note": "Inject in email field; type=pt; status=422",
-    "timestamp": "2026-06-14T13:21:56.928398Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:sqli",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8924,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=sqli; status=400",
-    "timestamp": "2026-06-14T13:22:06.156273Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:sqli",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8906,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=sqli; status=400",
-    "timestamp": "2026-06-14T13:22:15.465908Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:sqli",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8859,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=sqli; status=400",
-    "timestamp": "2026-06-14T13:22:24.727360Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:sqli",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8840,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=sqli; status=400",
-    "timestamp": "2026-06-14T13:22:33.971279Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:sqli",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8930,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=sqli; status=400",
-    "timestamp": "2026-06-14T13:22:43.305101Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:sqli",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8841,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=sqli; status=400",
-    "timestamp": "2026-06-14T13:22:52.549294Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:sqli",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8865,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=sqli; status=400",
-    "timestamp": "2026-06-14T13:23:01.817653Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:sqli",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8848,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=sqli; status=400",
-    "timestamp": "2026-06-14T13:23:11.067930Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:nosqli",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8861,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=nosqli; status=400",
-    "timestamp": "2026-06-14T13:23:20.337198Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:nosqli",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8853,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=nosqli; status=400",
-    "timestamp": "2026-06-14T13:23:29.593232Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:nosqli",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8893,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=nosqli; status=400",
-    "timestamp": "2026-06-14T13:23:38.888802Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:special",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8926,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=special; status=400",
-    "timestamp": "2026-06-14T13:23:48.218180Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:special",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8992,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=special; status=400",
-    "timestamp": "2026-06-14T13:23:57.614535Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:special",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8855,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=special; status=400",
-    "timestamp": "2026-06-14T13:24:06.875357Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:special",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8870,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=special; status=400",
-    "timestamp": "2026-06-14T13:24:16.148511Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:xss",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8842,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=xss; status=400",
-    "timestamp": "2026-06-14T13:24:25.395335Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:xss",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8828,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=xss; status=400",
-    "timestamp": "2026-06-14T13:24:34.627537Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:pt",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8971,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=pt; status=400",
-    "timestamp": "2026-06-14T13:24:44.001848Z"
-  },
-  {
-    "endpoint": "/analyze",
-    "method": "POST",
-    "role": "user:inject:pt",
-    "status": 400,
-    "expected_status": 200,
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 8893,
-    "test_category": "injection",
-    "note": "Inject in analyze text field; type=pt; status=400",
-    "timestamp": "2026-06-14T13:24:53.298831Z"
+    "timestamp": "2026-06-16T05:05:31.418951Z"
   },
   {
     "endpoint": "/login",
@@ -1606,10 +1359,10 @@
     "expected_status": 429,
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 906,
+    "response_time_ms": 1055,
     "test_category": "rate_limiting",
-    "note": "30 requests sent. 401=2 429=28 5xx=0. Avg latency=906ms. Rate limiting confirmed via 429.",
-    "timestamp": "2026-06-14T13:25:23.983021Z"
+    "note": "30 requests sent. 401=2 429=28 5xx=0. Avg latency=1055ms. Rate limiting confirmed via 429.",
+    "timestamp": "2026-06-16T05:06:06.500514Z"
   },
   {
     "endpoint": "/signup",
@@ -1622,7 +1375,7 @@
     "response_time_ms": 0,
     "test_category": "rate_limiting",
     "note": "Signup burst 10 reqs; 429_triggered=True",
-    "timestamp": "2026-06-14T13:25:35.600146Z"
+    "timestamp": "2026-06-16T05:06:20.162675Z"
   },
   {
     "endpoint": ".gitignore",
@@ -1635,7 +1388,7 @@
     "response_time_ms": 0,
     "test_category": "hardcoded_secrets",
     "note": "root_gitignore_has_env=True backend_gitignore_has_env=True",
-    "timestamp": "2026-06-14T13:25:35.761243Z"
+    "timestamp": "2026-06-16T05:06:20.188443Z"
   },
   {
     "endpoint": "/",
@@ -1645,10 +1398,10 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 785,
+    "response_time_ms": 1055,
     "test_category": "method_tampering",
     "note": "Sent PUT to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:36.646141Z"
+    "timestamp": "2026-06-16T05:06:21.302063Z"
   },
   {
     "endpoint": "/",
@@ -1658,10 +1411,10 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 862,
+    "response_time_ms": 887,
     "test_category": "method_tampering",
     "note": "Sent DELETE to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:37.712383Z"
+    "timestamp": "2026-06-16T05:06:22.391923Z"
   },
   {
     "endpoint": "/",
@@ -1671,10 +1424,10 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 900,
+    "response_time_ms": 949,
     "test_category": "method_tampering",
     "note": "Sent PATCH to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:38.815905Z"
+    "timestamp": "2026-06-16T05:06:23.544341Z"
   },
   {
     "endpoint": "/",
@@ -1684,10 +1437,10 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 874,
+    "response_time_ms": 923,
     "test_category": "method_tampering",
     "note": "Sent OPTIONS to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:39.896922Z"
+    "timestamp": "2026-06-16T05:06:24.670854Z"
   },
   {
     "endpoint": "/",
@@ -1697,10 +1450,10 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 847,
+    "response_time_ms": 1024,
     "test_category": "method_tampering",
     "note": "Sent TRACE to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:40.947434Z"
+    "timestamp": "2026-06-16T05:06:25.900351Z"
   },
   {
     "endpoint": "/signup",
@@ -1710,443 +1463,14 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 874,
+    "response_time_ms": 825,
     "test_category": "method_tampering",
     "note": "Sent PUT to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:42.025119Z"
+    "timestamp": "2026-06-16T05:06:26.930651Z"
   },
   {
     "endpoint": "/signup",
     "method": "DELETE",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 858,
-    "test_category": "method_tampering",
-    "note": "Sent DELETE to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:43.086934Z"
-  },
-  {
-    "endpoint": "/signup",
-    "method": "PATCH",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 856,
-    "test_category": "method_tampering",
-    "note": "Sent PATCH to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:44.146520Z"
-  },
-  {
-    "endpoint": "/signup",
-    "method": "OPTIONS",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 965,
-    "test_category": "method_tampering",
-    "note": "Sent OPTIONS to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:45.315820Z"
-  },
-  {
-    "endpoint": "/signup",
-    "method": "TRACE",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 872,
-    "test_category": "method_tampering",
-    "note": "Sent TRACE to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:46.391284Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "PUT",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 876,
-    "test_category": "method_tampering",
-    "note": "Sent PUT to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:47.471894Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "DELETE",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 848,
-    "test_category": "method_tampering",
-    "note": "Sent DELETE to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:48.524190Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "PATCH",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 854,
-    "test_category": "method_tampering",
-    "note": "Sent PATCH to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:49.582831Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "OPTIONS",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 856,
-    "test_category": "method_tampering",
-    "note": "Sent OPTIONS to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:50.642477Z"
-  },
-  {
-    "endpoint": "/login",
-    "method": "TRACE",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 871,
-    "test_category": "method_tampering",
-    "note": "Sent TRACE to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:51.718977Z"
-  },
-  {
-    "endpoint": "/reset-password",
-    "method": "PUT",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 866,
-    "test_category": "method_tampering",
-    "note": "Sent PUT to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:52.788327Z"
-  },
-  {
-    "endpoint": "/reset-password",
-    "method": "DELETE",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 873,
-    "test_category": "method_tampering",
-    "note": "Sent DELETE to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:53.864933Z"
-  },
-  {
-    "endpoint": "/reset-password",
-    "method": "PATCH",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 875,
-    "test_category": "method_tampering",
-    "note": "Sent PATCH to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:54.943998Z"
-  },
-  {
-    "endpoint": "/reset-password",
-    "method": "OPTIONS",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 881,
-    "test_category": "method_tampering",
-    "note": "Sent OPTIONS to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:56.028814Z"
-  },
-  {
-    "endpoint": "/reset-password",
-    "method": "TRACE",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 849,
-    "test_category": "method_tampering",
-    "note": "Sent TRACE to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:57.082196Z"
-  },
-  {
-    "endpoint": "/docs",
-    "method": "PUT",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 866,
-    "test_category": "method_tampering",
-    "note": "Sent PUT to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:58.152852Z"
-  },
-  {
-    "endpoint": "/docs",
-    "method": "DELETE",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 876,
-    "test_category": "method_tampering",
-    "note": "Sent DELETE to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:25:59.232314Z"
-  },
-  {
-    "endpoint": "/docs",
-    "method": "PATCH",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 908,
-    "test_category": "method_tampering",
-    "note": "Sent PATCH to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:00.344000Z"
-  },
-  {
-    "endpoint": "/docs",
-    "method": "OPTIONS",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 858,
-    "test_category": "method_tampering",
-    "note": "Sent OPTIONS to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:01.406354Z"
-  },
-  {
-    "endpoint": "/docs",
-    "method": "TRACE",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 871,
-    "test_category": "method_tampering",
-    "note": "Sent TRACE to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:02.481467Z"
-  },
-  {
-    "endpoint": "/openapi.json",
-    "method": "PUT",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 899,
-    "test_category": "method_tampering",
-    "note": "Sent PUT to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:03.584555Z"
-  },
-  {
-    "endpoint": "/openapi.json",
-    "method": "DELETE",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 869,
-    "test_category": "method_tampering",
-    "note": "Sent DELETE to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:04.657365Z"
-  },
-  {
-    "endpoint": "/openapi.json",
-    "method": "PATCH",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 851,
-    "test_category": "method_tampering",
-    "note": "Sent PATCH to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:05.714405Z"
-  },
-  {
-    "endpoint": "/openapi.json",
-    "method": "OPTIONS",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 851,
-    "test_category": "method_tampering",
-    "note": "Sent OPTIONS to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:06.769742Z"
-  },
-  {
-    "endpoint": "/openapi.json",
-    "method": "TRACE",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 844,
-    "test_category": "method_tampering",
-    "note": "Sent TRACE to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:07.819005Z"
-  },
-  {
-    "endpoint": "/redoc",
-    "method": "PUT",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 905,
-    "test_category": "method_tampering",
-    "note": "Sent PUT to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:08.927831Z"
-  },
-  {
-    "endpoint": "/redoc",
-    "method": "DELETE",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 847,
-    "test_category": "method_tampering",
-    "note": "Sent DELETE to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:09.979227Z"
-  },
-  {
-    "endpoint": "/redoc",
-    "method": "PATCH",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 858,
-    "test_category": "method_tampering",
-    "note": "Sent PATCH to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:11.041137Z"
-  },
-  {
-    "endpoint": "/redoc",
-    "method": "OPTIONS",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 876,
-    "test_category": "method_tampering",
-    "note": "Sent OPTIONS to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:12.121521Z"
-  },
-  {
-    "endpoint": "/redoc",
-    "method": "TRACE",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 851,
-    "test_category": "method_tampering",
-    "note": "Sent TRACE to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:13.176358Z"
-  },
-  {
-    "endpoint": "/me",
-    "method": "PUT",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 856,
-    "test_category": "method_tampering",
-    "note": "Sent PUT to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:14.235909Z"
-  },
-  {
-    "endpoint": "/me",
-    "method": "DELETE",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 907,
-    "test_category": "method_tampering",
-    "note": "Sent DELETE to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:15.347379Z"
-  },
-  {
-    "endpoint": "/me",
-    "method": "PATCH",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 846,
-    "test_category": "method_tampering",
-    "note": "Sent PATCH to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:16.397340Z"
-  },
-  {
-    "endpoint": "/me",
-    "method": "OPTIONS",
-    "role": "fuzzer:method",
-    "status": 405,
-    "expected_status": "405/401/404",
-    "finding": false,
-    "severity": "INFO",
-    "response_time_ms": 888,
-    "test_category": "method_tampering",
-    "note": "Sent OPTIONS to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:17.489236Z"
-  },
-  {
-    "endpoint": "/me",
-    "method": "TRACE",
     "role": "fuzzer:method",
     "status": 405,
     "expected_status": "405/401/404",
@@ -2154,8 +1478,437 @@
     "severity": "INFO",
     "response_time_ms": 879,
     "test_category": "method_tampering",
+    "note": "Sent DELETE to POST endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:28.014496Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "PATCH",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 862,
+    "test_category": "method_tampering",
+    "note": "Sent PATCH to POST endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:29.080767Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "OPTIONS",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 842,
+    "test_category": "method_tampering",
+    "note": "Sent OPTIONS to POST endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:30.127177Z"
+  },
+  {
+    "endpoint": "/signup",
+    "method": "TRACE",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 938,
+    "test_category": "method_tampering",
+    "note": "Sent TRACE to POST endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:31.269922Z"
+  },
+  {
+    "endpoint": "/login",
+    "method": "PUT",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 866,
+    "test_category": "method_tampering",
+    "note": "Sent PUT to POST endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:32.340412Z"
+  },
+  {
+    "endpoint": "/login",
+    "method": "DELETE",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 944,
+    "test_category": "method_tampering",
+    "note": "Sent DELETE to POST endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:33.488266Z"
+  },
+  {
+    "endpoint": "/login",
+    "method": "PATCH",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 816,
+    "test_category": "method_tampering",
+    "note": "Sent PATCH to POST endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:34.507503Z"
+  },
+  {
+    "endpoint": "/login",
+    "method": "OPTIONS",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 849,
+    "test_category": "method_tampering",
+    "note": "Sent OPTIONS to POST endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:35.562869Z"
+  },
+  {
+    "endpoint": "/login",
+    "method": "TRACE",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1753,
+    "test_category": "method_tampering",
+    "note": "Sent TRACE to POST endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:37.523820Z"
+  },
+  {
+    "endpoint": "/reset-password",
+    "method": "PUT",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1819,
+    "test_category": "method_tampering",
+    "note": "Sent PUT to POST endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:39.550073Z"
+  },
+  {
+    "endpoint": "/reset-password",
+    "method": "DELETE",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1713,
+    "test_category": "method_tampering",
+    "note": "Sent DELETE to POST endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:41.469737Z"
+  },
+  {
+    "endpoint": "/reset-password",
+    "method": "PATCH",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1769,
+    "test_category": "method_tampering",
+    "note": "Sent PATCH to POST endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:43.445914Z"
+  },
+  {
+    "endpoint": "/reset-password",
+    "method": "OPTIONS",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1817,
+    "test_category": "method_tampering",
+    "note": "Sent OPTIONS to POST endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:45.469821Z"
+  },
+  {
+    "endpoint": "/reset-password",
+    "method": "TRACE",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 910,
+    "test_category": "method_tampering",
+    "note": "Sent TRACE to POST endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:46.585556Z"
+  },
+  {
+    "endpoint": "/docs",
+    "method": "PUT",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 967,
+    "test_category": "method_tampering",
+    "note": "Sent PUT to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:47.757768Z"
+  },
+  {
+    "endpoint": "/docs",
+    "method": "DELETE",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 864,
+    "test_category": "method_tampering",
+    "note": "Sent DELETE to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:48.827275Z"
+  },
+  {
+    "endpoint": "/docs",
+    "method": "PATCH",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 919,
+    "test_category": "method_tampering",
+    "note": "Sent PATCH to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:49.951271Z"
+  },
+  {
+    "endpoint": "/docs",
+    "method": "OPTIONS",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 922,
+    "test_category": "method_tampering",
+    "note": "Sent OPTIONS to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:51.078070Z"
+  },
+  {
+    "endpoint": "/docs",
+    "method": "TRACE",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 921,
+    "test_category": "method_tampering",
     "note": "Sent TRACE to GET endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:18.571994Z"
+    "timestamp": "2026-06-16T05:06:52.204501Z"
+  },
+  {
+    "endpoint": "/openapi.json",
+    "method": "PUT",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1055,
+    "test_category": "method_tampering",
+    "note": "Sent PUT to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:53.465233Z"
+  },
+  {
+    "endpoint": "/openapi.json",
+    "method": "DELETE",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 826,
+    "test_category": "method_tampering",
+    "note": "Sent DELETE to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:54.496338Z"
+  },
+  {
+    "endpoint": "/openapi.json",
+    "method": "PATCH",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 844,
+    "test_category": "method_tampering",
+    "note": "Sent PATCH to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:55.546553Z"
+  },
+  {
+    "endpoint": "/openapi.json",
+    "method": "OPTIONS",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 795,
+    "test_category": "method_tampering",
+    "note": "Sent OPTIONS to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:56.546328Z"
+  },
+  {
+    "endpoint": "/openapi.json",
+    "method": "TRACE",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 862,
+    "test_category": "method_tampering",
+    "note": "Sent TRACE to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:57.613233Z"
+  },
+  {
+    "endpoint": "/redoc",
+    "method": "PUT",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 941,
+    "test_category": "method_tampering",
+    "note": "Sent PUT to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:06:58.758014Z"
+  },
+  {
+    "endpoint": "/redoc",
+    "method": "DELETE",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1388,
+    "test_category": "method_tampering",
+    "note": "Sent DELETE to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:07:00.351165Z"
+  },
+  {
+    "endpoint": "/redoc",
+    "method": "PATCH",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 782,
+    "test_category": "method_tampering",
+    "note": "Sent PATCH to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:07:01.338234Z"
+  },
+  {
+    "endpoint": "/redoc",
+    "method": "OPTIONS",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 811,
+    "test_category": "method_tampering",
+    "note": "Sent OPTIONS to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:07:02.354487Z"
+  },
+  {
+    "endpoint": "/redoc",
+    "method": "TRACE",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1013,
+    "test_category": "method_tampering",
+    "note": "Sent TRACE to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:07:03.573003Z"
+  },
+  {
+    "endpoint": "/me",
+    "method": "PUT",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 939,
+    "test_category": "method_tampering",
+    "note": "Sent PUT to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:07:04.718439Z"
+  },
+  {
+    "endpoint": "/me",
+    "method": "DELETE",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 872,
+    "test_category": "method_tampering",
+    "note": "Sent DELETE to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:07:05.796379Z"
+  },
+  {
+    "endpoint": "/me",
+    "method": "PATCH",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 819,
+    "test_category": "method_tampering",
+    "note": "Sent PATCH to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:07:06.820623Z"
+  },
+  {
+    "endpoint": "/me",
+    "method": "OPTIONS",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 1039,
+    "test_category": "method_tampering",
+    "note": "Sent OPTIONS to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:07:08.065632Z"
+  },
+  {
+    "endpoint": "/me",
+    "method": "TRACE",
+    "role": "fuzzer:method",
+    "status": 405,
+    "expected_status": "405/401/404",
+    "finding": false,
+    "severity": "INFO",
+    "response_time_ms": 881,
+    "test_category": "method_tampering",
+    "note": "Sent TRACE to GET endpoint; status=405",
+    "timestamp": "2026-06-16T05:07:09.153208Z"
   },
   {
     "endpoint": "/update-profile",
@@ -2165,10 +1918,10 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 1019,
+    "response_time_ms": 772,
     "test_category": "method_tampering",
     "note": "Sent PUT to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:19.794041Z"
+    "timestamp": "2026-06-16T05:07:10.132002Z"
   },
   {
     "endpoint": "/update-profile",
@@ -2178,10 +1931,10 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 860,
+    "response_time_ms": 892,
     "test_category": "method_tampering",
     "note": "Sent DELETE to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:20.858108Z"
+    "timestamp": "2026-06-16T05:07:11.230035Z"
   },
   {
     "endpoint": "/update-profile",
@@ -2191,10 +1944,10 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 845,
+    "response_time_ms": 910,
     "test_category": "method_tampering",
     "note": "Sent PATCH to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:21.906838Z"
+    "timestamp": "2026-06-16T05:07:12.346032Z"
   },
   {
     "endpoint": "/update-profile",
@@ -2204,10 +1957,10 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 833,
+    "response_time_ms": 1095,
     "test_category": "method_tampering",
     "note": "Sent OPTIONS to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:22.945258Z"
+    "timestamp": "2026-06-16T05:07:13.646580Z"
   },
   {
     "endpoint": "/update-profile",
@@ -2217,10 +1970,10 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 867,
+    "response_time_ms": 894,
     "test_category": "method_tampering",
     "note": "Sent TRACE to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:24.016136Z"
+    "timestamp": "2026-06-16T05:07:14.747014Z"
   },
   {
     "endpoint": "/analyze",
@@ -2230,10 +1983,10 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 906,
+    "response_time_ms": 873,
     "test_category": "method_tampering",
     "note": "Sent PUT to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:25.125868Z"
+    "timestamp": "2026-06-16T05:07:15.825378Z"
   },
   {
     "endpoint": "/analyze",
@@ -2243,10 +1996,10 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 841,
+    "response_time_ms": 863,
     "test_category": "method_tampering",
     "note": "Sent DELETE to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:26.171355Z"
+    "timestamp": "2026-06-16T05:07:16.894419Z"
   },
   {
     "endpoint": "/analyze",
@@ -2256,10 +2009,10 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 898,
+    "response_time_ms": 809,
     "test_category": "method_tampering",
     "note": "Sent PATCH to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:27.274160Z"
+    "timestamp": "2026-06-16T05:07:17.909116Z"
   },
   {
     "endpoint": "/analyze",
@@ -2269,10 +2022,10 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 858,
+    "response_time_ms": 976,
     "test_category": "method_tampering",
     "note": "Sent OPTIONS to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:28.335743Z"
+    "timestamp": "2026-06-16T05:07:19.092019Z"
   },
   {
     "endpoint": "/analyze",
@@ -2282,10 +2035,10 @@
     "expected_status": "405/401/404",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 907,
+    "response_time_ms": 893,
     "test_category": "method_tampering",
     "note": "Sent TRACE to POST endpoint; status=405",
-    "timestamp": "2026-06-14T13:26:29.446342Z"
+    "timestamp": "2026-06-16T05:07:20.193187Z"
   },
   {
     "endpoint": "/update-profile",
@@ -2295,10 +2048,10 @@
     "expected_status": "200/422",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 1544,
+    "response_time_ms": 1492,
     "test_category": "mass_assignment",
     "note": "Injected keys: ['name', 'role']; status=200",
-    "timestamp": "2026-06-14T13:26:31.200773Z"
+    "timestamp": "2026-06-16T05:07:21.901007Z"
   },
   {
     "endpoint": "/update-profile",
@@ -2308,10 +2061,10 @@
     "expected_status": "200/422",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 1411,
+    "response_time_ms": 1450,
     "test_category": "mass_assignment",
     "note": "Injected keys: ['name', 'is_superuser']; status=200",
-    "timestamp": "2026-06-14T13:26:32.813650Z"
+    "timestamp": "2026-06-16T05:07:23.554686Z"
   },
   {
     "endpoint": "/update-profile",
@@ -2321,9 +2074,9 @@
     "expected_status": "200/422",
     "finding": false,
     "severity": "INFO",
-    "response_time_ms": 1435,
+    "response_time_ms": 1549,
     "test_category": "mass_assignment",
     "note": "Injected keys: ['name', 'balance']; status=200",
-    "timestamp": "2026-06-14T13:26:34.450906Z"
+    "timestamp": "2026-06-16T05:07:25.306375Z"
   }
 ]

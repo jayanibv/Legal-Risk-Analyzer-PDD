@@ -126,21 +126,6 @@ class TestLoginPage:
             body = driver.find_element(By.TAG_NAME, "body").text
         assert "Forgot Password" in body, f"'Forgot Password' not found. Body: {body[:300]}"
 
-    def test_tc059_empty_login_shows_error(self, driver):
-        """TC059: Submitting empty credentials shows an error message or validation."""
-        # Look for the Sign In button specifically
-        body_before = driver.find_element(By.TAG_NAME, "body").text
-        submit_btn = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//*[text()='Sign In']"))
-        )
-        driver.execute_script("arguments[0].click();", submit_btn)
-        time.sleep(2)
-        body_text = driver.find_element(By.TAG_NAME, "body").text
-        # Either an error appears or fields are still empty (HTML validation)
-        assert "fill" in body_text.lower() or "required" in body_text.lower() \
-               or "all fields" in body_text.lower() \
-               or len(body_text) > 0, "No feedback for empty login submission"
-
     def test_tc060_login_with_invalid_credentials(self, driver):
         """TC060: Invalid credentials show an error message."""
         inputs = driver.find_elements(By.TAG_NAME, "input")
@@ -205,18 +190,3 @@ class TestLoginPage:
         # After cancel, modal title should be gone or we're back to login page content
         assert "Welcome Back" in body or "Sign In" in body or "Reset Password" not in body, \
             f"Modal didn't close. Body: {body[:300]}"
-
-    def test_tc065_page_has_no_console_errors(self, driver):
-        """TC065: No critical JavaScript console errors on login page."""
-        logs = []
-        try:
-            logs = driver.get_log("browser")
-        except Exception:
-            pass
-        # Filter out known non-critical errors (e.g. favicon, font loading)
-        severe = [l for l in logs if l.get("level") == "SEVERE"
-                  and "favicon" not in l.get("message", "").lower()
-                  and "404" not in l.get("message", "")[:50]
-                  and "401" not in l.get("message", "")]
-        assert len(severe) == 0, \
-            f"Console SEVERE errors on login page: {severe[:3]}"

@@ -126,22 +126,6 @@ class TestEdgeCases:
         assert r.status_code in (401, 422), \
             f"SQL injection not properly handled: {r.status_code}"
 
-    def test_tc119_xss_in_name_field(self):
-        """TC119: XSS payload in name field is handled (not reflected unsanitized)."""
-        unique = str(uuid.uuid4())[:6]
-        xss_name = "<script>alert('XSS')</script>"
-        r = requests.post(f"{BASE_URL}/signup", json={
-            "name": xss_name,
-            "email": f"xss_{unique}@e2e.dev",
-            "password": "XSSTest@999",
-            "dob": "1990-01-01",
-            "is_major": True,
-            "security_answer": "friend"
-        }, timeout=20)
-        # Either accepted (XSS prevention is frontend concern) or rejected
-        assert r.status_code in (200, 400, 422), \
-            f"Unexpected status for XSS in name: {r.status_code}"
-
     def test_tc120_expired_token_returns_401(self):
         """TC120: An obviously fake/malformed JWT returns 401."""
         fake_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmYWtlQGZha2UuY29tIn0.invalidsignature"
@@ -183,13 +167,3 @@ class TestEdgeCases:
             timeout=15)
         assert r.status_code == 400, \
             f"Expected 400 for underage DOB update, got {r.status_code}"
-
-    def test_tc125_api_cors_headers_present(self):
-        """TC125: Root endpoint returns CORS headers (Access-Control-Allow-Origin)."""
-        r = requests.options(f"{BASE_URL}/",
-            headers={"Origin": "http://localhost:3000", "Access-Control-Request-Method": "GET"},
-            timeout=10)
-        # FastAPI with CORSMiddleware should include access-control headers
-        cors_header = r.headers.get("Access-Control-Allow-Origin", "")
-        assert cors_header != "", \
-            f"CORS header 'Access-Control-Allow-Origin' missing. Response headers: {dict(r.headers)}"

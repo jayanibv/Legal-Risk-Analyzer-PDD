@@ -145,6 +145,14 @@ def main():
     print(f"\n  Report : {REPORT_PATH}")
     print(f"  Ended  : {datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}\n")
 
+    # Generate Excel Report automatically
+    print("\n  Generating Excel Report...")
+    try:
+        import dast_report_xlsx
+        dast_report_xlsx.build()
+    except Exception as e:
+        print(f"  [!] Failed to generate Excel report: {e}")
+
 
 if __name__ == "__main__":
     main()

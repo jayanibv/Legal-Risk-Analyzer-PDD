@@ -1,8 +1,8 @@
 {
   "base_url": "https://legal-risk-analyzer.up.railway.app",
   "tokens": {
-    "valid_user": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYXN0Xzg4ZGMwZDFlX3UxQHNlY3Rlc3QuZGV2IiwiZXhwIjoxNzg0MDM1MTgwfQ.vVxyLU-eA3CrB4hZH5BDaEv4WBpZI6TMk2TCxu7LOg4",
-    "other_user": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYXN0X2RlNmE1MTU1X3UyQHNlY3Rlc3QuZGV2IiwiZXhwIjoxNzg0MDM1MTgxfQ.i6SJkYZpIblPF2ymLdsPto6VKpG6gez1A3Hmn7QayJI"
+    "valid_user": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYXN0X2QzY2U2MmU3X3UxQHNlY3Rlc3QuZGV2IiwiZXhwIjoxNzg0MTc4MTUyfQ.Jo_uVzdf64K56UEGvZDO1Ew_Wp7wBauL-exfdeqTnfA",
+    "other_user": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYXN0XzdiY2VjMmY0X3UyQHNlY3Rlc3QuZGV2IiwiZXhwIjoxNzg0MTc4MTU1fQ.SWaa8QseNXSr2o4XiYX16WLCefDmgvF2_7DPEKH1dmU"
   },
   "endpoints": [
     {
@@ -11,7 +11,7 @@
       "path": "/",
       "access_rule": "public",
       "no_auth_status": 200,
-      "latency_ms": 892
+      "latency_ms": 890
     },
     {
       "idx": 2,
@@ -19,7 +19,7 @@
       "path": "/signup",
       "access_rule": "public",
       "no_auth_status": 422,
-      "latency_ms": 669
+      "latency_ms": 852
     },
     {
       "idx": 3,
@@ -27,7 +27,7 @@
       "path": "/login",
       "access_rule": "public",
       "no_auth_status": 422,
-      "latency_ms": 616
+      "latency_ms": 962
     },
     {
       "idx": 4,
@@ -35,7 +35,7 @@
       "path": "/reset-password",
       "access_rule": "public",
       "no_auth_status": 422,
-      "latency_ms": 620
+      "latency_ms": 902
     },
     {
       "idx": 5,
@@ -43,7 +43,7 @@
       "path": "/docs",
       "access_rule": "public",
       "no_auth_status": 200,
-      "latency_ms": 629
+      "latency_ms": 1168
     },
     {
       "idx": 6,
@@ -51,7 +51,7 @@
       "path": "/openapi.json",
       "access_rule": "public",
       "no_auth_status": 200,
-      "latency_ms": 961
+      "latency_ms": 1175
     },
     {
       "idx": 7,
@@ -59,7 +59,7 @@
       "path": "/redoc",
       "access_rule": "public",
       "no_auth_status": 200,
-      "latency_ms": 901
+      "latency_ms": 945
     },
     {
       "idx": 8,
@@ -67,7 +67,7 @@
       "path": "/me",
       "access_rule": "requires-auth",
       "no_auth_status": 401,
-      "latency_ms": 904
+      "latency_ms": 1038
     },
     {
       "idx": 9,
@@ -75,7 +75,7 @@
       "path": "/update-profile",
       "access_rule": "requires-auth",
       "no_auth_status": 401,
-      "latency_ms": 919
+      "latency_ms": 1143
     },
     {
       "idx": 10,
@@ -83,7 +83,7 @@
       "path": "/analyze",
       "access_rule": "requires-auth",
       "no_auth_status": 401,
-      "latency_ms": 894
+      "latency_ms": 1186
     },
     {
       "idx": 11,
@@ -91,7 +91,7 @@
       "path": "/analyze-pdf",
       "access_rule": "requires-auth",
       "no_auth_status": 401,
-      "latency_ms": 952
+      "latency_ms": 1191
     },
     {
       "idx": 12,
@@ -99,7 +99,7 @@
       "path": "/history",
       "access_rule": "requires-auth",
       "no_auth_status": 401,
-      "latency_ms": 900
+      "latency_ms": 1434
     },
     {
       "idx": 13,
@@ -107,7 +107,7 @@
       "path": "/analysis/{id}",
       "access_rule": "requires-auth",
       "no_auth_status": 401,
-      "latency_ms": 904
+      "latency_ms": 1315
     },
     {
       "idx": 14,
@@ -115,7 +115,7 @@
       "path": "/chat",
       "access_rule": "requires-auth",
       "no_auth_status": 401,
-      "latency_ms": 892
+      "latency_ms": 1177
     },
     {
       "idx": 15,
@@ -123,8 +123,8 @@
       "path": "/translate",
       "access_rule": "requires-auth",
       "no_auth_status": 401,
-      "latency_ms": 958
+      "latency_ms": 1396
     }
   ],
-  "generated_at": "2026-06-14T13:19:42.476627Z"
+  "generated_at": "2026-06-16T05:02:35.286871Z"
 }
