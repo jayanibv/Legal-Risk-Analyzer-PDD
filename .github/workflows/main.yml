@@ -25,7 +25,8 @@ jobs:
         python -m pip install --upgrade pip
         # Assuming you have a requirements.txt file, otherwise we will need to add the install commands here.
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        pip install pytest selenium requests 
+        pip install pytest selenium requests webdriver-manager openpyxl pandas
+
 
     - name: Run Selenium Tests
       run: |
