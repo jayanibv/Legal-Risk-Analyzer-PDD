@@ -1,0 +1,63 @@
+name: 3. Appium Mobile E2E Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  mobile-tests:
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install Python Dependencies
+      run: |
+        pip install Appium-Python-Client selenium openpyxl pandas
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install Appium
+      run: |
+        npm install -g appium
+        appium driver install uiautomator2
+        appium &
+        sleep 5
+
+    # Since you mentioned you already have the APK on your phone,
+    # you will need to place the 'app.apk' file in the root of your GitHub repository
+    # or build it dynamically here. For now, it expects an app-release.apk in the root.
+
+    - name: Run Appium Tests on Android Emulator
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 31
+        target: google_apis
+        arch: x86_64
+        profile: pixel_6
+        script: |
+          # Wait for emulator to fully boot
+          adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
+          
+          # Install the APK onto the emulator
+          adb install LegalRiskAnalyzer.apk
+          
+          # Run the Python test script
+          python automated_test/appium_runner.py
+
+    - name: Upload Excel Report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: Appium-Test-Report
+        path: automated_test/*.xlsx
