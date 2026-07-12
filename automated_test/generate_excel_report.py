@@ -13,7 +13,7 @@ def generate_report():
     with open(report_path, "r", encoding="utf-8") as f:
         records = json.load(f)
         
-    base_url = "https://legal-risk-analyzer.up.railway.app"
+    base_url = "https://legal-risk-analyzer-pdd.onrender.com"
     timestamp = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H-%M-%S')
     display_time = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')
     

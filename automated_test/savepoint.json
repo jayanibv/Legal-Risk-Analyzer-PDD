@@ -1,5 +1,5 @@
 {
-  "base_url": "https://legal-risk-analyzer.up.railway.app",
+  "base_url": "https://legal-risk-analyzer-pdd.onrender.com",
   "tokens": {
     "valid_user": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYXN0X2QzY2U2MmU3X3UxQHNlY3Rlc3QuZGV2IiwiZXhwIjoxNzg0MTc4MTUyfQ.Jo_uVzdf64K56UEGvZDO1Ew_Wp7wBauL-exfdeqTnfA",
     "other_user": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYXN0XzdiY2VjMmY0X3UyQHNlY3Rlc3QuZGV2IiwiZXhwIjoxNzg0MTc4MTU1fQ.SWaa8QseNXSr2o4XiYX16WLCefDmgvF2_7DPEKH1dmU"

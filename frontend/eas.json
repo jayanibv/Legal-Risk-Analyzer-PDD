@@ -14,13 +14,13 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://legal-risk-analyzer.up.railway.app"
+        "EXPO_PUBLIC_API_URL": "https://legal-risk-analyzer-pdd.onrender.com"
       }
     },
     "production": {
       "autoIncrement": true,
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://legal-risk-analyzer.up.railway.app"
+        "EXPO_PUBLIC_API_URL": "https://legal-risk-analyzer-pdd.onrender.com"
       }
     }
   },

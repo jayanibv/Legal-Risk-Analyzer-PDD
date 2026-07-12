@@ -6,7 +6,7 @@ import sys, time, requests
 
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
-BASE = "https://legal-risk-analyzer.up.railway.app"
+BASE = "https://legal-risk-analyzer-pdd.onrender.com"
 PASS_ICON = "[PASS]"
 FAIL_ICON = "[FAIL]"
 INFO_ICON = "[INFO]"

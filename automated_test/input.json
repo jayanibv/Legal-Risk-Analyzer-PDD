@@ -1,4 +1,4 @@
 {
-  "baseUrl": "https://legal-risk-analyzer.up.railway.app",
+  "baseUrl": "https://legal-risk-analyzer-pdd.onrender.com",
   "notes": "Target set to local server to test the security fixes locally."
 }
