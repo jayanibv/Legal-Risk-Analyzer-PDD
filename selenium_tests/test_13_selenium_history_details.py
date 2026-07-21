@@ -170,7 +170,8 @@ class TestAnalysisDetailsAPI:
             headers={"Authorization": f"Bearer {tok}"},
             timeout=15)
         if r.status_code in (200, 404):
-            data = _j(r, [])
+            res = _j(r)
+            data = res if isinstance(res, list) else []
             assert isinstance(data, list), f"/history must return list, got {type(data)}"
 
     def test_tc218_history_items_have_id_field(self):
@@ -180,7 +181,8 @@ class TestAnalysisDetailsAPI:
             headers={"Authorization": f"Bearer {tok}"},
             timeout=15)
         if r.status_code in (200, 404):
-            items = _j(r, [])
+            res = _j(r)
+            items = res if isinstance(res, list) else []
             for item in items:
                 assert "id" in item, f"History item missing 'id': {item}"
 
@@ -191,7 +193,8 @@ class TestAnalysisDetailsAPI:
             headers={"Authorization": f"Bearer {tok}"},
             timeout=15)
         if r.status_code in (200, 404):
-            items = _j(r, [])
+            res = _j(r)
+            items = res if isinstance(res, list) else []
             for item in items:
                 assert "risk_score" in item, f"Missing risk_score: {item}"
 
@@ -202,7 +205,8 @@ class TestAnalysisDetailsAPI:
             headers={"Authorization": f"Bearer {tok}"},
             timeout=15)
         if r.status_code in (200, 404):
-            items = _j(r, [])
+            res = _j(r)
+            items = res if isinstance(res, list) else []
             for item in items:
                 assert "risk_level" in item, f"Missing risk_level: {item}"
 
