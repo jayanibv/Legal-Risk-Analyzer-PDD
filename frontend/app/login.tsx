@@ -13,6 +13,7 @@ import AnimatedButton from '../components/AnimatedButton';
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -21,6 +22,7 @@ export default function LoginScreen() {
   const [forgotDob, setForgotDob] = useState('');
   const [forgotSecurity, setForgotSecurity] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [showNewPassword, setShowNewPassword] = useState(false);
   const [modalError, setModalError] = useState('');
   const [modalSuccess, setModalSuccess] = useState('');
 
@@ -113,8 +115,11 @@ export default function LoginScreen() {
                   placeholderTextColor={colors.textSecondary} placeholder="Password"
                   value={password}
                   onChangeText={setPassword}
-                  secureTextEntry
+                  secureTextEntry={!showPassword}
                 />
+                <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={{ padding: 4 }}>
+                  <Ionicons name={showPassword ? "eye-off" : "eye"} size={20} color={colors.textSecondary} />
+                </TouchableOpacity>
               </View>
 
               <TouchableOpacity style={styles.forgotBtn} onPress={() => setShowForgotModal(true)}>
@@ -150,7 +155,12 @@ export default function LoginScreen() {
             <TextInput style={[styles.modalInput, { backgroundColor: colors.cardAlt, color: colors.text }]} placeholderTextColor={colors.textSecondary} placeholder="Email" value={forgotEmail} onChangeText={setForgotEmail} autoCapitalize="none" />
             <TextInput style={[styles.modalInput, { backgroundColor: colors.cardAlt, color: colors.text }]} placeholderTextColor={colors.textSecondary} placeholder="Date of Birth (YYYY-MM-DD)" value={forgotDob} onChangeText={setForgotDob} />
             <TextInput style={[styles.modalInput, { backgroundColor: colors.cardAlt, color: colors.text }]} placeholderTextColor={colors.textSecondary} placeholder="Best friend's name?" value={forgotSecurity} onChangeText={setForgotSecurity} />
-            <TextInput style={[styles.modalInput, { backgroundColor: colors.cardAlt, color: colors.text }]} placeholderTextColor={colors.textSecondary} placeholder="New Password" value={newPassword} onChangeText={setNewPassword} secureTextEntry />
+            <View style={[styles.inputBox, { backgroundColor: colors.cardAlt, width: '100%', marginBottom: 16 }]}>
+              <TextInput style={[styles.input, { color: colors.text, marginLeft: 0 }, Platform.OS === 'web' && { outlineStyle: 'none' } as any]} placeholderTextColor={colors.textSecondary} placeholder="New Password" value={newPassword} onChangeText={setNewPassword} secureTextEntry={!showNewPassword} />
+              <TouchableOpacity onPress={() => setShowNewPassword(!showNewPassword)} style={{ padding: 4 }}>
+                <Ionicons name={showNewPassword ? "eye-off" : "eye"} size={20} color={colors.textSecondary} />
+              </TouchableOpacity>
+            </View>
 
             {modalError ? <Text style={styles.modalError}>{modalError}</Text> : null}
             {modalSuccess ? <Text style={styles.modalSuccess}>{modalSuccess}</Text> : null}

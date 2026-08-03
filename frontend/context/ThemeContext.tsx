@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useColorScheme, Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
+import { usePathname } from 'expo-router';
 
 type Theme = 'light' | 'dark';
 
@@ -31,42 +32,41 @@ export interface ThemeColors {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const lightColors: ThemeColors = {
-  bg: '#F4F6F9',
+  bg: '#F8FAFC',
   card: '#FFFFFF',
-  cardAlt: '#F8FAFC',
-  text: '#1B1F3B',
-  textSecondary: '#64748B',
-  primary: '#00E5FF',
-  primaryGradientStart: '#00E5FF',
-  primaryGradientEnd: '#00B8CC',
-  secondary: '#FF4D6D',
-  border: 'rgba(27,31,59,0.1)',
+  cardAlt: '#F1F5F9',
+  text: '#0F172A',
+  textSecondary: '#475569',
+  primary: '#1E3A8A',
+  primaryGradientStart: '#1E3A8A',
+  primaryGradientEnd: '#1D4ED8',
+  secondary: '#475569',
+  border: '#CBD5E1',
   divider: '#E2E8F0',
-  error: '#FF4D6D',
-  success: '#00F5A0',
-  warning: '#FFB020',
+  error: '#DC2626',
+  success: '#16A34A',
+  warning: '#D97706',
 };
 
 export const darkColors: ThemeColors = {
-  bg: '#1B1F3B',
-  card: '#252A4A',
-  cardAlt: '#2A3052',
-  text: '#FFFFFF',
-  textSecondary: '#8B92B8',
-  primary: '#00E5FF',
-  primaryGradientStart: '#00E5FF',
-  primaryGradientEnd: '#00B8CC',
-  secondary: '#FF4D6D',
-  border: 'rgba(0,229,255,0.3)',
-  divider: '#2A3052',
-  error: '#FF4D6D',
-  success: '#00F5A0',
-  warning: '#FFB020',
+  bg: '#0F172A',
+  card: '#1E293B',
+  cardAlt: '#334155',
+  text: '#F8FAFC',
+  textSecondary: '#94A3B8',
+  primary: '#3B82F6',
+  primaryGradientStart: '#3B82F6',
+  primaryGradientEnd: '#2563EB',
+  secondary: '#94A3B8',
+  border: '#334155',
+  divider: '#1E293B',
+  error: '#EF4444',
+  success: '#22C55E',
+  warning: '#F59E0B',
 };
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const systemTheme = useColorScheme();
-  const [theme, setTheme] = useState<Theme>(systemTheme || 'light');
+  const [theme, setTheme] = useState<Theme>('light'); // default to light initially
 
   useEffect(() => {
     const loadTheme = async () => {

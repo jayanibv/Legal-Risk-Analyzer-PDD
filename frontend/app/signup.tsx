@@ -15,6 +15,8 @@ export default function SignupScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [dob, setDob] = useState(''); // YYYY-MM-DD
   const [securityAnswer, setSecurityAnswer] = useState('');
   const [isMajor, setIsMajor] = useState(false);
@@ -151,8 +153,11 @@ export default function SignupScreen() {
                   placeholderTextColor={colors.textSecondary} placeholder="Password"
                   value={password}
                   onChangeText={setPassword}
-                  secureTextEntry
+                  secureTextEntry={!showPassword}
                 />
+                <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={{ padding: 4 }}>
+                  <Ionicons name={showPassword ? "eye-off" : "eye"} size={20} color={colors.textSecondary} />
+                </TouchableOpacity>
               </View>
 
               <View style={styles.strengthContainer}>
@@ -167,8 +172,11 @@ export default function SignupScreen() {
                   placeholderTextColor={colors.textSecondary} placeholder="Confirm Password"
                   value={confirmPassword}
                   onChangeText={setConfirmPassword}
-                  secureTextEntry
+                  secureTextEntry={!showConfirmPassword}
                 />
+                <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)} style={{ padding: 4 }}>
+                  <Ionicons name={showConfirmPassword ? "eye-off" : "eye"} size={20} color={colors.textSecondary} />
+                </TouchableOpacity>
               </View>
 
               <TouchableOpacity style={styles.checkbox} onPress={() => setIsMajor(!isMajor)}>
