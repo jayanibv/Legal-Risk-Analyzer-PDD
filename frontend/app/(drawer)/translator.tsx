@@ -9,7 +9,7 @@ import { translateText } from '../../services/api';
 import Animated, { FadeInDown, FadeInUp, SlideInRight } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const LANGUAGES = ["Plain English", "Spanish", "French", "Hindi", "Mandarin"];
+const LANGUAGES = ["Plain English", "Spanish", "French", "Hindi", "Mandarin", "Telugu", "Tamil"];
 
 export default function TranslatorScreen() {
   const { colors, isDark } = useTheme();

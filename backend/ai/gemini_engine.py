@@ -66,7 +66,7 @@ def analyze_with_gemini(text, retries=4):
             else:
                 return None
 
-def chat_with_gemini(message, retries=2):
+def chat_with_gemini(message, retries=4):
     if not client:
         return {"response": "AI is unavailable right now."}
     
@@ -80,11 +80,11 @@ def chat_with_gemini(message, retries=2):
             return {"response": response.text}
         except Exception as e:
             if attempt < retries - 1:
-                time.sleep(1)
+                time.sleep((attempt + 1) * 4) # 4s, 8s, 12s backoff
             else:
                 return {"response": "Sorry, I couldn't process your request."}
 
-def translate_with_gemini(text, language, retries=2):
+def translate_with_gemini(text, language, retries=4):
     if not client:
         return {"response": "AI is unavailable right now."}
         
@@ -112,10 +112,19 @@ Clause to translate:
                     response_mime_type="application/json",
                 )
             )
-            data = json.loads(response.text)
+            raw_text = response.text.strip()
+            if raw_text.startswith("```json"):
+                raw_text = raw_text[7:]
+            elif raw_text.startswith("```"):
+                raw_text = raw_text[3:]
+            if raw_text.endswith("```"):
+                raw_text = raw_text[:-3]
+                
+            data = json.loads(raw_text.strip())
             return {"response": data.get("translation", "Error"), "notes": data.get("translator_notes", "")}
         except Exception as e:
+            print(f"Translation Error (Attempt {attempt + 1}/{retries}): {e}")
             if attempt < retries - 1:
-                time.sleep(1)
+                time.sleep((attempt + 1) * 4) # 4s, 8s, 12s backoff
             else:
                 return {"response": "Sorry, translation failed."}
