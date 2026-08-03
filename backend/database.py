@@ -14,7 +14,7 @@ load_dotenv()
 # postgresql://user:password@postgresserver/db
 DATABASE_URL = os.environ["DATABASE_URL"]
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DATABASE_URL, pool_size=30, max_overflow=50, pool_timeout=60)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
