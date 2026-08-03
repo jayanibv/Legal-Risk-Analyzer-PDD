@@ -9,52 +9,65 @@ on:
 
 jobs:
   selenium-api-tests:
-    name: "Selenium + API Tests"
+    name: "Selenium + API Tests (selenium_tests/)"
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
     steps:
+      # ── Checkout ─────────────────────────────────────────────────────────────
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # ── Python setup ─────────────────────────────────────────────────────────
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
 
+      # ── Chrome (for Selenium) ─────────────────────────────────────────────────
       - name: Install Google Chrome
         run: |
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
           sudo apt-get update -y
           sudo apt-get install -y google-chrome-stable
           google-chrome --version
 
+      # ── Python dependencies ───────────────────────────────────────────────────
       - name: Install Python dependencies
-        run: pip install -r selenium_tests/requirements.txt
-
-      - name: Warm up backend (Render cold-start ~60s)
         run: |
-          echo "Waking up Render backend..."
+          pip install --upgrade pip
+          pip install pytest requests selenium webdriver-manager openpyxl pandas
+
+      # ── Warmup backend (Render free-tier cold start) ──────────────────────────
+      - name: Warm up backend (Render cold-start)
+        run: |
+          echo "Pinging backend to wake Render free-tier instance..."
           for i in $(seq 1 18); do
             STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://legal-risk-analyzer-pdd.onrender.com/ --max-time 30 || echo "0")
-            echo "Attempt $i → HTTP $STATUS"
-            if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 500 ]; then
-              echo "✅ Backend is up!"
+            echo "Attempt $i: HTTP $STATUS"
+            if [ "$STATUS" -lt 500 ] && [ "$STATUS" -gt 0 ]; then
+              echo "Backend is up!"
               break
             fi
             sleep 10
           done
 
+      # ── Run Selenium / API tests ──────────────────────────────────────────────
       - name: Run Selenium & API Tests
         run: |
           cd selenium_tests
           pytest . -v --tb=short --no-header -p no:warnings
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
 
+      # ── Upload Excel report as artifact ──────────────────────────────────────
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: selenium-test-report-${{ github.run_number }}
+          name: selenium-test-report
           path: selenium_tests/*.xlsx
           if-no-files-found: ignore
           retention-days: 30
