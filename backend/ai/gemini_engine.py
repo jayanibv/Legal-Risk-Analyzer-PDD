@@ -47,7 +47,7 @@ def analyze_with_gemini(text, retries=4):
         try:
             prompt = f"{SYSTEM_PROMPT}\n\nDocument to analyze:\n{text}"
             response = client.models.generate_content(
-                model='gemini-1.5-flash',
+                model='gemini-2.5-flash',
                 contents=prompt,
                 config=types.GenerateContentConfig(
                     response_mime_type="application/json",
@@ -76,7 +76,7 @@ def chat_with_gemini(message, retries=4):
         try:
             prompt = f"You are a strict Legal Assistant. You MUST ONLY answer questions related to law, legal concepts, contracts, and rights. If a user asks a question about coding, programming, sports, math, general trivia, or ANY non-legal topic, you MUST firmly refuse to answer and remind them that you are strictly a Legal Assistant. Answer the user's question simply and accurately if it is legal. Avoid giving strict legal advice, but explain concepts clearly.\n\nUser: {message}"
             response = client.models.generate_content(
-                model='gemini-1.5-flash',
+                model='gemini-2.5-flash',
                 contents=prompt
             )
             return {"response": response.text}
@@ -112,7 +112,7 @@ Clause to translate:
 """
                 
             response = client.models.generate_content(
-                model='gemini-1.5-flash',
+                model='gemini-2.5-flash',
                 contents=prompt,
                 config=types.GenerateContentConfig(
                     response_mime_type="application/json",
