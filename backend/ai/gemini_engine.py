@@ -47,7 +47,7 @@ def analyze_with_gemini(text, retries=4):
         try:
             prompt = f"{SYSTEM_PROMPT}\n\nDocument to analyze:\n{text}"
             response = client.models.generate_content(
-                model='gemini-2.5-flash',
+                model='gemini-1.5-flash',
                 contents=prompt,
                 config=types.GenerateContentConfig(
                     response_mime_type="application/json",
@@ -66,6 +66,8 @@ def analyze_with_gemini(text, retries=4):
             else:
                 return None
 
+import re
+
 def chat_with_gemini(message, retries=4):
     if not client:
         return {"response": "AI is unavailable right now."}
@@ -74,13 +76,17 @@ def chat_with_gemini(message, retries=4):
         try:
             prompt = f"You are a strict Legal Assistant. You MUST ONLY answer questions related to law, legal concepts, contracts, and rights. If a user asks a question about coding, programming, sports, math, general trivia, or ANY non-legal topic, you MUST firmly refuse to answer and remind them that you are strictly a Legal Assistant. Answer the user's question simply and accurately if it is legal. Avoid giving strict legal advice, but explain concepts clearly.\n\nUser: {message}"
             response = client.models.generate_content(
-                model='gemini-2.5-flash',
+                model='gemini-1.5-flash',
                 contents=prompt
             )
             return {"response": response.text}
         except Exception as e:
             if attempt < retries - 1:
-                time.sleep((attempt + 1) * 4) # 4s, 8s, 12s backoff
+                delay = 5
+                match = re.search(r'retry in ([\d\.]+)s', str(e))
+                if match:
+                    delay = float(match.group(1)) + 1
+                time.sleep(delay)
             else:
                 return {"response": "Sorry, I couldn't process your request."}
 
@@ -106,7 +112,7 @@ Clause to translate:
 """
                 
             response = client.models.generate_content(
-                model='gemini-2.5-flash',
+                model='gemini-1.5-flash',
                 contents=prompt,
                 config=types.GenerateContentConfig(
                     response_mime_type="application/json",
@@ -125,6 +131,10 @@ Clause to translate:
         except Exception as e:
             print(f"Translation Error (Attempt {attempt + 1}/{retries}): {e}")
             if attempt < retries - 1:
-                time.sleep((attempt + 1) * 4) # 4s, 8s, 12s backoff
+                delay = 5
+                match = re.search(r'retry in ([\d\.]+)s', str(e))
+                if match:
+                    delay = float(match.group(1)) + 1
+                time.sleep(delay)
             else:
                 return {"response": "Sorry, translation failed."}
