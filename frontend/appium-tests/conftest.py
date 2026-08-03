@@ -41,6 +41,7 @@ except ImportError:
 APK_PATH       = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "..", "LegalRiskAnalyzer.apk")
 )
+APPIUM_HOST    = "http://127.0.0.1:4723"
 APP_PACKAGE    = "com.jayani.legalriskanalyzer"
 APP_ACTIVITY   = ".MainActivity"
 WAIT_TIMEOUT   = 20   # seconds for explicit waits
@@ -61,22 +62,6 @@ ONBOARDING_TITLES = [
 ]
 ONBOARDING_BUTTONS = ["Next", "Get Started", "Skip"]
 
-# ─── BROWSERSTACK / LOCAL MODE ────────────────────────────────────────────────
-# When BROWSERSTACK_USERNAME env var is set (i.e. running in GitHub Actions),
-# tests run on BrowserStack real devices — no emulator needed.
-# When NOT set (i.e. running locally), tests use your local Appium + emulator.
-BS_USERNAME  = os.environ.get("BROWSERSTACK_USERNAME", "")
-BS_ACCESSKEY = os.environ.get("BROWSERSTACK_ACCESS_KEY", "")
-BS_APP_URL   = os.environ.get("BROWSERSTACK_APP_URL", "")   # uploaded APK url
-USE_BROWSERSTACK = bool(BS_USERNAME and BS_ACCESSKEY and BS_APP_URL)
-
-if USE_BROWSERSTACK:
-    # BrowserStack remote hub — no local Appium server needed
-    APPIUM_HOST = f"https://{BS_USERNAME}:{BS_ACCESSKEY}@hub.browserstack.com/wd/hub"
-else:
-    # Local Appium server (dev / emulator)
-    APPIUM_HOST = "http://127.0.0.1:4723"
-
 # Global results collector
 _results = []
 
@@ -85,48 +70,23 @@ _results = []
 def get_options(full_reset=False, no_reset=False):
     """
     Build Appium 2.x / Selenium 4.x compatible options.
-    Automatically switches between BrowserStack (CI) and local emulator (dev).
-
-    BrowserStack mode  → uses real cloud Android device, no emulator
-    Local mode         → uses local Appium + emulator
+    Uses W3C capability format with 'appium:' prefix for vendor caps.
+    no_reset=True   → keep ALL app data (use when app is already at desired screen)
+    full_reset=True → wipe data AND reinstall APK (AVOID using per-test: causes INSTALL_FAILED_PACKAGE_CHANGED)
+    default         → clear app data only (noReset=False, fullReset=False) — shows onboarding fresh
     """
     opts = ArgOptions()
-
-    if USE_BROWSERSTACK:
-        # ── BrowserStack W3C capabilities ────────────────────────────────────
-        opts.set_capability("platformName", "Android")
-        opts.set_capability("bstack:options", {
-            "userName":        BS_USERNAME,
-            "accessKey":       BS_ACCESSKEY,
-            "projectName":     "Legal Risk Analyzer",
-            "buildName":       "Appium E2E Build",
-            "sessionName":     "Android Tests",
-            "deviceName":      "Samsung Galaxy S23",
-            "osVersion":       "13.0",
-            "autoGrantPermissions": True,
-            "newCommandTimeout": 120,
-            "debug":           True,
-            "networkLogs":     True,
-        })
-        opts.set_capability("appium:app",         BS_APP_URL)   # bs://... URL
-        opts.set_capability("appium:appPackage",  APP_PACKAGE)
-        opts.set_capability("appium:appActivity", APP_ACTIVITY)
-        opts.set_capability("appium:automationName", "UiAutomator2")
-        opts.set_capability("appium:noReset",     no_reset)
-    else:
-        # ── Local emulator capabilities ───────────────────────────────────────
-        opts.set_capability("platformName",                             "Android")
-        opts.set_capability("appium:deviceName",                       "Android Emulator")
-        opts.set_capability("appium:app",                              APK_PATH)
-        opts.set_capability("appium:appPackage",                       APP_PACKAGE)
-        opts.set_capability("appium:appActivity",                      APP_ACTIVITY)
-        opts.set_capability("appium:automationName",                   "UiAutomator2")
-        opts.set_capability("appium:noReset",                          no_reset)
-        opts.set_capability("appium:fullReset",                        full_reset)
-        opts.set_capability("appium:newCommandTimeout",                120)
-        opts.set_capability("appium:autoGrantPermissions",             True)
-        opts.set_capability("appium:uiautomator2ServerInstallTimeout", 60000)
-
+    opts.set_capability("platformName",                             "Android")
+    opts.set_capability("appium:deviceName",                       "Android Emulator")
+    opts.set_capability("appium:app",                              APK_PATH)
+    opts.set_capability("appium:appPackage",                       APP_PACKAGE)
+    opts.set_capability("appium:appActivity",                      APP_ACTIVITY)
+    opts.set_capability("appium:automationName",                   "UiAutomator2")
+    opts.set_capability("appium:noReset",                          no_reset)
+    opts.set_capability("appium:fullReset",                        full_reset)
+    opts.set_capability("appium:newCommandTimeout",                120)
+    opts.set_capability("appium:autoGrantPermissions",             True)
+    opts.set_capability("appium:uiautomator2ServerInstallTimeout", 60000)
     return opts
 
 
@@ -135,8 +95,8 @@ def get_options(full_reset=False, no_reset=False):
 def driver():
     """
     Create one Appium session per test class.
-    BrowserStack: connects to real cloud device.
-    Local: clears app data so onboarding shows, then skips to login.
+    Clears app data (noReset=False, fullReset=False) so onboarding shows.
+    After launch, automatically skips onboarding to reach login screen.
     """
     opts = get_options(full_reset=False, no_reset=False)
     d = webdriver.Remote(command_executor=APPIUM_HOST, options=opts)
@@ -151,8 +111,8 @@ def driver():
 def driver_fresh():
     """
     Fresh session per onboarding test.
-    BrowserStack: new cloud session per test.
-    Local: clears app data only (no reinstall — avoids INSTALL_FAILED_PACKAGE_CHANGED).
+    Clears app data only (does NOT reinstall APK) so onboarding shows fresh.
+    Using fullReset=True per-function causes INSTALL_FAILED_PACKAGE_CHANGED errors.
     """
     opts = get_options(full_reset=False, no_reset=False)
     d = webdriver.Remote(command_executor=APPIUM_HOST, options=opts)
