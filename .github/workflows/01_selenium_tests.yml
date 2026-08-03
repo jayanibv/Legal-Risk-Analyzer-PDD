@@ -11,14 +11,14 @@ jobs:
   selenium-api-tests:
     name: "Selenium + API Tests (selenium_tests/)"
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
 
     steps:
-      # ── Checkout ─────────────────────────────────────────────────────────────
+      # ── Checkout ──────────────────────────────────────────────────────────────
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ── Python setup ─────────────────────────────────────────────────────────
+      # ── Python setup ──────────────────────────────────────────────────────────
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
@@ -38,27 +38,35 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip install --upgrade pip
-          pip install pytest requests selenium webdriver-manager openpyxl pandas
+          pip install pytest pytest-timeout requests selenium webdriver-manager openpyxl pandas
 
       # ── Warmup backend (Render free-tier cold start) ──────────────────────────
       - name: Warm up backend (Render cold-start)
         run: |
           echo "Pinging backend to wake Render free-tier instance..."
-          for i in $(seq 1 18); do
+          READY=0
+          for i in $(seq 1 30); do
             STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://legal-risk-analyzer-pdd.onrender.com/ --max-time 30 || echo "0")
             echo "Attempt $i: HTTP $STATUS"
-            if [ "$STATUS" -lt 500 ] && [ "$STATUS" -gt 0 ]; then
-              echo "Backend is up!"
+            if [ "$STATUS" = "200" ]; then
+              echo "Backend returned 200 — waiting 20s for full initialization..."
+              sleep 20
+              STATUS2=$(curl -s -o /dev/null -w "%{http_code}" https://legal-risk-analyzer-pdd.onrender.com/ --max-time 15 || echo "0")
+              echo "Verification ping: HTTP $STATUS2"
+              READY=1
               break
             fi
             sleep 10
           done
+          if [ "$READY" = "0" ]; then
+            echo "Backend never returned 200 — proceeding anyway (tests will handle errors)"
+          fi
 
       # ── Run Selenium / API tests ──────────────────────────────────────────────
       - name: Run Selenium & API Tests
         run: |
           cd selenium_tests
-          pytest . -v --tb=short --no-header -p no:warnings
+          pytest . -v --tb=short --no-header -p no:warnings --timeout=120
         env:
           PYTHONDONTWRITEBYTECODE: "1"
 
