@@ -66,6 +66,8 @@ def analyze_with_gemini(text, retries=4):
             else:
                 return None
 
+import re
+
 def chat_with_gemini(message, retries=4):
     if not client:
         return {"response": "AI is unavailable right now."}
@@ -80,7 +82,11 @@ def chat_with_gemini(message, retries=4):
             return {"response": response.text}
         except Exception as e:
             if attempt < retries - 1:
-                time.sleep((attempt + 1) * 4) # 4s, 8s, 12s backoff
+                delay = 5
+                match = re.search(r'retry in ([\d\.]+)s', str(e))
+                if match:
+                    delay = float(match.group(1)) + 1
+                time.sleep(delay)
             else:
                 return {"response": "Sorry, I couldn't process your request."}
 
@@ -125,6 +131,10 @@ Clause to translate:
         except Exception as e:
             print(f"Translation Error (Attempt {attempt + 1}/{retries}): {e}")
             if attempt < retries - 1:
-                time.sleep((attempt + 1) * 4) # 4s, 8s, 12s backoff
+                delay = 5
+                match = re.search(r'retry in ([\d\.]+)s', str(e))
+                if match:
+                    delay = float(match.group(1)) + 1
+                time.sleep(delay)
             else:
                 return {"response": "Sorry, translation failed."}
