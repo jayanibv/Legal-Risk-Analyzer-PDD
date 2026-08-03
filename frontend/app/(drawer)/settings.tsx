@@ -30,8 +30,29 @@ export default function SettingsScreen() {
   const [tempDate, setTempDate] = useState({ day: '', month: '', year: '' });
 
   useEffect(() => {
+    loadCachedProfile();
     fetchProfile();
   }, []);
+
+  const loadCachedProfile = async () => {
+    try {
+      const cachedStr = Platform.OS === 'web' 
+        ? localStorage.getItem('cached_profile') 
+        : await SecureStore.getItemAsync('cached_profile');
+      
+      if (cachedStr) {
+        const profile = JSON.parse(cachedStr);
+        setUserName(profile.name || 'User');
+        setUserEmail(profile.email || '');
+        setUserDob(profile.dob || '');
+        setNewName(profile.name || '');
+        setNewDob(profile.dob || '');
+        setLoading(false); // Stop loading instantly using cache
+      }
+    } catch (e) {
+      // Ignore cache errors
+    }
+  };
 
   const fetchProfile = async () => {
     try {
@@ -42,6 +63,14 @@ export default function SettingsScreen() {
         setUserDob(profile.dob || '');
         setNewName(profile.name || '');
         setNewDob(profile.dob || '');
+        
+        // Save to cache for next time
+        const cachedStr = JSON.stringify(profile);
+        if (Platform.OS === 'web') {
+          localStorage.setItem('cached_profile', cachedStr);
+        } else {
+          await SecureStore.setItemAsync('cached_profile', cachedStr);
+        }
       }
     } catch (e) {
       console.log("Could not fetch profile");
