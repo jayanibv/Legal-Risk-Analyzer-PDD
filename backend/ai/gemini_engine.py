@@ -91,15 +91,14 @@ def chat_with_gemini(message, retries=4):
                 return {"response": "Sorry, I couldn't process your request."}
 
 def translate_with_gemini(text, language, retries=4):
-    if not client:
-        return {"response": "AI is unavailable right now."}
-        
-    for attempt in range(retries):
-        try:
-            prompt = f"""
-Translate or rewrite the following legal clause into {language}.
-If the language is 'Plain English', rewrite it so a 5-year-old could understand it without losing important conditions.
-Otherwise, translate it accurately preserving legal meaning.
+    if language.lower() == "plain english":
+        if not client:
+            return {"response": "AI is unavailable right now."}
+            
+        for attempt in range(retries):
+            try:
+                prompt = f"""
+Rewrite the following legal clause so a 5-year-old could understand it without losing important conditions.
 
 OUTPUT STRICTLY IN JSON FORMAT:
 {{
@@ -110,31 +109,46 @@ OUTPUT STRICTLY IN JSON FORMAT:
 Clause to translate:
 {text}
 """
-                
-            response = client.models.generate_content(
-                model='gemini-2.5-flash',
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
+                    
+                response = client.models.generate_content(
+                    model='gemini-2.5-flash',
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json",
+                    )
                 )
-            )
-            raw_text = response.text.strip()
-            if raw_text.startswith("```json"):
-                raw_text = raw_text[7:]
-            elif raw_text.startswith("```"):
-                raw_text = raw_text[3:]
-            if raw_text.endswith("```"):
-                raw_text = raw_text[:-3]
+                raw_text = response.text.strip()
+                if raw_text.startswith("```json"):
+                    raw_text = raw_text[7:]
+                elif raw_text.startswith("```"):
+                    raw_text = raw_text[3:]
+                if raw_text.endswith("```"):
+                    raw_text = raw_text[:-3]
+                    
+                data = json.loads(raw_text.strip())
+                return {"response": data.get("translation", "Error"), "notes": data.get("translator_notes", "")}
+            except Exception as e:
+                print(f"Translation Error (Attempt {attempt + 1}/{retries}): {e}")
+                if attempt < retries - 1:
+                    delay = 5
+                    match = re.search(r'retry in ([\d\.]+)s', str(e))
+                    if match:
+                        delay = float(match.group(1)) + 1
+                    time.sleep(delay)
+                else:
+                    return {"response": "Sorry, translation failed."}
+    else:
+        # Use deep-translator for language-to-language translation
+        try:
+            from deep_translator import GoogleTranslator
+            
+            target_lang = language.lower()
+            if target_lang == "mandarin":
+                target_lang = "zh-CN"
                 
-            data = json.loads(raw_text.strip())
-            return {"response": data.get("translation", "Error"), "notes": data.get("translator_notes", "")}
+            translator = GoogleTranslator(source='auto', target=target_lang)
+            translation = translator.translate(text)
+            return {"response": translation, "notes": ""}
         except Exception as e:
-            print(f"Translation Error (Attempt {attempt + 1}/{retries}): {e}")
-            if attempt < retries - 1:
-                delay = 5
-                match = re.search(r'retry in ([\d\.]+)s', str(e))
-                if match:
-                    delay = float(match.group(1)) + 1
-                time.sleep(delay)
-            else:
-                return {"response": "Sorry, translation failed."}
+            print(f"Deep-translator Error: {e}")
+            return {"response": "Sorry, translation failed."}

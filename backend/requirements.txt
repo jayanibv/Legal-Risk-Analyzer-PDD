@@ -16,3 +16,4 @@ supabase
 slowapi
 email-validator
 bcrypt
+deep-translator
