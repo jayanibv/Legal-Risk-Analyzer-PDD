@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 # pyrefly: ignore [missing-import]
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import NullPool
 import os
 # pyrefly: ignore [missing-import]
 from dotenv import load_dotenv
@@ -14,7 +15,7 @@ load_dotenv()
 # postgresql://user:password@postgresserver/db
 DATABASE_URL = os.environ["DATABASE_URL"]
 
-engine = create_engine(DATABASE_URL, pool_size=10, max_overflow=20, pool_timeout=30, pool_pre_ping=True)
+engine = create_engine(DATABASE_URL, poolclass=NullPool)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
