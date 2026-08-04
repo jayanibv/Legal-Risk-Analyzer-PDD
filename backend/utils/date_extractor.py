@@ -61,6 +61,13 @@ def extract_dates(text: str) -> list:
                 found_values.append(match.group(0).strip())
                 
         for value in found_values:
+            s_lower = sentence_clean.lower()
+            
+            # Exclude dates that are clearly personal/non-contractual
+            exclude_keywords = ["birth", "dob", "born", "birthday", "age"]
+            if any(kw in s_lower for kw in exclude_keywords):
+                continue
+                
             category = categorize_sentence(sentence_clean)
             
             # Simple deduplication key
