@@ -24,7 +24,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Initialize Database
-models.Base.metadata.create_all(bind=database.engine)
+try:
+    models.Base.metadata.create_all(bind=database.engine)
+except Exception as e:
+    print(f"Warning: DB initialization failed on startup (likely due to zero-downtime deployment limits): {e}")
 
 def get_real_ip(request: Request):
     forwarded_for = request.headers.get("X-Forwarded-For")
