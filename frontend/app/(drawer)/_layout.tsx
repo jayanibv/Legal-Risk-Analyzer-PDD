@@ -49,13 +49,7 @@ export default function DrawerLayout() {
           drawerIcon: ({ color }) => <Ionicons name="chatbubbles" size={24} color={color} />,
         }}
       />
-      <Drawer.Screen
-        name="translator"
-        options={{
-          title: 'Translator',
-          drawerIcon: ({ color }) => <Ionicons name="language" size={24} color={color} />,
-        }}
-      />
+
       <Drawer.Screen
         name="settings"
         options={{

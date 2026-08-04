@@ -75,6 +75,20 @@ export default function SummaryScreen() {
   // Handle both singular and plural keys for backward compatibility
   const overviewData = result.summaries || result.summary || [];
 
+  const getTimelineIcon = (type: string) => {
+    switch(type) {
+      case 'Contract Signed': return '📝';
+      case 'Effective Date': return '🚀';
+      case 'Payment Due': return '💰';
+      case 'Renewal Date': return '🔄';
+      case 'Notice Period': return '⏳';
+      case 'Termination': return '⚠️';
+      case 'Expiry': return '📅';
+      case 'Delivery': return '📦';
+      default: return '📆';
+    }
+  };
+
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.bg }]}>
       <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.divider }]}>
@@ -98,6 +112,59 @@ export default function SummaryScreen() {
           </View>
         </View>
 
+        {result.at_a_glance && (
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>At a Glance</Text>
+            <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.divider }]}>
+              <View style={styles.glanceGrid}>
+                <View style={styles.glanceItem}>
+                  <Text style={[styles.glanceLabel, { color: colors.textSecondary }]}>Document Type</Text>
+                  <Text style={[styles.glanceValue, { color: colors.text }]} numberOfLines={1}>{result.at_a_glance.document_type || 'Unknown'}</Text>
+                </View>
+                <View style={styles.glanceItem}>
+                  <Text style={[styles.glanceLabel, { color: colors.textSecondary }]}>Pages</Text>
+                  <Text style={[styles.glanceValue, { color: colors.text }]}>{result.at_a_glance.pages || 'N/A'}</Text>
+                </View>
+                <View style={styles.glanceItem}>
+                  <Text style={[styles.glanceLabel, { color: colors.textSecondary }]}>Risk Level</Text>
+                  <Text style={[styles.glanceValue, { color: riskColor }]}>{result.at_a_glance.risk_level || result.risk_level}</Text>
+                </View>
+                <View style={styles.glanceItem}>
+                  <Text style={[styles.glanceLabel, { color: colors.textSecondary }]}>Important Dates</Text>
+                  <Text style={[styles.glanceValue, { color: colors.text }]}>{result.at_a_glance.important_dates || 0}</Text>
+                </View>
+                <View style={styles.glanceItem}>
+                  <Text style={[styles.glanceLabel, { color: colors.textSecondary }]}>Critical Clauses</Text>
+                  <Text style={[styles.glanceValue, { color: colors.error }]}>{result.at_a_glance.critical_clauses || 0}</Text>
+                </View>
+                <View style={styles.glanceItem}>
+                  <Text style={[styles.glanceLabel, { color: colors.textSecondary }]}>Missing Clauses</Text>
+                  <Text style={[styles.glanceValue, { color: colors.warning }]}>{result.at_a_glance.missing_clauses || 0}</Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        )}
+
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>📅 Contract Timeline</Text>
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.divider }]}>
+            {result.important_dates && result.important_dates.length > 0 ? (
+              result.important_dates.map((date: any, idx: number) => (
+                <View key={idx} style={styles.timelineRow}>
+                  <Text style={styles.timelineIcon}>{getTimelineIcon(date.type)}</Text>
+                  <View style={styles.timelineContent}>
+                    <Text style={[styles.timelineType, { color: colors.textSecondary }]}>{date.type}</Text>
+                    <Text style={[styles.timelineValue, { color: colors.text }]}>{date.value}</Text>
+                  </View>
+                </View>
+              ))
+            ) : (
+              <Text style={[styles.bulletText, { color: colors.textSecondary }]}>No important contractual dates were detected.</Text>
+            )}
+          </View>
+        </View>
+
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: colors.text }]}>Document Overview</Text>
           <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.divider }]}>
@@ -109,6 +176,13 @@ export default function SummaryScreen() {
             )) : <Text style={[styles.bulletText, { color: colors.textSecondary }]}>No overview available.</Text>}
           </View>
         </View>
+
+        <TouchableOpacity
+          style={[styles.decisionButton, { backgroundColor: '#10b981', borderColor: '#059669' }]}
+          onPress={() => router.push({ pathname: '/verdict', params: { resultData: JSON.stringify(result) } })}
+        >
+          <Text style={styles.decisionButtonText}>Contract Decision Support ⭐⭐⭐⭐⭐</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.detailsButton, { backgroundColor: colors.primary }]}
@@ -146,5 +220,16 @@ const styles = StyleSheet.create({
   button: { padding: 16, borderRadius: 12, minWidth: 150, alignItems: 'center' },
   buttonText: { color: '#FFFFFF', fontWeight: 'bold' },
   detailsButtonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '700', marginRight: 8 },
+  decisionButton: { padding: 18, borderRadius: 16, justifyContent: 'center', alignItems: 'center', elevation: 3, marginBottom: 16, borderWidth: 1 },
+  decisionButtonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
+  glanceGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
+  glanceItem: { width: '48%', marginBottom: 16 },
+  glanceLabel: { fontSize: 13, marginBottom: 4 },
+  glanceValue: { fontSize: 15, fontWeight: '700' },
+  timelineRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 16 },
+  timelineIcon: { fontSize: 24, marginRight: 16 },
+  timelineContent: { flex: 1 },
+  timelineType: { fontSize: 13, marginBottom: 2 },
+  timelineValue: { fontSize: 16, fontWeight: '700' },
   errorText: { fontSize: 16, marginBottom: 20, textAlign: 'center' }
 });

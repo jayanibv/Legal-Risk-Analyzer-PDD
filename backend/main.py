@@ -15,8 +15,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-from ai.gemini_engine import analyze_with_gemini, chat_with_gemini, translate_with_gemini
+from ai.gemini_engine import analyze_with_gemini, chat_with_gemini
 from utils.pdf_reader import extract_text_from_pdf
+from utils.date_extractor import extract_dates
 from utils.supabase_client import supabase
 import models, database, auth
 from dotenv import load_dotenv
@@ -84,10 +85,6 @@ class Input(BaseModel):
 
 class ChatRequest(BaseModel):
     message: str
-
-class TranslateRequest(BaseModel):
-    text: str
-    language: str
 
 # --- HELPERS ---
 def validate_password(password: str):
@@ -250,14 +247,20 @@ def analyze(data: Input, current_user: models.User = Depends(get_current_user), 
             "risk_score": existing_doc.analysis.risk_score,
             "risk_level": existing_doc.analysis.risk_level,
             "risks": existing_doc.analysis.data.get("risks", []),
+            "verdict": existing_doc.analysis.data.get("verdict", None),
+            "at_a_glance": existing_doc.analysis.data.get("at_a_glance", None),
+            "important_dates": existing_doc.analysis.data.get("important_dates", []),
             "cached": True
         }
 
-    # Call Gemini
+    # Call Gemini and Date Extractor
     try:
         gemini_result = analyze_with_gemini(data.text)
         if not gemini_result:
             raise HTTPException(status_code=500, detail="Gemini API Error")
+            
+        important_dates = extract_dates(data.text)
+        gemini_result["important_dates"] = important_dates
     except Exception as e:
         raise HTTPException(status_code=400, detail="Unable to process the provided text. Invalid input formatting.")
 
@@ -283,6 +286,9 @@ def analyze(data: Input, current_user: models.User = Depends(get_current_user), 
         "risk_score": risk_score,
         "risk_level": get_risk_level(risk_score),
         "risks": gemini_result.get("risks", []),
+        "verdict": gemini_result.get("verdict", None),
+        "at_a_glance": gemini_result.get("at_a_glance", None),
+        "important_dates": gemini_result.get("important_dates", []),
         "cached": False
     }
 
@@ -310,6 +316,9 @@ async def analyze_pdf(
             "risk_score": existing_doc.analysis.risk_score,
             "risk_level": existing_doc.analysis.risk_level,
             "risks": existing_doc.analysis.data.get("risks", []),
+            "verdict": existing_doc.analysis.data.get("verdict", None),
+            "at_a_glance": existing_doc.analysis.data.get("at_a_glance", None),
+            "important_dates": existing_doc.analysis.data.get("important_dates", []),
             "cached": True
         }
 
@@ -319,6 +328,9 @@ async def analyze_pdf(
     
     if not gemini_result:
         raise HTTPException(status_code=500, detail="Gemini API Error")
+        
+    important_dates = extract_dates(text)
+    gemini_result["important_dates"] = important_dates
 
     # Upload to Supabase Storage
     file_url = None
@@ -352,6 +364,9 @@ async def analyze_pdf(
         "risk_score": risk_score,
         "risk_level": get_risk_level(risk_score),
         "risks": gemini_result.get("risks", []),
+        "verdict": gemini_result.get("verdict", None),
+        "at_a_glance": gemini_result.get("at_a_glance", None),
+        "important_dates": gemini_result.get("important_dates", []),
         "cached": False
     }
 
@@ -387,6 +402,9 @@ def get_analysis_by_id(doc_id: int, current_user: models.User = Depends(get_curr
         "risks": doc.analysis.data.get("risks", []),
         "clauses": doc.analysis.data.get("detected_clauses", []),
         "context": doc.analysis.data.get("context", "Other"),
+        "verdict": doc.analysis.data.get("verdict", None),
+        "at_a_glance": doc.analysis.data.get("at_a_glance", None),
+        "important_dates": doc.analysis.data.get("important_dates", []),
         "date": doc.created_at.isoformat() + "Z"
     }
 
@@ -395,7 +413,3 @@ def chat_endpoint(req: ChatRequest, current_user: models.User = Depends(get_curr
     response = chat_with_gemini(req.message)
     return response
 
-@app.post("/translate")
-def translate_endpoint(req: TranslateRequest, current_user: models.User = Depends(get_current_user)):
-    response = translate_with_gemini(req.text, req.language)
-    return response
