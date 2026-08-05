@@ -29,8 +29,9 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
 # ─── Configuration ────────────────────────────────────────────────────────────
-BASE_URL     = "https://legal-risk-analyzer-pdd.onrender.com"
-FRONTEND_URL = "https://legal-risk-analyzer-pdd.vercel.app"
+import os
+BASE_URL     = os.environ.get("BASE_URL", "https://legal-risk-analyzer-pdd.onrender.com")
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "https://legal-risk-analyzer-pdd.vercel.app")
 
 TEST_EMAIL    = "testuser_e2e@legalrisk.dev"
 TEST_PASSWORD = "TestPass@123"

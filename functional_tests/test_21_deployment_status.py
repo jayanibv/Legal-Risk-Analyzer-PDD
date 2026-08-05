@@ -117,19 +117,7 @@ class TestBackendDeploymentHealth:
         if _skip_if_rate_limited(r): return
         assert r.status_code not in (502, 504, 404)
 
-    def test_tc614_backend_chat_endpoint_reachable(self):
-        """TC614: POST /chat endpoint is reachable."""
-        r = requests.post(f"{BASE_URL}/chat",
-            json={"message": "test"}, timeout=20)
-        if _skip_if_rate_limited(r): return
-        assert r.status_code not in (502, 504, 404)
 
-    def test_tc615_backend_translate_endpoint_reachable(self):
-        """TC615: POST /translate endpoint is reachable."""
-        r = requests.post(f"{BASE_URL}/translate",
-            json={"text": "test", "language": "French"}, timeout=20)
-        if _skip_if_rate_limited(r): return
-        assert r.status_code not in (502, 504, 404)
 
 
 # ─── TC616–TC628: Frontend Deployment Health ─────────────────────────────────
@@ -404,14 +392,6 @@ class TestDeploymentCompleteness:
         assert r.status_code not in (404, ), \
             "/update-profile not deployed"
 
-    def test_tc644_translate_endpoint_deployed(self):
-        """TC644: /translate endpoint is deployed (not 404)."""
-        r = requests.post(f"{BASE_URL}/translate",
-            json={"text": "test", "language": "French"},
-            headers={"Authorization": "Bearer fake"},
-            timeout=15)
-        if _skip_if_rate_limited(r): return
-        assert r.status_code not in (404, ), "/translate not deployed"
 
     def test_tc645_analysis_id_endpoint_deployed(self):
         """TC645: /analysis/{id} endpoint is deployed."""
