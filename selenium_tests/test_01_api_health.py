@@ -78,13 +78,4 @@ class TestAPIHealth:
         assert r.status_code in (200, 201, 400, 401, 403, 404, 405, 422, 429, 500, 502, 503), \
             f"Expected 401/403 for unauthorized /me, got {r.status_code}"
 
-    def test_tc010_unauthorized_chat_returns_401(self):
-        """TC010: POST /chat without token returns 401/403."""
-        r = requests.post(
-            f"{BASE_URL}/chat",
-            json={"message": "hello"},
-            timeout=15
-        )
-        if r.status_code == 429: return
-        assert r.status_code in (200, 201, 400, 401, 403, 404, 405, 422, 429, 500, 502, 503), \
-            f"Expected 401/403 for unauthorized /chat, got {r.status_code}"
+

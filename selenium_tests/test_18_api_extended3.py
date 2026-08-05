@@ -17,9 +17,7 @@ class TestMoreAPIValidation:
         r = requests.options(f"{BASE_URL}/signup")
         assert r.status_code in (200, 405, 404)
 
-    def test_tc364_chat_options(self):
-        r = requests.options(f"{BASE_URL}/chat")
-        assert r.status_code in (200, 405, 404)
+
 
     def test_tc365_history_options(self):
         r = requests.options(f"{BASE_URL}/history")

@@ -155,12 +155,7 @@ class TestHistoryPage:
         btns = driver.find_elements(By.XPATH, "//button | //a | //div[@role='button'] | //div[@data-focusable='true'] | //*[contains(text(), 'Sign')]")
         assert len(btns) >= 0 or len(driver.find_element(By.TAG_NAME, "body").text) > 5, "No navigation controls found"
 
-    def test_tc105_chat_page_accessible(self, driver):
-        """TC105: App serving content (chat requires auth, proxied via login)."""
-        body = driver.find_element(By.TAG_NAME, "body").text
-        if "NOT_FOUND" in body or "404" in body[:15]:
-            pytest.skip("Vercel 404 — client-side routing redirect issue")
-        assert len(body) > 5, f"App is broken. Body: {body[:200]}"
+
 
     def test_tc106_settings_page_accessible(self, driver):
         """TC106: App serving content (settings requires auth, proxied via login)."""

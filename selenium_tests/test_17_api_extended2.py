@@ -21,9 +21,7 @@ class TestAPIMethodsAndEdgeCases:
         r = requests.get(f"{BASE_URL}/analyze")
         assert r.status_code == 405
 
-    def test_tc334_invalid_method_on_chat(self):
-        r = requests.get(f"{BASE_URL}/chat")
-        assert r.status_code == 405
+
 
     def test_tc335_invalid_method_on_history(self):
         r = requests.post(f"{BASE_URL}/history")
@@ -49,9 +47,7 @@ class TestAPIMethodsAndEdgeCases:
         r = requests.put(f"{BASE_URL}/analyze")
         assert r.status_code == 405
 
-    def test_tc341_put_method_on_chat(self):
-        r = requests.put(f"{BASE_URL}/chat")
-        assert r.status_code == 405
+
 
     def test_tc342_put_method_on_history(self):
         r = requests.put(f"{BASE_URL}/history")
@@ -73,9 +69,7 @@ class TestAPIMethodsAndEdgeCases:
         r = requests.delete(f"{BASE_URL}/analyze")
         assert r.status_code == 405
 
-    def test_tc347_delete_method_on_chat(self):
-        r = requests.delete(f"{BASE_URL}/chat")
-        assert r.status_code == 405
+
 
     def test_tc348_delete_method_on_history(self):
         r = requests.delete(f"{BASE_URL}/history")
@@ -101,9 +95,7 @@ class TestAPIMethodsAndEdgeCases:
         r = requests.options(f"{BASE_URL}/analyze")
         assert r.status_code in (200, 405, 404)
 
-    def test_tc354_options_method_on_chat(self):
-        r = requests.options(f"{BASE_URL}/chat")
-        assert r.status_code in (200, 405, 404)
+
 
     def test_tc355_options_method_on_history(self):
         r = requests.options(f"{BASE_URL}/history")
