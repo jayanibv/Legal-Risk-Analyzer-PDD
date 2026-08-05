@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
+import { GlobalStore } from '../services/store';
 
 export default function VerdictScreen() {
   const router = useRouter();
@@ -12,7 +13,9 @@ export default function VerdictScreen() {
 
   let result = null;
   try {
-    if (params.resultData) {
+    if (GlobalStore.currentAnalysis) {
+      result = GlobalStore.currentAnalysis;
+    } else if (params.resultData) {
       result = JSON.parse(params.resultData as string);
     }
   } catch (e) {

@@ -99,8 +99,8 @@ export default function ChatScreen() {
       <SafeAreaView style={styles.safeArea}>
         <KeyboardAvoidingView 
           style={styles.chatContainer} 
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 20}
+          behavior="padding"
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
         >
           <Animated.View entering={FadeInDown.duration(400)} style={[styles.header, { borderBottomColor: colors.divider }]}>
             <TouchableOpacity 
@@ -118,6 +118,7 @@ export default function ChatScreen() {
 
           <FlatList
             ref={flatListRef}
+            style={{ flex: 1 }}
             data={messages}
             renderItem={renderMessage}
             keyExtractor={item => item.id}

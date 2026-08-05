@@ -71,14 +71,25 @@ def analyze_with_gemini(text, retries=4):
                 )
             )
             
-            data = json.loads(response.text)
+            import re
+            clean_text = response.text
+            json_match = re.search(r'\{.*\}', clean_text, re.DOTALL)
+            if json_match:
+                clean_text = json_match.group(0)
+            else:
+                clean_text = clean_text.strip()
+            
+            data = json.loads(clean_text)
             return data
         except Exception as e:
+            with open("debug.log", "a", encoding="utf-8") as f:
+                f.write(f"Gemini Error (Attempt {attempt + 1}): {e}\n")
+                if 'response' in locals() and hasattr(response, 'text'):
+                    f.write(f"Raw Response: {response.text}\n")
             print(f"Gemini Error (Attempt {attempt + 1}/{retries}): {e}")
-            if 'response' in locals() and hasattr(response, 'text') and response.text:
-                print(f"Raw Gemini Response: {response.text}")
                 
             if attempt < retries - 1:
+                import time
                 time.sleep(2 ** attempt)  # 1s, 2s, 4s wait
             else:
                 return None

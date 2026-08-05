@@ -28,9 +28,10 @@ export default function ScanningScreen() {
         if (data.detail) throw new Error(data.detail);
 
         // Store result in global state or pass via params
+        GlobalStore.currentAnalysis = data;
         router.replace({
           pathname: '/summary',
-          params: { resultData: JSON.stringify(data) }
+          params: { id: data.id }
         });
 
       } catch (error: any) {

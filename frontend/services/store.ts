@@ -1,4 +1,5 @@
 export const GlobalStore = {
   selectedFile: null,
-  textContent: ''
+  textContent: '',
+  currentAnalysis: null
 };

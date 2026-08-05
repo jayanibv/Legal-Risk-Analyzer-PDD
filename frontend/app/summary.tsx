@@ -5,6 +5,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
 import { getAnalysisById } from '../services/api';
+import { GlobalStore } from '../services/store';
 
 export default function SummaryScreen() {
   const router = useRouter();
@@ -22,7 +23,9 @@ export default function SummaryScreen() {
   const loadData = async () => {
     setLoading(true);
     try {
-      if (params.resultData) {
+      if (GlobalStore.currentAnalysis) {
+        setResult(GlobalStore.currentAnalysis);
+      } else if (params.resultData) {
         const parsed = JSON.parse(params.resultData as string);
         setResult(parsed);
       } else if (params.id) {
@@ -179,14 +182,20 @@ export default function SummaryScreen() {
 
         <TouchableOpacity
           style={[styles.decisionButton, { backgroundColor: '#10b981', borderColor: '#059669' }]}
-          onPress={() => router.push({ pathname: '/verdict', params: { resultData: JSON.stringify(result) } })}
+          onPress={() => {
+            GlobalStore.currentAnalysis = result;
+            router.push({ pathname: '/verdict', params: { id: result.id } });
+          }}
         >
           <Text style={styles.decisionButtonText}>Contract Decision Support ⭐⭐⭐⭐⭐</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.detailsButton, { backgroundColor: colors.primary }]}
-          onPress={() => router.push({ pathname: '/details', params: { resultData: JSON.stringify(result) } })}
+          onPress={() => {
+            GlobalStore.currentAnalysis = result;
+            router.push({ pathname: '/details', params: { id: result.id } });
+          }}
         >
           <Text style={styles.detailsButtonText}>View Detailed Risks</Text>
           <Ionicons name="chevron-forward" size={20} color="#FFFFFF" />

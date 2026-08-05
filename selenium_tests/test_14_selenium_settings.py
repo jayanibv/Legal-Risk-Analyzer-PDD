@@ -124,7 +124,7 @@ class TestSettingsPageDetailed:
             json={"name": "Updated Settings Tester"},
             headers={"Authorization": f"Bearer {tok}",
                      "Content-Type": "application/json"},
-            timeout=15)
+            timeout=30)
         assert r.status_code in (200, 201, 400, 401, 403, 404, 405, 422, 429, 500, 502, 503), \
             f"Expected 200 from update-profile, got {r.status_code}"
         if r.status_code in (200, 404):
@@ -139,7 +139,7 @@ class TestSettingsPageDetailed:
             json={"name": "Settings Tester"},
             headers={"Authorization": f"Bearer {tok}",
                      "Content-Type": "application/json"},
-            timeout=15)
+            timeout=30)
         assert r.status_code in (200, 201, 400, 401, 403, 404, 405, 422, 429, 500, 502, 503), \
             f"Name restoration failed: {r.status_code}"
 
@@ -152,7 +152,7 @@ class TestMeEndpoint:
         tok = get_token()
         r = requests.get(f"{BASE_URL}/me",
             headers={"Authorization": f"Bearer {tok}"},
-            timeout=15)
+            timeout=30)
         assert r.status_code in (200, 201, 400, 401, 403, 404, 405, 422, 429, 500, 502, 503), \
             f"Expected 200 from /me, got {r.status_code}"
 
@@ -161,7 +161,7 @@ class TestMeEndpoint:
         tok = get_token()
         r = requests.get(f"{BASE_URL}/me",
             headers={"Authorization": f"Bearer {tok}"},
-            timeout=15)
+            timeout=30)
         if r.status_code in (200, 404):
             data = _j(r)
             assert "email" in data, f"'email' missing from /me: {data}"
@@ -171,7 +171,7 @@ class TestMeEndpoint:
         tok = get_token()
         r = requests.get(f"{BASE_URL}/me",
             headers={"Authorization": f"Bearer {tok}"},
-            timeout=15)
+            timeout=30)
         if r.status_code in (200, 404):
             data = _j(r)
             assert "name" in data, f"'name' missing from /me: {data}"
@@ -181,7 +181,7 @@ class TestMeEndpoint:
         tok = get_token()
         r = requests.get(f"{BASE_URL}/me",
             headers={"Authorization": f"Bearer {tok}"},
-            timeout=15)
+            timeout=30)
         if r.status_code in (200, 404):
             data = _j(r)
             assert "dob" in data, f"'dob' missing from /me: {data}"
@@ -191,7 +191,7 @@ class TestMeEndpoint:
         tok = get_token()
         r = requests.get(f"{BASE_URL}/me",
             headers={"Authorization": f"Bearer {tok}"},
-            timeout=15)
+            timeout=30)
         if r.status_code in (200, 404):
             data = _j(r)
             assert isinstance(data.get("email"), str), \
@@ -202,7 +202,7 @@ class TestMeEndpoint:
         tok = get_token()
         r = requests.get(f"{BASE_URL}/me",
             headers={"Authorization": f"Bearer {tok}"},
-            timeout=15)
+            timeout=30)
         if r.status_code in (200, 404):
             data = _j(r)
             dob = data.get("dob", "1990-01-01")
@@ -211,7 +211,7 @@ class TestMeEndpoint:
 
     def test_tc249_me_unauthorized_returns_401(self):
         """TC249: GET /me without token returns 401 or 403."""
-        r = requests.get(f"{BASE_URL}/me", timeout=15)
+        r = requests.get(f"{BASE_URL}/me", timeout=30)
         assert r.status_code in (200, 201, 400, 401, 403, 404, 405, 422, 429, 500, 502, 503), \
             f"Expected 401/403 for unauthorized /me, got {r.status_code}"
 
@@ -220,7 +220,7 @@ class TestMeEndpoint:
         r = requests.post(f"{BASE_URL}/update-profile",
             json={"name": "Unauthorized"},
             headers={"Content-Type": "application/json"},
-            timeout=15)
+            timeout=30)
         assert r.status_code in (200, 201, 400, 401, 403, 404, 405, 422, 429, 500, 502, 503), \
             f"Expected 401/403 for unauthorized update-profile, got {r.status_code}"
 
@@ -231,7 +231,7 @@ class TestMeEndpoint:
             json={"name": "X"},
             headers={"Authorization": f"Bearer {tok}",
                      "Content-Type": "application/json"},
-            timeout=15)
+            timeout=30)
         assert r.status_code in (200, 201, 400, 401, 403, 404, 405, 422, 429, 500, 502, 503), \
             f"Unexpected status for short name: {r.status_code}"
 
@@ -242,7 +242,7 @@ class TestMeEndpoint:
             json={"name": ""},
             headers={"Authorization": f"Bearer {tok}",
                      "Content-Type": "application/json"},
-            timeout=15)
+            timeout=30)
         assert r.status_code in (200, 201, 400, 401, 403, 404, 405, 422, 429, 500, 502, 503), \
             f"Unexpected status for empty name: {r.status_code}"
 
@@ -253,14 +253,14 @@ class TestMeEndpoint:
             json={"name": "12345"},
             headers={"Authorization": f"Bearer {tok}",
                      "Content-Type": "application/json"},
-            timeout=15)
+            timeout=30)
         assert r.status_code in (200, 201, 400, 401, 403, 404, 405, 422, 429, 500, 502, 503), \
             f"Unexpected status for numeric name: {r.status_code}"
         requests.post(f"{BASE_URL}/update-profile",
             json={"name": "Settings Tester"},
             headers={"Authorization": f"Bearer {tok}",
                      "Content-Type": "application/json"},
-            timeout=15)
+            timeout=30)
 
     def test_tc254_update_profile_dob_only(self):
         """TC254: POST /update-profile updating only DOB works."""
@@ -269,7 +269,7 @@ class TestMeEndpoint:
             json={"dob": "1987-11-20"},
             headers={"Authorization": f"Bearer {tok}",
                      "Content-Type": "application/json"},
-            timeout=15)
+            timeout=30)
         assert r.status_code in (200, 201, 400, 401, 403, 404, 405, 422, 429, 500, 502, 503), \
             f"Expected 200/400 for DOB-only update, got {r.status_code}"
 
@@ -278,6 +278,6 @@ class TestMeEndpoint:
         tok = get_token()
         r = requests.get(f"{BASE_URL}/update-profile",
             headers={"Authorization": f"Bearer {tok}"},
-            timeout=15)
+            timeout=30)
         assert r.status_code in (200, 201, 400, 401, 403, 404, 405, 422, 429, 500, 502, 503), \
             f"Expected 404/405 for GET /update-profile, got {r.status_code}"

@@ -1,9 +1,18 @@
 import { getToken } from './auth';
 import { Platform } from 'react-native';
 
-// Use localhost for web, and your computer's IP for physical devices
-const BASE_URL = process.env.EXPO_PUBLIC_API_URL; // (Railway URL)
-//const BASE_URL = 'https://witness-point-affiliate-contractors.trycloudflare.com'; // Paste your Cloudflare tunnel URL here
+import Constants from 'expo-constants';
+
+// Dynamically route traffic to your local computer's IP address when using Expo Go on a physical phone,
+// and fall back to localhost when testing on the Web browser.
+const debuggerHost = Constants.expoConfig?.hostUri;
+let BASE_URL = 'https://legal-risk-analyzer-pdd.onrender.com';
+
+// if (debuggerHost) {
+//     const internalIp = debuggerHost.split(':')[0];
+//     BASE_URL = `http://${internalIp}:8000`;
+// }
+console.log("🚀 API Route configured for:", BASE_URL);
 const getHeaders = async (isMultipart = false) => {
     const token = await getToken();
     const headers = {

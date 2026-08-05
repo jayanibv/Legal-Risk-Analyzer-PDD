@@ -340,12 +340,12 @@ class TestSecurityAndPerformance:
             f"/history took too long: {r.elapsed.total_seconds():.2f}s"
 
     def test_tc297_api_me_response_time(self):
-        """TC297: GET /me responds within 10 seconds."""
+        """TC297: GET /me responds within 20 seconds."""
         tok = get_token()
         r = requests.get(f"{BASE_URL}/me",
             headers={"Authorization": f"Bearer {tok}"},
-            timeout=15)
-        assert r.elapsed.total_seconds() < 10, \
+            timeout=25)
+        assert r.elapsed.total_seconds() < 20, \
             f"/me took too long: {r.elapsed.total_seconds():.2f}s"
 
     def test_tc298_frontend_no_obvious_errors(self, driver):

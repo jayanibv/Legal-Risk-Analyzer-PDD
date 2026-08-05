@@ -9,8 +9,9 @@ import requests
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
-BASE_URL     = "https://legal-risk-analyzer-pdd.onrender.com"
-FRONTEND_URL = "https://legal-risk-analyzer-pdd.vercel.app"
+import os
+BASE_URL     = os.environ.get("BASE_URL", "https://legal-risk-analyzer-pdd.onrender.com")
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "https://legal-risk-analyzer-pdd.vercel.app")
 
 # Vercel 404 markers that appear in the static export's error page
 _404_MARKERS = ("NOT_FOUND", "404: NOT_FOUND", "404 | ")
