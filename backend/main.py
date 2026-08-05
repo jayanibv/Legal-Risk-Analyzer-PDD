@@ -2,6 +2,7 @@ import hashlib
 import json
 import random
 import re
+# Trigger reload for .env update
 import os
 import datetime
 import urllib.parse
@@ -50,7 +51,7 @@ def read_root():
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://legal-risk-analyzer-pdd.vercel.app", "http://localhost:8081", "http://127.0.0.1:8081"],
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -242,6 +243,8 @@ def analyze(data: Input, current_user: models.User = Depends(get_current_user), 
     
     if existing_doc and existing_doc.analysis:
         return {
+            "id": existing_doc.analysis.id,
+            "document_id": existing_doc.id,
             "summaries": existing_doc.analysis.data.get("summaries", []),
             "clauses": existing_doc.analysis.data.get("detected_clauses", []),
             "risk_score": existing_doc.analysis.risk_score,
@@ -281,6 +284,8 @@ def analyze(data: Input, current_user: models.User = Depends(get_current_user), 
     db.commit()
 
     return {
+        "id": analysis.id,
+        "document_id": new_doc.id,
         "summaries": gemini_result.get("summaries", []),
         "clauses": gemini_result.get("detected_clauses", []),
         "risk_score": risk_score,
@@ -311,6 +316,8 @@ async def analyze_pdf(
     
     if existing_doc and existing_doc.analysis:
         return {
+            "id": existing_doc.analysis.id,
+            "document_id": existing_doc.id,
             "summaries": existing_doc.analysis.data.get("summaries", []),
             "clauses": existing_doc.analysis.data.get("detected_clauses", []),
             "risk_score": existing_doc.analysis.risk_score,
@@ -359,6 +366,8 @@ async def analyze_pdf(
     db.commit()
 
     return {
+        "id": analysis.id,
+        "document_id": new_doc.id,
         "summaries": gemini_result.get("summaries", []),
         "clauses": gemini_result.get("detected_clauses", []),
         "risk_score": risk_score,
