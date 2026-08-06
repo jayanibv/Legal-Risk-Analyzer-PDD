@@ -26,11 +26,10 @@ jobs:
       - name: Install dependencies
         run: pip install openpyxl
 
-      - name: Generate 100% Pass Rate Appium Report
+      - name: Run Appium Android UI Tests
         run: |
           cd frontend/appium-tests
-          python generate_fresh_report.py
-          echo "Mock Appium tests executed successfully."
+          python run_appium_suite.py
 
       - name: Upload Appium Test Report
         if: always()
