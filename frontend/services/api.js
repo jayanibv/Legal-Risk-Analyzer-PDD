@@ -3,15 +3,18 @@ import { Platform } from 'react-native';
 
 import Constants from 'expo-constants';
 
-// Dynamically route traffic to your local computer's IP address when using Expo Go on a physical phone,
-// and fall back to localhost when testing on the Web browser.
+// Dynamically route traffic depending on environment
 const debuggerHost = Constants.expoConfig?.hostUri;
-let BASE_URL = 'https://legal-risk-analyzer-pdd.onrender.com';
+let BASE_URL = 'https://legal-risk-analyzer-pdd.onrender.com'; // Production URL
 
-// if (debuggerHost) {
-//     const internalIp = debuggerHost.split(':')[0];
-//     BASE_URL = `http://${internalIp}:8000`;
-// }
+if (__DEV__) {
+    if (Platform.OS === 'web') {
+        BASE_URL = 'http://localhost:8000';
+    } else if (debuggerHost) {
+        const internalIp = debuggerHost.split(':')[0];
+        BASE_URL = `http://${internalIp}:8000`;
+    }
+}
 console.log("🚀 API Route configured for:", BASE_URL);
 const getHeaders = async (isMultipart = false) => {
     const token = await getToken();

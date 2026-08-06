@@ -16,7 +16,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-from ai.gemini_engine import analyze_with_gemini
+from ai.gemini_engine import analyze_with_gemini, chat_with_gemini
 from utils.pdf_reader import extract_text_from_pdf
 from utils.date_extractor import extract_dates
 from utils.supabase_client import supabase
@@ -84,7 +84,8 @@ class Token(BaseModel):
 class Input(BaseModel):
     text: str = Field(..., max_length=100000)
 
-
+class ChatInput(BaseModel):
+    message: str = Field(..., max_length=1000)
 
 # --- HELPERS ---
 def validate_password(password: str):
@@ -416,3 +417,12 @@ def get_analysis_by_id(doc_id: int, current_user: models.User = Depends(get_curr
         "date": doc.created_at.isoformat() + "Z"
     }
 
+@app.post("/chat")
+@limiter.limit("5/minute")
+async def chat(request: Request, data: ChatInput, current_user: models.User = Depends(get_current_user)):
+    """Simple conversational endpoint for the chatbot."""
+    if not data.message.strip():
+        raise HTTPException(status_code=400, detail="Message cannot be empty")
+        
+    reply = chat_with_gemini(data.message)
+    return {"response": reply}

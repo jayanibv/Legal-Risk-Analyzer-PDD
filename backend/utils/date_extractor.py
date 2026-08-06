@@ -16,6 +16,8 @@ DATE_REGEXES = {
 
 # Keywords to categorize sentences that contain dates/deadlines
 CATEGORIES = {
+    "Document Issued": ["issued", "date:", "issued on", "certificate date"],
+    "Internship/Employment Period": ["internship", "employment", "period", "duration", "tenure"],
     "Contract Signed": ["signed", "executed", "signature"],
     "Effective Date": ["effective from", "effective date", "comes into effect"],
     "Renewal Date": ["automatically renew", "renewal date", "renews on"],

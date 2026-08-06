@@ -94,3 +94,25 @@ def analyze_with_gemini(text, retries=4):
             else:
                 return None
 
+def chat_with_gemini(message: str) -> str:
+    """Simple conversational function for the Legal Assistant chatbot."""
+    if not client:
+        return "Sorry, the AI engine is currently offline."
+    
+    try:
+        chat_prompt = (
+            "You are a helpful Legal Assistant chatbot. "
+            "Provide a concise, helpful, and professional answer to the user's question. "
+            "Always include a disclaimer that you are an AI and this is not formal legal advice.\n\n"
+            f"User Question: {message}"
+        )
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=chat_prompt
+        )
+        return response.text.strip()
+    except Exception as e:
+        print(f"Chat Error: {e}")
+        return "I'm sorry, I'm having trouble connecting to my servers right now."
+
+
