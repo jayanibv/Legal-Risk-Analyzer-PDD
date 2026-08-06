@@ -16,7 +16,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-from ai.ai_engine import analyze_document as analyze_with_gemini, chat_with_bot as chat_with_gemini
+from ai.ai_engine import analyze_document as analyze_with_gemini, chat_with_bot as chat_with_gemini, translate_document
 from utils.pdf_reader import extract_text_from_pdf
 from utils.date_extractor import extract_dates
 from utils.supabase_client import supabase
@@ -86,6 +86,12 @@ class Input(BaseModel):
 
 class ChatInput(BaseModel):
     message: str = Field(..., max_length=1000)
+
+SUPPORTED_LANGUAGES = {"Tamil", "Telugu", "Spanish", "Mandarin", "German", "Italian", "Portuguese"}
+
+class TranslateInput(BaseModel):
+    text: str = Field(..., max_length=100000)
+    language: str
 
 # --- HELPERS ---
 def validate_password(password: str):
@@ -426,3 +432,29 @@ async def chat(request: Request, data: ChatInput, current_user: models.User = De
         
     reply = chat_with_gemini(data.message)
     return {"response": reply}
+
+@app.post("/translate")
+@limiter.limit("5/minute")
+async def translate(request: Request, data: TranslateInput, current_user: models.User = Depends(get_current_user)):
+    """Translate a legal document into a supported target language using Ollama."""
+    if not data.text or not data.text.strip():
+        raise HTTPException(status_code=400, detail="Document text cannot be empty.")
+    
+    if data.language not in SUPPORTED_LANGUAGES:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Unsupported language: {data.language}. Supported languages are: {', '.join(sorted(SUPPORTED_LANGUAGES))}"
+        )
+    
+    try:
+        translated = translate_document(data.text.strip(), data.language)
+        if not translated:
+            raise HTTPException(status_code=500, detail="Translation produced empty response.")
+        return {"translated_text": translated}
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail="AI engine (Ollama) is unavailable.")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Translation failed: {str(e)}")
+

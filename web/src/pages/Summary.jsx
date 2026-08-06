@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { X, AlertCircle, Share, ChevronRight } from 'lucide-react';
+import { X, AlertCircle, Share, ChevronRight, Globe } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { getAnalysisById } from '../services/api';
 import { GlobalStore } from '../services/store';
@@ -191,6 +191,45 @@ export default function SummaryScreen() {
                 <p style={{ fontSize: '15px', lineHeight: '22px', margin: 0, color: colors.textSecondary }}>{point}</p>
               </div>
             )) : <p style={{ color: colors.textSecondary, margin: 0 }}>No overview available.</p>}
+          </div>
+        </motion.div>
+
+        {/* Legal Translator Card */}
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.35 }} style={{ marginBottom: '30px' }}>
+          <h2 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '16px', color: colors.text, display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Globe size={20} color={colors.primary} />
+            Legal Translator
+          </h2>
+          <div style={{ borderRadius: '20px', padding: '20px', backgroundColor: colors.card, border: `1px solid ${colors.divider}` }}>
+            <p style={{ fontSize: '15px', lineHeight: '22px', margin: '0 0 16px 0', color: colors.textSecondary }}>
+              Translate this analyzed legal document into another language while preserving legal terminology.
+            </p>
+            <button
+              onClick={() => {
+                GlobalStore.currentAnalysis = result;
+                const docText = GlobalStore.textContent || (result.summaries ? result.summaries.join('\n\n') : '');
+                if (docText) sessionStorage.setItem('last_document_text', docText);
+                navigate('/translator', { state: { text: docText } });
+              }}
+              style={{
+                width: '100%',
+                padding: '14px',
+                borderRadius: '12px',
+                backgroundColor: colors.primary,
+                color: '#FFFFFF',
+                border: 'none',
+                fontSize: '15px',
+                fontWeight: '700',
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
+              <Globe size={18} />
+              Open Legal Translator
+            </button>
           </div>
         </motion.div>
 

@@ -1,8 +1,16 @@
 {
-  "extends": "expo/tsconfig.base.json",
   "compilerOptions": {
-    "jsx": "react",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "lib": ["DOM", "ESNext"],
+    "moduleResolution": "node",
+    "noEmit": true,
+    "skipLibCheck": true,
     "strict": true,
+    "target": "ESNext",
     "paths": {
       "@/*": [
         "./*"

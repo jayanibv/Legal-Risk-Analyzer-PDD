@@ -138,3 +138,15 @@ export const chatWithBot = async (message) => {
     if (!response.ok) throw new Error(data.detail || "Failed to chat");
     return data.response;
 };
+
+export const translateDocument = async (text, language) => {
+    const response = await fetch(`${BASE_URL}/translate`, {
+        method: "POST",
+        headers: getHeaders(),
+        body: JSON.stringify({ text, language })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.detail || "Translation failed");
+    return data;
+};
+

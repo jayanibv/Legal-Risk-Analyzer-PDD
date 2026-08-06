@@ -44,6 +44,7 @@ export default function UploadScreen() {
     setTimeout(() => {
       GlobalStore.selectedFile = selectedFile ? { file: selectedFile, name: selectedFile.name, size: selectedFile.size } : null;
       GlobalStore.textContent = text;
+      if (text) sessionStorage.setItem('last_document_text', text);
       navigate('/scanning');
     }, 750);
   };

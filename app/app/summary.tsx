@@ -180,6 +180,29 @@ export default function SummaryScreen() {
           </View>
         </View>
 
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>🌐 Legal Translator</Text>
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.divider }]}>
+            <Text style={[styles.bulletText, { color: colors.textSecondary, marginBottom: 16 }]}>
+              Translate this analyzed legal document into another language while preserving legal terminology.
+            </Text>
+            <TouchableOpacity
+              style={[styles.translatorButton, { backgroundColor: colors.primary }]}
+              onPress={() => {
+                GlobalStore.currentAnalysis = result;
+                const docText = GlobalStore.textContent || (result.summaries ? result.summaries.join('\n\n') : '');
+                router.push({
+                  pathname: '/(drawer)/legal-translator',
+                  params: { text: docText }
+                });
+              }}
+            >
+              <Ionicons name="language-outline" size={20} color="#FFFFFF" style={{ marginRight: 8 }} />
+              <Text style={styles.translatorButtonText}>Open Legal Translator</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
         <TouchableOpacity
           style={[styles.decisionButton, { backgroundColor: '#10b981', borderColor: '#059669' }]}
           onPress={() => {
@@ -240,5 +263,8 @@ const styles = StyleSheet.create({
   timelineContent: { flex: 1 },
   timelineType: { fontSize: 13, marginBottom: 2 },
   timelineValue: { fontSize: 16, fontWeight: '700' },
-  errorText: { fontSize: 16, marginBottom: 20, textAlign: 'center' }
+  errorText: { fontSize: 16, marginBottom: 20, textAlign: 'center' },
+  translatorButton: { flexDirection: 'row', height: 48, borderRadius: 12, justifyContent: 'center', alignItems: 'center' },
+  translatorButtonText: { color: '#FFFFFF', fontSize: 15, fontWeight: '700' }
 });
+

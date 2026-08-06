@@ -17,6 +17,7 @@ import DetailsScreen from './pages/Details';
 import HistoryScreen from './pages/History';
 import TemplatesScreen from './pages/Templates';
 import ChatScreen from './pages/Chat';
+import LegalTranslatorScreen from './pages/LegalTranslator';
 import SettingsScreen from './pages/Settings';
 
 function ProtectedRoute({ children }) {
@@ -110,6 +111,7 @@ function App() {
             <Route path="/history" element={<HistoryScreen />} />
             <Route path="/templates" element={<TemplatesScreen />} />
             <Route path="/chat" element={<ChatScreen />} />
+            <Route path="/translator" element={<LegalTranslatorScreen />} />
             <Route path="/settings" element={<SettingsScreen />} />
           </Route>
         </Routes>

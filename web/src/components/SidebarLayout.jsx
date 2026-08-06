@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { Home, Clock, FileText, MessageCircle, Settings, LogOut, Menu, X } from 'lucide-react';
+import { Home, Clock, FileText, MessageCircle, Settings, LogOut, Menu, X, Globe } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { removeToken } from '../services/auth';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -15,6 +15,7 @@ export default function SidebarLayout() {
     { name: 'History', path: '/history', icon: Clock },
     { name: 'Templates', path: '/templates', icon: FileText },
     { name: 'AI Legal Chat', path: '/chat', icon: MessageCircle },
+    { name: 'Legal Translator', path: '/translator', icon: Globe },
     { name: 'Settings', path: '/settings', icon: Settings },
   ];
 

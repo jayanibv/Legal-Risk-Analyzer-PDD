@@ -2,7 +2,6 @@ fastapi
 uvicorn
 pydantic
 python-dotenv
-google-genai
 pdfplumber
 sqlalchemy
 psycopg2-binary
@@ -16,6 +15,4 @@ supabase
 slowapi
 email-validator
 bcrypt
-deep-translator
-groq
-anthropic
+requests

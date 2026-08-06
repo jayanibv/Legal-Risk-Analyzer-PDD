@@ -1,20 +1,17 @@
-import os
 import json
 import re
-from dotenv import load_dotenv
-from groq import Groq
-from google import genai
-from google.genai import types
+import time
+import requests
 
-load_dotenv()
+# ---------------------------------------------------------------------------
+# Ollama configuration
+# ---------------------------------------------------------------------------
+OLLAMA_URL = "http://localhost:11434/api/generate"
+MODEL_NAME = "qwen2.5:3b"
 
-# Initialize API Clients
-gemini_api_key = os.getenv("GEMINI_API_KEY")
-groq_api_key = os.getenv("GROQ_API_KEY")
-
-gemini_client = genai.Client(api_key=gemini_api_key) if gemini_api_key else None
-groq_client = Groq(api_key=groq_api_key) if groq_api_key else None
-
+# ---------------------------------------------------------------------------
+# System prompt – kept exactly as originally authored
+# ---------------------------------------------------------------------------
 SYSTEM_PROMPT = """
 You are a professional Legal Document Auditor. Your task is to analyze a legal contract and provide a comprehensive risk assessment.
 
@@ -58,59 +55,159 @@ VERDICT WEIGHTING: Base your verdict roughly on: High-Risk Clauses (35%), Missin
 Respond ONLY with the raw JSON object. Do not include markdown formatting or explanations.
 """
 
+# ---------------------------------------------------------------------------
+# Reusable Ollama helper
+# ---------------------------------------------------------------------------
+
+def ask_ollama(prompt: str) -> str:
+    """
+    POST a prompt to the local Ollama instance and return the generated text.
+    Retries up to twice on transient failures.
+    """
+    payload = {
+        "model": MODEL_NAME,
+        "prompt": prompt,
+        "stream": False,
+    }
+
+    last_error = None
+    for attempt in range(3):          # initial try + 2 retries
+        try:
+            response = requests.post(
+                OLLAMA_URL,
+                json=payload,
+                timeout=180,
+            )
+            response.raise_for_status()
+            data = response.json()
+            return data.get("response", "")
+        except requests.exceptions.ConnectionError as e:
+            last_error = e
+            print(f"Ollama connection error (attempt {attempt + 1}/3): {e}")
+            if attempt < 2:
+                time.sleep(2 ** attempt)
+        except requests.exceptions.Timeout as e:
+            last_error = e
+            print(f"Ollama timeout (attempt {attempt + 1}/3): {e}")
+            if attempt < 2:
+                time.sleep(2 ** attempt)
+        except Exception as e:
+            last_error = e
+            print(f"Ollama unexpected error (attempt {attempt + 1}/3): {e}")
+            if attempt < 2:
+                time.sleep(2 ** attempt)
+
+    raise RuntimeError(
+        f"Ollama is unavailable after 3 attempts. Last error: {last_error}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Document analysis
+# ---------------------------------------------------------------------------
+
 def analyze_document(text, retries=2):
-    if not gemini_client:
-        return None
+    """
+    Analyze a legal document and return a parsed risk-assessment dictionary.
+    Returns None if analysis fails after all retries.
+    """
+    prompt = f"{SYSTEM_PROMPT}\n\nDocument to analyze:\n{text}"
 
     for attempt in range(retries):
         try:
-            prompt = f"{SYSTEM_PROMPT}\n\nDocument to analyze:\n{text}"
-            response = gemini_client.models.generate_content(
-                model='gemini-3.5-flash',
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                )
-            )
-            
-            clean_text = response.text
-            json_match = re.search(r'\{.*\}', clean_text, re.DOTALL)
+            raw = ask_ollama(prompt)
+
+            # Strip markdown code fences if the model wrapped the JSON
+            clean = re.sub(r"```(?:json)?", "", raw, flags=re.IGNORECASE).strip()
+            clean = clean.strip("`").strip()
+
+            # Extract the first JSON object from the response
+            json_match = re.search(r'\{.*\}', clean, re.DOTALL)
             if json_match:
-                clean_text = json_match.group(0)
-            else:
-                clean_text = clean_text.strip()
-            
-            data = json.loads(clean_text)
+                clean = json_match.group(0)
+
+            data = json.loads(clean)
             return data
-        except Exception as e:
-            print(f"Gemini Error (Attempt {attempt + 1}/{retries}): {e}")
+
+        except (json.JSONDecodeError, ValueError) as e:
+            print(f"JSON parse error (attempt {attempt + 1}/{retries}): {e}")
             if attempt < retries - 1:
-                import time
                 time.sleep(2 ** attempt)
             else:
                 return None
 
+        except RuntimeError as e:
+            # Ollama is offline – surface a clear error, no retry needed
+            print(f"Ollama unavailable during document analysis: {e}")
+            return None
+
+        except Exception as e:
+            print(f"analyze_document error (attempt {attempt + 1}/{retries}): {e}")
+            if attempt < retries - 1:
+                time.sleep(2 ** attempt)
+            else:
+                return None
+
+
+# ---------------------------------------------------------------------------
+# Legal assistant chatbot
+# ---------------------------------------------------------------------------
+
+CHAT_SYSTEM_PROMPT = (
+    "You are a professional Legal Assistant. "
+    "Answer clearly. "
+    "Keep answers concise. "
+    "Always mention that you are an AI assistant and not a licensed lawyer."
+)
+
+
 def chat_with_bot(message: str) -> str:
     """Simple conversational function for the Legal Assistant chatbot."""
-    if not groq_client:
-        return "Sorry, the AI engine is currently offline."
-    
+    prompt = f"{CHAT_SYSTEM_PROMPT}\n\nUser: {message}\nAssistant:"
+
     try:
-        response = groq_client.chat.completions.create(
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are a helpful Legal Assistant chatbot. Provide a concise, helpful, and professional answer to the user's question. Always include a disclaimer that you are an AI and this is not formal legal advice."
-                },
-                {
-                    "role": "user",
-                    "content": message
-                }
-            ],
-            model="llama-3.1-8b-instant",
-            max_tokens=1024
+        reply = ask_ollama(prompt)
+        return reply.strip() if reply else "I'm sorry, I received an empty response."
+    except RuntimeError as e:
+        print(f"Chat Error: {e}")
+        return (
+            "I'm sorry, the AI engine is currently offline. "
+            "Please make sure Ollama is running locally and try again."
         )
-        return response.choices[0].message.content.strip()
     except Exception as e:
         print(f"Chat Error: {e}")
-        return "I'm sorry, I'm having trouble connecting to my servers right now."
+        return "I'm sorry, I'm having trouble connecting to the AI engine right now."
+
+
+# ---------------------------------------------------------------------------
+# Legal Document Translator
+# ---------------------------------------------------------------------------
+
+def translate_document(text: str, language: str) -> str:
+    """
+    Translate a legal document into the specified language using local Ollama.
+    """
+    prompt = f"""You are an expert legal translator.
+
+Translate the following legal document into {language}.
+
+Requirements:
+
+• Preserve the legal meaning exactly.
+• Preserve legal terminology.
+• Preserve formatting whenever possible.
+• Do NOT summarize.
+• Do NOT simplify.
+• Do NOT explain.
+• Return ONLY the translated document.
+
+Document to translate:
+{text}"""
+
+    try:
+        reply = ask_ollama(prompt)
+        return reply.strip() if reply else ""
+    except Exception as e:
+        print(f"Translation Error: {e}")
+        raise e
+

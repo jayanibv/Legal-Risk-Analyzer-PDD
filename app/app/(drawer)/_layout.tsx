@@ -25,28 +25,35 @@ export default function DrawerLayout() {
         name="index"
         options={{
           title: 'Dashboard',
-          drawerIcon: ({ color }) => <Ionicons name="home" size={24} color={color} />,
+          drawerIcon: ({ color }: { color: string }) => <Ionicons name="home" size={24} color={color} />,
         }}
       />
       <Drawer.Screen
         name="history"
         options={{
           title: 'History',
-          drawerIcon: ({ color }) => <Ionicons name="time" size={24} color={color} />,
+          drawerIcon: ({ color }: { color: string }) => <Ionicons name="time" size={24} color={color} />,
         }}
       />
       <Drawer.Screen
         name="templates"
         options={{
           title: 'Templates',
-          drawerIcon: ({ color }) => <Ionicons name="document-text" size={24} color={color} />,
+          drawerIcon: ({ color }: { color: string }) => <Ionicons name="document-text" size={24} color={color} />,
         }}
       />
       <Drawer.Screen
         name="chat"
         options={{
           title: 'AI Legal Chat',
-          drawerIcon: ({ color }) => <Ionicons name="chatbubbles" size={24} color={color} />,
+          drawerIcon: ({ color }: { color: string }) => <Ionicons name="chatbubbles" size={24} color={color} />,
+        }}
+      />
+      <Drawer.Screen
+        name="legal-translator"
+        options={{
+          title: 'Legal Translator',
+          drawerIcon: ({ color }: { color: string }) => <Ionicons name="language-outline" size={24} color={color} />,
         }}
       />
 
@@ -54,7 +61,7 @@ export default function DrawerLayout() {
         name="settings"
         options={{
           title: 'Settings',
-          drawerIcon: ({ color }) => <Ionicons name="settings" size={24} color={color} />,
+          drawerIcon: ({ color }: { color: string }) => <Ionicons name="settings" size={24} color={color} />,
         }}
       />
     </Drawer>
