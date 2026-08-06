@@ -4,3 +4,4 @@
 automated_test/savepoint.json
 backend/.env
 frontend/.env
+!*.env.example
