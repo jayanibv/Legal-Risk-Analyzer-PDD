@@ -1,17 +1,19 @@
 import os
 import json
+import re
+from dotenv import load_dotenv
+from groq import Groq
 from google import genai
 from google.genai import types
-from dotenv import load_dotenv
 
 load_dotenv()
 
-# 🧠 CONFIGURE GEMINI
-api_key = os.getenv("GEMINI_API_KEY")
-if api_key:
-    client = genai.Client(api_key=api_key)
-else:
-    client = None
+# Initialize API Clients
+gemini_api_key = os.getenv("GEMINI_API_KEY")
+groq_api_key = os.getenv("GROQ_API_KEY")
+
+gemini_client = genai.Client(api_key=gemini_api_key) if gemini_api_key else None
+groq_client = Groq(api_key=groq_api_key) if groq_api_key else None
 
 SYSTEM_PROMPT = """
 You are a professional Legal Document Auditor. Your task is to analyze a legal contract and provide a comprehensive risk assessment.
@@ -52,26 +54,25 @@ OUTPUT FORMAT (STRICT JSON):
   }
 }
 VERDICT WEIGHTING: Base your verdict roughly on: High-Risk Clauses (35%), Missing Essential Clauses (20%), Financial Obligations (15%), Fairness (15%), Readability (5%), Ambiguous Language (10%).
+
+Respond ONLY with the raw JSON object. Do not include markdown formatting or explanations.
 """
 
-import time
-
-def analyze_with_gemini(text, retries=4):
-    if not client:
+def analyze_document(text, retries=2):
+    if not gemini_client:
         return None
 
     for attempt in range(retries):
         try:
             prompt = f"{SYSTEM_PROMPT}\n\nDocument to analyze:\n{text}"
-            response = client.models.generate_content(
-                model='gemini-2.5-flash',
+            response = gemini_client.models.generate_content(
+                model='gemini-3.5-flash',
                 contents=prompt,
                 config=types.GenerateContentConfig(
                     response_mime_type="application/json",
                 )
             )
             
-            import re
             clean_text = response.text
             json_match = re.search(r'\{.*\}', clean_text, re.DOTALL)
             if json_match:
@@ -82,37 +83,34 @@ def analyze_with_gemini(text, retries=4):
             data = json.loads(clean_text)
             return data
         except Exception as e:
-            with open("debug.log", "a", encoding="utf-8") as f:
-                f.write(f"Gemini Error (Attempt {attempt + 1}): {e}\n")
-                if 'response' in locals() and hasattr(response, 'text'):
-                    f.write(f"Raw Response: {response.text}\n")
             print(f"Gemini Error (Attempt {attempt + 1}/{retries}): {e}")
-                
             if attempt < retries - 1:
                 import time
-                time.sleep(2 ** attempt)  # 1s, 2s, 4s wait
+                time.sleep(2 ** attempt)
             else:
                 return None
 
-def chat_with_gemini(message: str) -> str:
+def chat_with_bot(message: str) -> str:
     """Simple conversational function for the Legal Assistant chatbot."""
-    if not client:
+    if not groq_client:
         return "Sorry, the AI engine is currently offline."
     
     try:
-        chat_prompt = (
-            "You are a helpful Legal Assistant chatbot. "
-            "Provide a concise, helpful, and professional answer to the user's question. "
-            "Always include a disclaimer that you are an AI and this is not formal legal advice.\n\n"
-            f"User Question: {message}"
+        response = groq_client.chat.completions.create(
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a helpful Legal Assistant chatbot. Provide a concise, helpful, and professional answer to the user's question. Always include a disclaimer that you are an AI and this is not formal legal advice."
+                },
+                {
+                    "role": "user",
+                    "content": message
+                }
+            ],
+            model="llama-3.1-8b-instant",
+            max_tokens=1024
         )
-        response = client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=chat_prompt
-        )
-        return response.text.strip()
+        return response.choices[0].message.content.strip()
     except Exception as e:
         print(f"Chat Error: {e}")
         return "I'm sorry, I'm having trouble connecting to my servers right now."
-
-

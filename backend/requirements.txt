@@ -17,3 +17,5 @@ slowapi
 email-validator
 bcrypt
 deep-translator
+groq
+anthropic

@@ -16,7 +16,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-from ai.gemini_engine import analyze_with_gemini, chat_with_gemini
+from ai.ai_engine import analyze_document as analyze_with_gemini, chat_with_bot as chat_with_gemini
 from utils.pdf_reader import extract_text_from_pdf
 from utils.date_extractor import extract_dates
 from utils.supabase_client import supabase
