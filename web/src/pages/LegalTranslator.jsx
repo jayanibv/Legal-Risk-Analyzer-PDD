@@ -6,8 +6,6 @@ import { translateDocument } from '../services/api';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const LANGUAGES = [
-  { id: 'Tamil', label: 'Tamil', flag: '🇮🇳' },
-  { id: 'Telugu', label: 'Telugu', flag: '🇮🇳' },
   { id: 'Spanish', label: 'Spanish', flag: '🇪🇸' },
   { id: 'Mandarin', label: 'Mandarin (Chinese)', flag: '🇨🇳' },
   { id: 'German', label: 'German', flag: '🇩🇪' },
@@ -113,42 +111,27 @@ export default function LegalTranslatorScreen() {
           backgroundColor: colors.card,
           border: `1px solid ${colors.border}`,
           borderRadius: '16px',
-          padding: '20px'
+          padding: '12px',
+          display: 'flex',
+          flexDirection: 'column'
         }}>
-          {documentText ? (
-            <div style={{
-              maxHeight: '160px',
-              overflowY: 'auto',
+          <textarea
+            value={documentText}
+            onChange={(e) => setDocumentText(e.target.value)}
+            placeholder="Paste or type the text you want to translate here..."
+            style={{
+              width: '100%',
+              minHeight: '160px',
+              backgroundColor: 'transparent',
+              border: 'none',
+              outline: 'none',
               fontSize: '14px',
               lineHeight: '22px',
-              color: colors.textSecondary,
-              whiteSpace: 'pre-wrap'
-            }}>
-              {documentText}
-            </div>
-          ) : (
-            <div style={{ textAlign: 'center', padding: '20px 10px' }}>
-              <FileText size={36} color={colors.textSecondary} style={{ marginBottom: '10px' }} />
-              <p style={{ fontSize: '14px', color: colors.textSecondary, marginBottom: '16px' }}>
-                No document text available. Please scan a document or paste contract text first.
-              </p>
-              <button
-                onClick={() => navigate('/upload')}
-                style={{
-                  padding: '10px 20px',
-                  backgroundColor: colors.primary,
-                  color: '#FFFFFF',
-                  border: 'none',
-                  borderRadius: '10px',
-                  fontWeight: '700',
-                  cursor: 'pointer',
-                  fontSize: '14px'
-                }}
-              >
-                Scan / Upload Document
-              </button>
-            </div>
-          )}
+              color: colors.text,
+              resize: 'vertical',
+              fontFamily: 'inherit'
+            }}
+          />
         </div>
       </div>
 

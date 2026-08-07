@@ -7,9 +7,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function ChatScreen() {
   const { colors, isDark } = useTheme();
   
-  const [messages, setMessages] = useState([
-    { id: '1', text: "Hello! I am your Legal Assistant. How can I help you today?", isUser: false }
-  ]);
+  const defaultMessage = { id: '1', text: "Hello! I am your Legal Assistant. How can I help you today?", isUser: false };
+  const [messages, setMessages] = useState(() => {
+    const saved = sessionStorage.getItem('chat_messages');
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) { return [defaultMessage]; }
+    }
+    return [defaultMessage];
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem('chat_messages', JSON.stringify(messages));
+  }, [messages]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
@@ -46,7 +55,7 @@ export default function ChatScreen() {
   const renderMessageText = (text, isUser) => {
     const boldParts = text.split(/(\*\*.*?\*\*)/g);
     return (
-      <span style={{ fontSize: '15px', fontFamily: 'Inter, sans-serif', lineHeight: '22px', color: isUser ? '#1B1F3B' : colors.text }}>
+      <span style={{ fontSize: '15px', fontFamily: 'Inter, sans-serif', lineHeight: '22px', color: isUser ? '#FFFFFF' : colors.text }}>
         {boldParts.map((bPart, bIndex) => {
           if (bPart.startsWith('**') && bPart.endsWith('**')) {
             return <strong key={bIndex}>{bPart.slice(2, -2)}</strong>;

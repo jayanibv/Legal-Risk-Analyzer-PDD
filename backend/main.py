@@ -87,7 +87,7 @@ class Input(BaseModel):
 class ChatInput(BaseModel):
     message: str = Field(..., max_length=1000)
 
-SUPPORTED_LANGUAGES = {"Tamil", "Telugu", "Spanish", "Mandarin", "German", "Italian", "Portuguese"}
+SUPPORTED_LANGUAGES = {"Spanish", "Mandarin", "German", "Italian", "Portuguese"}
 
 class TranslateInput(BaseModel):
     text: str = Field(..., max_length=100000)

@@ -157,7 +157,10 @@ CHAT_SYSTEM_PROMPT = (
     "You are a professional Legal Assistant. "
     "Answer clearly. "
     "Keep answers concise. "
-    "Always mention that you are an AI assistant and not a licensed lawyer."
+    "Always mention that you are an AI assistant and not a licensed lawyer. "
+    "IMPORTANT RESTRICTION: You are strictly limited to answering questions related to the legal domain and legal risk analysis. "
+    "If the user asks about anything outside of this domain (e.g. sports, entertainment, coding, general facts, etc.), "
+    "politely refuse to answer and clearly state that you can only assist with legal matters."
 )
 
 
@@ -187,21 +190,16 @@ def translate_document(text: str, language: str) -> str:
     """
     Translate a legal document into the specified language using local Ollama.
     """
-    prompt = f"""You are an expert legal translator.
+    prompt = f"""You are a world-class professional translator and linguistic expert. Your task is to provide a flawless, native-quality translation of the following text into {language}.
 
-Translate the following legal document into {language}.
+Critical translation rules:
+1. ACCURACY: Translate the text with 100% accuracy. Do not hallucinate, omit, or add any information. 
+2. FLUENCY & IDIOM: Ensure the translation reads naturally in {language}, using correct grammar, syntax, and culturally appropriate phrasing.
+3. CONTEXT: If the text is a legal document, use formal, precise legal terminology native to {language}. If it is conversational, translate it naturally.
+4. FORMATTING: Preserve all original formatting, bullet points, numbering, and paragraph structures exactly.
+5. NO CHATTER: Do NOT include any explanations, introductory text, or notes. Output ONLY the translated text.
 
-Requirements:
-
-• Preserve the legal meaning exactly.
-• Preserve legal terminology.
-• Preserve formatting whenever possible.
-• Do NOT summarize.
-• Do NOT simplify.
-• Do NOT explain.
-• Return ONLY the translated document.
-
-Document to translate:
+Text to translate:
 {text}"""
 
     try:

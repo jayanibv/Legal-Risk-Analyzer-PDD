@@ -29,7 +29,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip install --upgrade pip
-          pip install requests openpyxl
+          pip install requests openpyxl pytest
 
       # ── Warmup backend (Render free-tier cold start) ──────────────────────────
       - name: Warm up backend (Render cold-start)
@@ -48,7 +48,7 @@ jobs:
       # ── Run load test ─────────────────────────────────────────────────────────
       - name: Run Load Tests (300 VUs, 60 seconds)
         run: |
-          python load_tests/load_test_baseline.py
+          pytest load_tests/ --tb=short --no-header
         env:
           PYTHONDONTWRITEBYTECODE: "1"
 
