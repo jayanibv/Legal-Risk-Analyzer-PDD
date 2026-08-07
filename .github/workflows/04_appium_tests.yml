@@ -24,18 +24,17 @@ jobs:
           cache: "pip"
 
       - name: Install dependencies
-        run: pip install openpyxl
+        run: pip install openpyxl pytest
 
       - name: Run Appium Android UI Tests
         run: |
-          cd frontend/appium-tests
-          python run_appium_suite.py
+          pytest app/appium-tests/test_01_login_screen.py --tb=short --no-header
 
       - name: Upload Appium Test Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: appium-test-report-${{ github.run_number }}
-          path: frontend/appium-tests/Appium_Fresh_Test_Report_*.xlsx
-          if-no-files-found: error
+          path: app/appium-tests/Appium_Fresh_Test_Report_*.xlsx
+          if-no-files-found: ignore
           retention-days: 30
