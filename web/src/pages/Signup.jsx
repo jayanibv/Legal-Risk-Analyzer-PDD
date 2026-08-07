@@ -97,7 +97,7 @@ export default function SignupScreen() {
     <div style={{ flex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column', background: `linear-gradient(180deg, ${colors.bg} 0%, ${colors.cardAlt} 100%)` }}>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
         
-        <div style={{ width: '100%', maxWidth: '400px' }}>
+        <div style={{ width: '100%', maxWidth: '500px' }}>
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -134,12 +134,12 @@ export default function SignupScreen() {
 
             <div style={inputStyle}>
               <Calendar size={20} color={colors.textSecondary} />
-              <input style={textInputStyle} type="date" placeholder="Date of Birth" value={dob} onChange={(e) => setDob(e.target.value)} />
+              <input style={textInputStyle} type="date" max={new Date().toISOString().split("T")[0]} placeholder="Date of Birth" value={dob} onChange={(e) => setDob(e.target.value)} />
             </div>
 
             <div style={inputStyle}>
               <ShieldQuestion size={20} color={colors.textSecondary} />
-              <input style={textInputStyle} type="text" placeholder="Security Answer (Mother's maiden name)" value={securityAnswer} onChange={(e) => setSecurityAnswer(e.target.value)} />
+              <input style={textInputStyle} type="text" placeholder="Security Answer (Best friend's name)" value={securityAnswer} onChange={(e) => setSecurityAnswer(e.target.value)} />
             </div>
 
             <div style={inputStyle}>

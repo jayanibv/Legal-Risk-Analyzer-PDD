@@ -120,12 +120,14 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
 # --- AUTH ROUTES ---
 @app.post("/signup")
-@limiter.limit("2/minute")
+@limiter.limit("20/minute")
 async def signup(request: Request, user_data: UserCreate, db: Session = Depends(database.get_db)):
     # 1. Age Validation
     try:
         birth_date = datetime.datetime.strptime(user_data.dob, "%Y-%m-%d")
         today = datetime.datetime.today()
+        if birth_date > today:
+            raise HTTPException(status_code=400, detail="Date of birth cannot be in the future.")
         age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
         if age < 18:
             raise HTTPException(status_code=400, detail="You must be at least 18 years old.")
@@ -162,7 +164,7 @@ async def signup(request: Request, user_data: UserCreate, db: Session = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 @app.post("/login", response_model=Token)
-@limiter.limit("2/minute")
+@limiter.limit("20/minute")
 def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
     user = db.query(models.User).filter(models.User.email == form_data.username).first()
     if not user or not auth.verify_password(form_data.password, user.hashed_password):

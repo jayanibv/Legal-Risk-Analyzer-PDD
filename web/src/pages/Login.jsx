@@ -187,7 +187,7 @@ export default function LoginScreen() {
               <input style={textInputStyle} type="date" placeholder="Date of Birth" value={forgotDob} onChange={(e) => setForgotDob(e.target.value)} />
             </div>
             <div style={inputStyle}>
-              <input style={textInputStyle} type="text" placeholder="Security Answer (Mother's maiden name)" value={forgotSecurity} onChange={(e) => setForgotSecurity(e.target.value)} />
+              <input style={textInputStyle} type="text" placeholder="Security Answer (Best friend's name)" value={forgotSecurity} onChange={(e) => setForgotSecurity(e.target.value)} />
             </div>
             <div style={inputStyle}>
               <input style={textInputStyle} type={showNewPassword ? "text" : "password"} placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />

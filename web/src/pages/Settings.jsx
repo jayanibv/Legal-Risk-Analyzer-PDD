@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Moon, Shield, HelpCircle, Mail, LogOut, ChevronRight, X } from 'lucide-react';
+import { Moon, Shield, HelpCircle, Mail, LogOut, ChevronRight, X, Lock } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { removeToken } from '../services/auth';
-import { getUserProfile, updateProfile } from '../services/api';
+import { getUserProfile, updateProfile, resetPassword } from '../services/api';
 
 export default function SettingsScreen() {
   const navigate = useNavigate();
@@ -21,6 +21,12 @@ export default function SettingsScreen() {
   const [newDob, setNewDob] = useState('');
   const [saving, setSaving] = useState(false);
   const [modalError, setModalError] = useState('');
+
+  const [passwordModalVisible, setPasswordModalVisible] = useState(false);
+  const [securityAnswer, setSecurityAnswer] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [passwordSaving, setPasswordSaving] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
 
   useEffect(() => {
     const loadCachedProfile = () => {
@@ -114,6 +120,27 @@ export default function SettingsScreen() {
     }
   };
 
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    if (!securityAnswer || !newPassword) {
+      setPasswordError("Please fill in all fields");
+      return;
+    }
+    setPasswordSaving(true);
+    setPasswordError('');
+    try {
+      await resetPassword(userEmail, userDob, securityAnswer, newPassword);
+      setPasswordModalVisible(false);
+      setSecurityAnswer('');
+      setNewPassword('');
+      alert("Password updated successfully!");
+    } catch (e) {
+      setPasswordError(e.message);
+    } finally {
+      setPasswordSaving(false);
+    }
+  };
+
   const SettingRow = ({ icon: Icon, title, showToggle, toggleValue, onToggle, onClick }) => (
     <div 
       onClick={!showToggle ? onClick : undefined}
@@ -165,6 +192,11 @@ export default function SettingsScreen() {
       </div>
 
       <div style={{ marginBottom: '32px' }}>
+        <h3 style={{ fontSize: '12px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '16px', marginLeft: '4px', color: colors.textSecondary }}>Account Settings</h3>
+        <SettingRow icon={Lock} title="Change Password" onClick={() => { setPasswordError(''); setPasswordModalVisible(true); }} />
+      </div>
+
+      <div style={{ marginBottom: '32px' }}>
         <h3 style={{ fontSize: '12px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '16px', marginLeft: '4px', color: colors.textSecondary }}>App Settings</h3>
         <SettingRow icon={Moon} title="Dark Mode" showToggle toggleValue={isDark} onToggle={toggleTheme} />
       </div>
@@ -209,11 +241,41 @@ export default function SettingsScreen() {
                 style={{ width: '100%', height: '56px', borderRadius: '16px', border: `1px solid ${colors.divider}`, padding: '0 16px', marginBottom: '24px', fontSize: '16px', backgroundColor: colors.bg, color: colors.text, boxSizing: 'border-box', colorScheme: isDark ? 'dark' : 'light' }}
               />
               
-              <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
-                <button type="button" onClick={() => setEditModalVisible(false)} style={{ flex: 1, height: '50px', borderRadius: '12px', backgroundColor: colors.divider, border: 'none', color: colors.text, cursor: 'pointer', fontWeight: 'bold' }}>Cancel</button>
-                <button type="submit" disabled={saving} style={{ flex: 1, height: '50px', borderRadius: '12px', backgroundColor: colors.primary, border: 'none', color: '#fff', cursor: 'pointer', fontWeight: 'bold', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  {saving ? <div className="spinner" style={{ width: '20px', height: '20px', borderRadius: '10px', border: '2px solid rgba(255,255,255,0.4)', borderTopColor: '#fff', animation: 'spin 1s linear infinite' }} /> : 'Save Changes'}
-                </button>
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <button type="button" onClick={() => setEditModalVisible(false)} style={{ flex: 1, padding: '14px', borderRadius: '12px', border: `1px solid ${colors.divider}`, backgroundColor: 'transparent', color: colors.textSecondary, fontWeight: '700', cursor: 'pointer' }}>Cancel</button>
+                <button type="submit" disabled={saving} style={{ flex: 1, padding: '14px', borderRadius: '12px', border: 'none', backgroundColor: colors.primary, color: '#FFF', fontWeight: '700', cursor: 'pointer', opacity: saving ? 0.7 : 1 }}>{saving ? 'Saving...' : 'Save Changes'}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Change Password Modal */}
+      {passwordModalVisible && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.6)', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', zIndex: 100 }}>
+          <div style={{ width: '100%', maxWidth: '400px', backgroundColor: colors.card, padding: '24px', borderRadius: '24px' }}>
+            <h2 style={{ fontSize: '22px', fontWeight: '800', color: colors.text, margin: '0 0 20px 0' }}>Change Password</h2>
+            {passwordError && <p style={{ color: '#EF4444', marginBottom: '16px', textAlign: 'center' }}>{passwordError}</p>}
+            
+            <form onSubmit={handleResetPassword}>
+              <input 
+                type="text" 
+                placeholder="Security Answer (Best friend's name)" 
+                value={securityAnswer} 
+                onChange={e => setSecurityAnswer(e.target.value)}
+                style={{ width: '100%', padding: '14px', borderRadius: '12px', border: `1px solid ${colors.divider}`, backgroundColor: colors.bg, color: colors.text, marginBottom: '16px', fontSize: '15px' }}
+              />
+              <input 
+                type="password" 
+                placeholder="New Password" 
+                value={newPassword} 
+                onChange={e => setNewPassword(e.target.value)}
+                style={{ width: '100%', padding: '14px', borderRadius: '12px', border: `1px solid ${colors.divider}`, backgroundColor: colors.bg, color: colors.text, marginBottom: '24px', fontSize: '15px' }}
+              />
+              
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <button type="button" onClick={() => setPasswordModalVisible(false)} style={{ flex: 1, padding: '14px', borderRadius: '12px', border: `1px solid ${colors.divider}`, backgroundColor: 'transparent', color: colors.textSecondary, fontWeight: '700', cursor: 'pointer' }}>Cancel</button>
+                <button type="submit" disabled={passwordSaving} style={{ flex: 1, padding: '14px', borderRadius: '12px', border: 'none', backgroundColor: colors.primary, color: '#FFF', fontWeight: '700', cursor: 'pointer', opacity: passwordSaving ? 0.7 : 1 }}>{passwordSaving ? 'Updating...' : 'Update Password'}</button>
               </div>
             </form>
           </div>

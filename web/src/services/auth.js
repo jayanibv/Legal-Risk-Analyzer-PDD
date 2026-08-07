@@ -10,6 +10,8 @@ export const getToken = () => {
 
 export const removeToken = () => {
     localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem('cached_profile');
+    sessionStorage.removeItem('chat_messages');
 };
 
 export const isAuthenticated = () => {

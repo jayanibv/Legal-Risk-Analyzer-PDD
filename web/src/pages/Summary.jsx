@@ -135,7 +135,7 @@ export default function SummaryScreen() {
             <div style={{ borderRadius: '20px', padding: '20px', backgroundColor: colors.card, border: `1px solid ${colors.divider}`, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px' }}>
               <div>
                 <div style={{ fontSize: '13px', marginBottom: '4px', color: colors.textSecondary }}>Document Type</div>
-                <div style={{ fontSize: '15px', fontWeight: '700', color: colors.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{result.at_a_glance.document_type || 'Unknown'}</div>
+                <div style={{ fontSize: '15px', fontWeight: '700', color: colors.text }}>{result.at_a_glance.document_type || 'Unknown'}</div>
               </div>
               <div>
                 <div style={{ fontSize: '13px', marginBottom: '4px', color: colors.textSecondary }}>Pages</div>

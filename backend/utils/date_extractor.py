@@ -5,7 +5,7 @@ import re
 
 DATE_REGEXES = {
     # e.g., 12/03/2026, 12-03-2026, 2026-03-12, 12.03.2026
-    "Numeric Dates": r'\b(?:\d{1,2}[-/.]\d{1,2}[-/.]\d{2,4}|\d{4}[-/.]\d{1,2}[-/.]\d{1,2})\b',
+    "Numeric Dates": r'\b(?:\d{1,2}([-/.])\d{1,2}\1\d{2,4}|\d{4}([-/.])\d{1,2}\2\d{1,2})\b',
     
     # e.g., March 12, 2026, 12 March 2026, Mar 12 2026
     "Long Dates": r'\b(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2}(?:st|nd|rd|th)?(?:,)?\s+\d{4}\b|\b\d{1,2}(?:st|nd|rd|th)?\s+(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)(?:,)?\s+\d{4}\b',
