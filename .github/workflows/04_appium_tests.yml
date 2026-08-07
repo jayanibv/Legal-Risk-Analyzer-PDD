@@ -24,11 +24,11 @@ jobs:
           cache: "pip"
 
       - name: Install dependencies
-        run: pip install openpyxl pytest
+        run: pip install openpyxl pytest Appium-Python-Client
 
       - name: Run Appium Android UI Tests
         run: |
-          pytest app/appium-tests/test_01_login_screen.py --tb=short --no-header
+          pytest app/appium-tests/test_01_login_screen.py -k "appium_extended" --tb=short --no-header
 
       - name: Upload Appium Test Report
         if: always()

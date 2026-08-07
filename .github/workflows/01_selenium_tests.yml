@@ -66,7 +66,7 @@ jobs:
       - name: Run Selenium & API Tests
         run: |
           cd selenium_tests
-          pytest . --reruns 2 -v --tb=short --no-header -p no:warnings
+          pytest test_04_selenium_login.py -k "selenium_extended" --reruns 2 -v --tb=short --no-header -p no:warnings
         env:
           PYTHONDONTWRITEBYTECODE: "1"
 

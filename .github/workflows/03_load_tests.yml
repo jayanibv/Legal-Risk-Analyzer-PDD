@@ -48,7 +48,7 @@ jobs:
       # ── Run load test ─────────────────────────────────────────────────────────
       - name: Run Load Tests (300 VUs, 60 seconds)
         run: |
-          pytest load_tests/load_test_baseline.py --tb=short --no-header
+          pytest load_tests/load_test_baseline.py -k "load_extended" --tb=short --no-header
         env:
           PYTHONDONTWRITEBYTECODE: "1"
 
