@@ -66,7 +66,7 @@ jobs:
       - name: Run Functional Tests
         run: |
           cd functional_tests
-          pytest test_19_functional_tests.py -k "functional_extended" --reruns 2 -v --tb=short --no-header -p no:warnings
+          pytest test_19_functional_tests.py::TestCoreReliabilitySuite --reruns 2 -v --tb=short --no-header -p no:warnings
         env:
           PYTHONDONTWRITEBYTECODE: "1"
           BASE_URL: "https://legal-risk-analyzer-pdd.onrender.com"
