@@ -1,24 +1,28 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
-import { chatWithBot } from '../services/api';
+import { chatWithBot, getChatHistory } from '../services/api';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ChatScreen() {
   const { colors, isDark } = useTheme();
   
   const defaultMessage = { id: '1', text: "Hello! I am your Legal Assistant. How can I help you today?", isUser: false };
-  const [messages, setMessages] = useState(() => {
-    const saved = sessionStorage.getItem('chat_messages');
-    if (saved) {
-      try { return JSON.parse(saved); } catch (e) { return [defaultMessage]; }
-    }
-    return [defaultMessage];
-  });
+  const [messages, setMessages] = useState([defaultMessage]);
 
   useEffect(() => {
-    sessionStorage.setItem('chat_messages', JSON.stringify(messages));
-  }, [messages]);
+    const fetchHistory = async () => {
+      try {
+        const history = await getChatHistory();
+        if (history && history.length > 0) {
+          setMessages([defaultMessage, ...history]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch chat history:", error);
+      }
+    };
+    fetchHistory();
+  }, []);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);

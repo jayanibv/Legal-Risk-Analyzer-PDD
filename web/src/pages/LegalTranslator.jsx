@@ -25,17 +25,7 @@ export default function LegalTranslatorScreen() {
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    // Get passed text from router location state or session storage
-    if (location.state?.text) {
-      setDocumentText(location.state.text);
-    } else {
-      const cachedText = sessionStorage.getItem('last_document_text');
-      if (cachedText) {
-        setDocumentText(cachedText);
-      }
-    }
-  }, [location.state]);
+
 
   const handleTranslate = async () => {
     const textToTranslate = documentText.trim();

@@ -155,6 +155,16 @@ export const chatWithBot = async (message) => {
     return data.response;
 };
 
+export const getChatHistory = async () => {
+    const response = await fetch(`${BASE_URL}/chat/history`, {
+        method: "GET",
+        headers: await getHeaders()
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.detail || "Failed to fetch chat history");
+    return data;
+};
+
 export const translateDocument = async (text, language) => {
     const response = await fetch(`${BASE_URL}/translate`, {
         method: "POST",

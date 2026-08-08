@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet, KeyboardAvoidingView, Platform, ActivityIndicator, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from 'expo-router';
+import { useNavigation, useFocusEffect } from 'expo-router';
 import { DrawerActions } from '@react-navigation/native';
 import { useTheme } from '../../context/ThemeContext';
-import { chatWithBot } from '../../services/api';
+import { chatWithBot, getChatHistory } from '../../services/api';
 import Animated, { FadeInDown, FadeInUp, SlideInRight, SlideInLeft } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -33,6 +33,23 @@ export default function ChatScreen() {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      const fetchHistory = async () => {
+        try {
+          const history = await getChatHistory();
+          if (history && history.length > 0) {
+            const defaultMessage = { id: '1', text: "Hello! I am your Legal Assistant. How can I help you today?", isUser: false };
+            setMessages([defaultMessage, ...history]);
+          }
+        } catch (error) {
+          console.error("Failed to fetch chat history:", error);
+        }
+      };
+      fetchHistory();
+    }, [])
+  );
 
   const sendMessage = async () => {
     if (!input.trim()) return;

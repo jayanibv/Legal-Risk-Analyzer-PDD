@@ -425,14 +425,36 @@ def get_analysis_by_id(doc_id: int, current_user: models.User = Depends(get_curr
         "date": doc.created_at.isoformat() + "Z"
     }
 
+@app.get("/chat/history")
+def get_chat_history(current_user: models.User = Depends(get_current_user), db: Session = Depends(database.get_db)):
+    chats = db.query(models.ChatMessage).filter(models.ChatMessage.user_id == current_user.id).order_by(models.ChatMessage.created_at.asc()).all()
+    history = []
+    for chat in chats:
+        history.append({
+            "id": str(chat.id) + "_user",
+            "text": chat.message,
+            "isUser": True
+        })
+        history.append({
+            "id": str(chat.id) + "_bot",
+            "text": chat.response,
+            "isUser": False
+        })
+    return history
+
 @app.post("/chat")
 @limiter.limit("5/minute")
-async def chat(request: Request, data: ChatInput, current_user: models.User = Depends(get_current_user)):
+async def chat(request: Request, data: ChatInput, current_user: models.User = Depends(get_current_user), db: Session = Depends(database.get_db)):
     """Simple conversational endpoint for the chatbot."""
     if not data.message.strip():
         raise HTTPException(status_code=400, detail="Message cannot be empty")
         
     reply = chat_with_gemini(data.message)
+    
+    new_chat = models.ChatMessage(user_id=current_user.id, message=data.message, response=reply)
+    db.add(new_chat)
+    db.commit()
+
     return {"response": reply}
 
 @app.post("/translate")

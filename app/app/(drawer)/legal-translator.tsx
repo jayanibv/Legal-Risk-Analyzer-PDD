@@ -22,8 +22,6 @@ import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const LANGUAGES = [
-  { id: 'Tamil', label: 'Tamil', flag: '🇮🇳' },
-  { id: 'Telugu', label: 'Telugu', flag: '🇮🇳' },
   { id: 'Spanish', label: 'Spanish', flag: '🇪🇸' },
   { id: 'Mandarin', label: 'Mandarin (Chinese)', flag: '🇨🇳' },
   { id: 'German', label: 'German', flag: '🇩🇪' },
@@ -44,22 +42,7 @@ export default function LegalTranslatorScreen() {
   const [error, setError] = useState<string>('');
   const [copied, setCopied] = useState<boolean>(false);
 
-  useEffect(() => {
-    // Determine document text from route params, GlobalStore.textContent, or current analysis
-    let initialText = '';
-    if (params.text && typeof params.text === 'string' && params.text.trim()) {
-      initialText = params.text;
-    } else if (GlobalStore.textContent && GlobalStore.textContent.trim()) {
-      initialText = GlobalStore.textContent;
-    } else if (GlobalStore.currentAnalysis) {
-      const current = GlobalStore.currentAnalysis as any;
-      const summaries = current.summaries || current.summary || [];
-      if (Array.isArray(summaries) && summaries.length > 0) {
-        initialText = summaries.join('\n\n');
-      }
-    }
-    setDocumentText(initialText);
-  }, [params.text]);
+
 
   const handleTranslate = async () => {
     const textToTranslate = documentText.trim();
@@ -135,30 +118,18 @@ export default function LegalTranslatorScreen() {
         </Animated.View>
 
         <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-          {/* Document Preview Section */}
+          {/* Document Input Section */}
           <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>📄 Document Preview</Text>
-            <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.divider }]}>
-              {documentText ? (
-                <ScrollView style={styles.previewScroll} nestedScrollEnabled>
-                  <Text style={[styles.previewText, { color: colors.textSecondary }]}>
-                    {documentText}
-                  </Text>
-                </ScrollView>
-              ) : (
-                <View style={styles.emptyContainer}>
-                  <Ionicons name="document-text-outline" size={40} color={colors.textSecondary} />
-                  <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-                    No document text found. Paste text or scan a document to translate.
-                  </Text>
-                  <TouchableOpacity
-                    style={[styles.smallScanButton, { backgroundColor: colors.primary }]}
-                    onPress={() => router.push('/upload')}
-                  >
-                    <Text style={styles.smallScanText}>Scan Document</Text>
-                  </TouchableOpacity>
-                </View>
-              )}
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>📄 Document Input</Text>
+            <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.divider, minHeight: 160 }]}>
+              <TextInput
+                value={documentText}
+                onChangeText={setDocumentText}
+                placeholder="Paste or type the text you want to translate here..."
+                placeholderTextColor={colors.textSecondary}
+                multiline
+                style={[styles.previewText, { color: colors.text, flex: 1, textAlignVertical: 'top' }]}
+              />
             </View>
           </View>
 
